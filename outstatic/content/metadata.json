@@ -1,25 +1,7 @@
 {
-  "commit": "7816db7bb56fe968e7c98c95e69db0e4c5482649",
-  "generated": "Wed, 26 Jun 2024 15:32:33 GMT",
+  "commit": "5d75c168480bda5cb22e0e52f12dd5a2a5fbb7bc",
+  "generated": "2024-06-26T15:33:00.997Z",
   "metadata": [
-    {
-      "__outstatic": {
-        "commit": "70b30ab45081fafd63d46691f374d2f03210fc87",
-        "hash": "4198963627",
-        "path": "outstatic/content/pages/home.md"
-      },
-      "author": {
-        "name": "Andre Vitorio",
-        "picture": ""
-      },
-      "collection": "pages",
-      "coverImage": "",
-      "description": "This is my blog.",
-      "publishedAt": "2022-03-17T05:35:07.322Z",
-      "slug": "home",
-      "status": "published",
-      "title": "Home"
-    },
     {
       "__outstatic": {
         "commit": "525018a11c751fe66b5d0737807e67e06955cecd",
@@ -136,6 +118,24 @@
       "slug": "nothing-wrong",
       "status": "published",
       "title": "Nothing is wrong. Everything is perfect"
+    },
+    {
+      "__outstatic": {
+        "commit": "5d75c168480bda5cb22e0e52f12dd5a2a5fbb7bc",
+        "hash": "2647876370",
+        "path": "outstatic/content/pages/home.md"
+      },
+      "author": {
+        "name": "Manuel De Ceglie",
+        "picture": ""
+      },
+      "collection": "pages",
+      "coverImage": "",
+      "description": "This is my blog.",
+      "publishedAt": "2022-03-17T05:35:07.322Z",
+      "slug": "home",
+      "status": "published",
+      "title": "Home"
     }
   ]
 }

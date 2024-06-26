@@ -1,6 +1,6 @@
 {
-  "commit": "f1d49d79a01c1d85981f368c71944529e6583183",
-  "generated": "2024-06-26T15:30:43.099Z",
+  "commit": "bc0a4f4e801664ae894ee542e7c4ec46bf846565",
+  "generated": "2024-06-26T15:31:21.668Z",
   "metadata": [
     {
       "__outstatic": {
@@ -121,12 +121,12 @@
     },
     {
       "__outstatic": {
-        "commit": "f1d49d79a01c1d85981f368c71944529e6583183",
-        "hash": "4198963627",
+        "commit": "bc0a4f4e801664ae894ee542e7c4ec46bf846565",
+        "hash": "1040967021",
         "path": "outstatic/content/pages/home.md"
       },
       "author": {
-        "name": "Andre Vitorio",
+        "name": "Manuel De Ceglie",
         "picture": ""
       },
       "collection": "pages",

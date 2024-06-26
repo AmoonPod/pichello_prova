@@ -2,7 +2,7 @@
 title: 'Home'
 status: 'published'
 author:
-  name: 'Andre Vitorio'
+  name: 'Manuel De Ceglie'
   picture: ''
 slug: 'home'
 description: 'This is my blog.'

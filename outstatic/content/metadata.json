@@ -1,7 +1,25 @@
 {
-  "commit": "5d75c168480bda5cb22e0e52f12dd5a2a5fbb7bc",
-  "generated": "2024-06-26T15:33:00.997Z",
+  "commit": "a636f376de8db253e5ad4730de445bcb62d9b70e",
+  "generated": "Wed, 26 Jun 2024 15:33:22 GMT",
   "metadata": [
+    {
+      "__outstatic": {
+        "commit": "e1332aada819bdfb4db0737168d6595509c8036f",
+        "hash": "2647876370",
+        "path": "outstatic/content/pages/home.md"
+      },
+      "author": {
+        "name": "Manuel De Ceglie",
+        "picture": ""
+      },
+      "collection": "pages",
+      "coverImage": "",
+      "description": "This is my blog.",
+      "publishedAt": "2022-03-17T05:35:07.322Z",
+      "slug": "home",
+      "status": "published",
+      "title": "Home"
+    },
     {
       "__outstatic": {
         "commit": "525018a11c751fe66b5d0737807e67e06955cecd",
@@ -118,24 +136,6 @@
       "slug": "nothing-wrong",
       "status": "published",
       "title": "Nothing is wrong. Everything is perfect"
-    },
-    {
-      "__outstatic": {
-        "commit": "5d75c168480bda5cb22e0e52f12dd5a2a5fbb7bc",
-        "hash": "2647876370",
-        "path": "outstatic/content/pages/home.md"
-      },
-      "author": {
-        "name": "Manuel De Ceglie",
-        "picture": ""
-      },
-      "collection": "pages",
-      "coverImage": "",
-      "description": "This is my blog.",
-      "publishedAt": "2022-03-17T05:35:07.322Z",
-      "slug": "home",
-      "status": "published",
-      "title": "Home"
     }
   ]
 }

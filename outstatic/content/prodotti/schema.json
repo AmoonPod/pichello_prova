@@ -16,6 +16,13 @@
       "dataType": "array",
       "title": "Varianti",
       "values": []
+    },
+    "descrizion": {
+      "required": true,
+      "description": "Descrizione del prodotto",
+      "fieldType": "Text",
+      "dataType": "string",
+      "title": "Descrizion"
     }
   }
 }

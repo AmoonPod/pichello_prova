@@ -1,25 +1,7 @@
 {
-  "commit": "69f8801f649760770db3a1d0d0cf23e13453287d",
-  "generated": "2024-06-27T12:55:47.438Z",
+  "commit": "4de13898c7d18e8a9c696f7b551747a1df29a3a5",
+  "generated": "Thu, 27 Jun 2024 12:57:35 GMT",
   "metadata": [
-    {
-      "__outstatic": {
-        "commit": "e1332aada819bdfb4db0737168d6595509c8036f",
-        "hash": "2647876370",
-        "path": "outstatic/content/pages/home.md"
-      },
-      "author": {
-        "name": "Manuel De Ceglie",
-        "picture": ""
-      },
-      "collection": "pages",
-      "coverImage": "",
-      "description": "This is my blog.",
-      "publishedAt": "2022-03-17T05:35:07.322Z",
-      "slug": "home",
-      "status": "published",
-      "title": "Home"
-    },
     {
       "__outstatic": {
         "commit": "d2f316fd04def3347c906f5227da5daf79971f61",
@@ -70,6 +52,24 @@
     },
     {
       "__outstatic": {
+        "commit": "e1332aada819bdfb4db0737168d6595509c8036f",
+        "hash": "2647876370",
+        "path": "outstatic/content/pages/home.md"
+      },
+      "author": {
+        "name": "Manuel De Ceglie",
+        "picture": ""
+      },
+      "collection": "pages",
+      "coverImage": "",
+      "description": "This is my blog.",
+      "publishedAt": "2022-03-17T05:35:07.322Z",
+      "slug": "home",
+      "status": "published",
+      "title": "Home"
+    },
+    {
+      "__outstatic": {
         "commit": "b22b0f4f3d38a659cbab9b89ac2b7394f2446de4",
         "hash": "425893791",
         "path": "outstatic/content/projects/flycream-travel.md"
@@ -102,23 +102,6 @@
       "slug": "couple-pizza",
       "status": "published",
       "title": "Couple Pizza"
-    },
-    {
-      "__outstatic": {
-        "commit": "998b7f74af83e46bbdb4ab5302c8e4c39963278f",
-        "hash": "3707858083",
-        "path": "outstatic/content/posts/the-wrong-decision.md"
-      },
-      "author": {
-        "name": "Naval Ravikant"
-      },
-      "collection": "posts",
-      "coverImage": "/images/skyline.png",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.",
-      "publishedAt": "2022-03-26T05:35:07.322Z",
-      "slug": "the-wrong-decision",
-      "status": "published",
-      "title": "If you want to make the wrong decision, ask everyone"
     },
     {
       "__outstatic": {
@@ -173,33 +156,20 @@
     },
     {
       "__outstatic": {
-        "commit": "69f8801f649760770db3a1d0d0cf23e13453287d",
-        "hash": "4250194146",
-        "path": "outstatic/content/prodotti/prova.md"
+        "commit": "998b7f74af83e46bbdb4ab5302c8e4c39963278f",
+        "hash": "3707858083",
+        "path": "outstatic/content/posts/the-wrong-decision.md"
       },
       "author": {
-        "name": "Manuel De Ceglie",
-        "picture": "https://avatars.githubusercontent.com/u/80224270?v=4"
+        "name": "Naval Ravikant"
       },
-      "collection": "prodotti",
-      "coverImage": "",
-      "description": "",
-      "descrizion": "Farina del sium 2",
-      "nome": "Farina2",
-      "publishedAt": "2024-06-27T13:07:22.627Z",
-      "slug": "prova",
-      "status": "draft",
-      "title": "Prova",
-      "varianti": [
-        {
-          "label": "Ceci",
-          "value": "ceci"
-        },
-        {
-          "label": "Grano",
-          "value": "grano"
-        }
-      ]
+      "collection": "posts",
+      "coverImage": "/images/skyline.png",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.",
+      "publishedAt": "2022-03-26T05:35:07.322Z",
+      "slug": "the-wrong-decision",
+      "status": "published",
+      "title": "If you want to make the wrong decision, ask everyone"
     }
   ]
 }

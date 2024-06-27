@@ -1,0 +1,13 @@
+{
+  "title": "prodotti",
+  "type": "object",
+  "properties": {
+    "nome": {
+      "required": true,
+      "description": "Nome del prodotto",
+      "fieldType": "String",
+      "dataType": "string",
+      "title": "Nome"
+    }
+  }
+}

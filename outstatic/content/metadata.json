@@ -1,6 +1,6 @@
 {
-  "commit": "4de13898c7d18e8a9c696f7b551747a1df29a3a5",
-  "generated": "Thu, 27 Jun 2024 12:52:56 GMT",
+  "commit": "69f8801f649760770db3a1d0d0cf23e13453287d",
+  "generated": "2024-06-27T12:55:47.438Z",
   "metadata": [
     {
       "__outstatic": {
@@ -168,6 +168,36 @@
         {
           "label": "Sium",
           "value": "sium"
+        }
+      ]
+    },
+    {
+      "__outstatic": {
+        "commit": "69f8801f649760770db3a1d0d0cf23e13453287d",
+        "hash": "4250194146",
+        "path": "outstatic/content/prodotti/prova.md"
+      },
+      "author": {
+        "name": "Manuel De Ceglie",
+        "picture": "https://avatars.githubusercontent.com/u/80224270?v=4"
+      },
+      "collection": "prodotti",
+      "coverImage": "",
+      "description": "",
+      "descrizion": "Farina del sium 2",
+      "nome": "Farina2",
+      "publishedAt": "2024-06-27T13:07:22.627Z",
+      "slug": "prova",
+      "status": "draft",
+      "title": "Prova",
+      "varianti": [
+        {
+          "label": "Ceci",
+          "value": "ceci"
+        },
+        {
+          "label": "Grano",
+          "value": "grano"
         }
       ]
     }

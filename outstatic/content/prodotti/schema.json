@@ -15,7 +15,20 @@
       "fieldType": "Tags",
       "dataType": "array",
       "title": "Varianti",
-      "values": []
+      "values": [
+        {
+          "value": "ceci",
+          "label": "Ceci"
+        },
+        {
+          "value": "grano",
+          "label": "Grano"
+        },
+        {
+          "value": "sium",
+          "label": "Sium"
+        }
+      ]
     },
     "descrizion": {
       "required": true,

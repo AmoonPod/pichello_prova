@@ -1,6 +1,6 @@
 {
-  "commit": "a636f376de8db253e5ad4730de445bcb62d9b70e",
-  "generated": "Wed, 26 Jun 2024 15:33:22 GMT",
+  "commit": "ff1153152a272cdc7b372516d5d63dcb3eb6857b",
+  "generated": "2024-06-27T12:47:19.693Z",
   "metadata": [
     {
       "__outstatic": {
@@ -136,6 +136,40 @@
       "slug": "nothing-wrong",
       "status": "published",
       "title": "Nothing is wrong. Everything is perfect"
+    },
+    {
+      "__outstatic": {
+        "commit": "ff1153152a272cdc7b372516d5d63dcb3eb6857b",
+        "hash": "4134505687",
+        "path": "outstatic/content/prodotti/farina.md"
+      },
+      "author": {
+        "name": "Manuel De Ceglie",
+        "picture": "https://avatars.githubusercontent.com/u/80224270?v=4"
+      },
+      "collection": "prodotti",
+      "coverImage": "",
+      "description": "",
+      "descrizion": "Farina molto buona",
+      "nome": "Farina",
+      "publishedAt": "2024-06-27T12:58:32.987Z",
+      "slug": "farina",
+      "status": "published",
+      "title": "Farina",
+      "varianti": [
+        {
+          "label": "Ceci",
+          "value": "ceci"
+        },
+        {
+          "label": "Grano",
+          "value": "grano"
+        },
+        {
+          "label": "Sium",
+          "value": "sium"
+        }
+      ]
     }
   ]
 }

@@ -1,43 +1,27 @@
-import { absoluteUrl } from '@/lib/utils'
-import { Metadata } from 'next'
-import '../styles/index.css'
+import Navbar from "@/components/Navbar";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://outstatic.com'),
+  metadataBase: new URL("https://example.com"),
+  keywords: ["example", "keywords"],
   title: {
-    default: 'Outstatic',
-    template: '%s | Outstatic'
+    default: "Example Title",
+    template: `%s | Example Title`,
   },
-  description: 'A blog starter built with Outstatic.',
   openGraph: {
-    title: 'Outstatic - A Static Site CMS for Next.js',
-    description: 'A blog starter built with Outstatic.',
-    url: absoluteUrl('/'),
-    siteName: 'Next.js',
-    images: [
-      {
-        url: absoluteUrl('/images/og-image.png'),
-        width: 1800,
-        height: 1600
-      }
-    ],
-    locale: 'en_US',
-    type: 'website'
+    description: "Example Description",
+    images: [],
   },
-  icons: {
-    icon: [{ url: '/favicon/favicon-32x32.png' }],
-    apple: [{ url: '/favicon/apple-touch-icon.png' }]
-  }
-}
+};
 
 export default function RootLayout({
-  children
+  children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="it">
       <body>{children}</body>
     </html>
-  )
+  );
 }

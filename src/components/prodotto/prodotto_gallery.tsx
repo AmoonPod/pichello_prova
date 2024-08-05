@@ -3,7 +3,6 @@
 import { useState } from "react";
 import styles from "./productGallery.module.css";
 import utils from "./utils.module.css";
-import Lightbox from "./lightbox";
 import { Immagine } from "../../../types";
 
 export default function ProdottoGallery({ images }: { images: Immagine[] }) {
@@ -24,15 +23,15 @@ export default function ProdottoGallery({ images }: { images: Immagine[] }) {
   };
 
   return (
-    <div className={styles.productGallery}>
+    <div className="flex-1 w-[500px]">
       <div
-        className="rounded-2xl overflow-hidden cursor-pointer mb-4"
+        className="cursor-pointer mb-4 flex justify-center"
         onClick={() => setShowLightbox(true)}
       >
         <img
           src={images[imgIndex].image}
           alt="gallery-cover-image "
-          className="aspect-square object-cover w-96 h-96"
+          className="aspect-square object-cover w-96 h-96 rounded-2xl"
         />
       </div>
       <ul

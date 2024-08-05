@@ -20,7 +20,7 @@ export default function ChiSiamo() {
               <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
                 La nostra storia, le nostre radici
               </h1>
-              <p className="max-w-[600px] md:text-xl">
+              <p className="max-w-[600px] md:text-lg">
                 Il Pichello trae il suo nome dalla storica casa contadina
                 chiamata 'pichel' in dialetto reggiano, italianizzato nel tempo
                 come Pichello. Da generazioni, la nostra famiglia si è dedicata
@@ -29,7 +29,7 @@ export default function ChiSiamo() {
               </p>
             </div>
             <div className="w-full max-w-sm space-y-2">
-              <Button variant="secondary" asChild>
+              <Button variant="outline" className="text-black" asChild>
                 <Link href="#">Leggi di più</Link>
               </Button>
             </div>

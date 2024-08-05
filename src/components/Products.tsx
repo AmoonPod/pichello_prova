@@ -3,6 +3,7 @@ import ProductCard from "./ProductCard";
 import { getProdotti } from "../../sanity/sanity.query";
 import { ProdottoType } from "../../types";
 import { Button } from "./ui/button";
+import Link from "next/link";
 
 export default async function Products() {
   const prodotti: ProdottoType[] = await getProdotti();
@@ -24,15 +25,21 @@ export default async function Products() {
             </p>
           </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ">
-            {prodotti.map((product: ProdottoType) => (
-              <ProductCard product={product} key={product._id} />
+            {prodotti.slice(0, 4).map((product: ProdottoType) => (
+              <ProductCard
+                product={product}
+                key={product._id}
+                showDescription={true}
+              />
             ))}
           </div>
         </div>
         <div className="flex justify-center">
-          <Button variant="secondary" className="mx-auto mt-8">
-            Sfoglia tutti i prodotti
-          </Button>
+          <Link href="/products" prefetch={true}>
+            <Button variant="secondary" className="mx-auto mt-8">
+              Sfoglia tutti i prodotti
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

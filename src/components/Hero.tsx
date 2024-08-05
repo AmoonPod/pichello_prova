@@ -18,10 +18,10 @@ export default function Hero() {
               <h2 className="text-secondary text-lg tracking-widest">
                 100% Prodotti Naturali
               </h2>
-              <h1 className="text-primary text-4xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
+              <h1 className="text-primary text-4xl  tracking-tighter sm:text-5xl xl:text-6xl/none font-extrabold">
                 Natura e qualità a portata di mano
               </h1>
-              <p className="max-w-[600px] text-muted-foreground md:text-xl">
+              <p className="max-w-[600px] text-muted-foreground md:text-xl font-light">
                 L'Azienda Agricola Il Pichello è il tuo punto di riferimento per
                 gustare e vivere la genuinità, con una gamma di prodotti 100%
                 naturali, coltivati e prodotti con amore e dedizione.

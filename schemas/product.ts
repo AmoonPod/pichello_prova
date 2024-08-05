@@ -15,11 +15,6 @@ export const prodotto = {
       type: "text",
     },
     {
-      name: "immagine_di_copertina",
-      title: "Immagine di copertina",
-      type: "image",
-    },
-    {
       name: "immagini",
       title: "Immagini",
       type: "array",

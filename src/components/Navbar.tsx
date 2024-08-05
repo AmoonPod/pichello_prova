@@ -39,9 +39,9 @@ export default function Navbar() {
                   Chi siamo
                 </Link>
                 <Link
-                  href="#"
+                  href="/products"
                   className="font-medium hover:underline"
-                  prefetch={false}
+                  prefetch={true}
                 >
                   Prodotti
                 </Link>
@@ -58,9 +58,9 @@ export default function Navbar() {
               Chi siamo
             </Link>
             <Link
-              href="#"
+              href="/products"
               className="font-medium flex items-center text-sm transition-colors hover:underline"
-              prefetch={false}
+              prefetch={true}
             >
               Prodotti
             </Link>

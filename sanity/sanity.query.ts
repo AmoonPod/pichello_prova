@@ -7,7 +7,9 @@ export async function getProdotti() {
       _id,
       nome,
       descrizione,
-      immagine_di_copertina {alt, "image": asset->url},
+      immagini[] {
+        "image": asset->url
+      },
       slug
     }`
   );
@@ -19,7 +21,6 @@ export async function getProdottoBySlug(slug: string) {
       _id,
       nome,
       descrizione,
-      immagine_di_copertina { "image": asset->url },
       immagini[] {
         "image": asset->url
       },

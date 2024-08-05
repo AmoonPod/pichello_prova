@@ -1,11 +1,11 @@
-import Navbar from "@/components/Navbar";
+import { Toaster } from "@/components/ui/toaster";
 import { Metadata } from "next";
-
+import { Bricolage_Grotesque } from "next/font/google";
 export const metadata: Metadata = {
   metadataBase: new URL("https://example.com"),
   keywords: ["example", "keywords"],
   title: {
-    default: "Example Title",
+    default: "Il Pichello",
     template: `%s | Example Title`,
   },
   openGraph: {
@@ -13,6 +13,11 @@ export const metadata: Metadata = {
     images: [],
   },
 };
+const bricolageGrotesque = Bricolage_Grotesque({
+  display: "swap",
+  weight: ["200", "300", "400", "500", "600", "700", "800"],
+  subsets: ["latin"],
+});
 
 export default function RootLayout({
   children,
@@ -21,7 +26,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="it">
-      <body>{children}</body>
+      <body className={`${bricolageGrotesque.className} `}>
+        {children}
+        <Toaster />
+      </body>
     </html>
   );
 }

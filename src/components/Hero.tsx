@@ -2,10 +2,11 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import home from "../../public/home.png"; // Assuming you save the uploaded image in the public directory
 import Link from "next/link";
+import ScrittaPiccolina from "./scrittaPiccolina";
 
 export default function Hero() {
   return (
-    <section className="hero-section py-12 md:py-24 lg:py-32 xl:py-48">
+    <section className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-center gap-16 lg:gap-20 lg:items-start px-8 py-8 lg:py-20">
       <div className="container px-4 md:px-6 max-w-7xl">
         <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
           <Image
@@ -15,13 +16,11 @@ export default function Hero() {
           />
           <div className="flex flex-col justify-center space-y-4">
             <div className="space-y-2">
-              <h2 className="text-secondary text-lg tracking-widest">
-                100% Prodotti Naturali
-              </h2>
-              <h1 className="text-primary text-4xl  tracking-tighter sm:text-5xl xl:text-6xl/none font-extrabold">
+              <ScrittaPiccolina>100% Prodotti Naturali</ScrittaPiccolina>
+              <h1 className="font-extrabold text-4xl lg:text-5xl text-primary tracking-tight md:-mb-4 flex flex-col gap-3 items-center lg:items-start">
                 Natura e qualità a portata di mano
               </h1>
-              <p className="max-w-[600px] text-muted-foreground md:text-xl font-light">
+              <p className="max-w-[600px] text-muted-foreground text-lg font-light">
                 L'Azienda Agricola Il Pichello è il tuo punto di riferimento per
                 gustare e vivere la genuinità, con una gamma di prodotti 100%
                 naturali, coltivati e prodotti con amore e dedizione.

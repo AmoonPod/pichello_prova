@@ -9,11 +9,15 @@ export default function Index() {
   return (
     <>
       <Navbar />
-      <Hero />
-      <ChiSiamo />
-      <Products />
-      <UniscitiANoi />
+      <main className="min-h-screen">
+        <Hero />
+        <ChiSiamo />
+        <Products />
+        <UniscitiANoi />
+      </main>
+
       <Footer />
+
     </>
   );
 }

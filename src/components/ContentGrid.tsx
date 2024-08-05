@@ -21,7 +21,7 @@ const ContentGrid = ({
 }: Props) => {
   return (
     <section id={collection}>
-      <h2 className="mb-8 text-5xl md:text-6xl font-bold tracking-tighter leading-tight">
+      <h2 className="mb-8 text-[56px] md:text-6xl font-bold tracking-tighter leading-tight">
         {title}
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 sm:gap-x-6 lg:gap-x-8 gap-y-5 sm:gap-y-6 lg:gap-y-8 mb-8">
@@ -48,13 +48,13 @@ const ContentGrid = ({
                 <div className="p-4">
                   {Array.isArray(item?.tags)
                     ? item.tags.map(({ label }) => (
-                        <span
-                          key={label}
-                          className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
-                        >
-                          {label}
-                        </span>
-                      ))
+                      <span
+                        key={label}
+                        className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+                      >
+                        {label}
+                      </span>
+                    ))
                     : null}
                   <h3 className="text-xl mb-2 leading-snug font-bold hover:underline">
                     {item.title}

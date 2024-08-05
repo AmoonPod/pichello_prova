@@ -31,7 +31,7 @@ const ProdottiPage = () => {
         <div className="container px-4 md:px-6 max-w-7xl">
           <div className="flex justify-between items-center mb-8">
             <div>
-              <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl xl:text-5xl/none text-primary">
+              <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl xl:text-[56px] text-primary">
                 Prodotti
               </h1>
               <p className="text-muted-foreground md:text-lg">

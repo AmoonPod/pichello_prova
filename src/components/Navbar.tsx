@@ -11,7 +11,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="fixed inset-x-0 top-0 z-50 bg-background h-20 flex items-center text-primary">
+    <header className="max-w-7xl mx-auto px-8 py-5 flex items-center text-primary">
       <div className="w-full max-w-7xl mx-auto px-4">
         <div className="flex justify-between h-14 items-center">
           <Link href="/" className="flex items-center" prefetch={false}>
@@ -72,6 +72,6 @@ export default function Navbar() {
           </div>
         </div>
       </div>
-    </nav>
+    </header>
   );
 }

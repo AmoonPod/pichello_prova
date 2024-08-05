@@ -80,7 +80,7 @@ export default async function Product({
           </div>
         </div>
         <section className="bg-muted py-12 ">
-          <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8 ">
+          <div className="max-w-4xl mx-auto ">
             <div>
               <h2 className="text-2xl md:text-3xl font-bold">
                 Dettagli del prodotto

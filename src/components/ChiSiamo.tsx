@@ -3,11 +3,12 @@ import Image from "next/image";
 import ChiSiamoImage from "../../public/ChiSiamoImage.png"; // Assuming you save the uploaded image in the public directory
 import Link from "next/link";
 import "../app/globals.css";
+import ScrittaPiccolina from "./scrittaPiccolina";
 
 export default function ChiSiamo() {
   return (
-    <section className="py-12 md:py-24 lg:py-32 xl:py-48 bg-secondary text-secondary-foreground">
-      <div className="container px-4 md:px-6 max-w-7xl">
+    <section className="gap-16 lg:gap-20 lg:items-start px-8 py-8 lg:py-20 bg-secondary text-secondary-foreground">
+      <div className=" px-4 md:px-6 max-w-7xl">
         <div className="grid gap-6 lg:grid-cols-[400px_1fr] lg:gap-12 xl:grid-cols-[600px_1fr]">
           <Image
             src={ChiSiamoImage}
@@ -16,11 +17,11 @@ export default function ChiSiamo() {
           />
           <div className="flex flex-col justify-center space-y-4">
             <div className="space-y-2">
-              <h2 className="text-lg tracking-widest">Chi siamo</h2>
-              <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
+              <ScrittaPiccolina white={true}>La Nostra Storia</ScrittaPiccolina>
+              <h1 className="font-extrabold text-4xl lg:text-5xl tracking-tight md:-mb-4 flex flex-col gap-3 items-center lg:items-start">
                 La nostra storia, le nostre radici
               </h1>
-              <p className="max-w-[600px] md:text-lg">
+              <p className="max-w-[600px] text-lg font-light">
                 Il Pichello trae il suo nome dalla storica casa contadina
                 chiamata 'pichel' in dialetto reggiano, italianizzato nel tempo
                 come Pichello. Da generazioni, la nostra famiglia si è dedicata

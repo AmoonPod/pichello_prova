@@ -28,7 +28,7 @@ export default function Hero() {
             </div>
             <div className="w-full max-w-sm space-y-2">
               <Button variant="secondary" asChild>
-                <Link href="#">Scopri di più</Link>
+                <Link href="/contatti">Contattaci</Link>
               </Button>
             </div>
           </div>

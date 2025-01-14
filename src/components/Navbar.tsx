@@ -51,7 +51,7 @@ export default function Navbar() {
           </Sheet>
           <nav className="hidden md:flex lg:flex gap-4">
             <Link
-              href="#"
+              href="/chi-siamo"
               className="font-medium flex items-center text-sm transition-colors hover:underline"
               prefetch={false}
             >

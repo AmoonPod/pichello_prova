@@ -8,11 +8,12 @@ import ProdottoGallery from "@/components/prodotto/prodotto_gallery";
 import ProductCard from "@/components/ProductCard";
 import { title } from "process";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { name: string };
-}) {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ name: string }>;
+  }
+) {
+  const params = await props.params;
   try {
     const prodotto: ProdottoType = await getProdottoBySlug(params.name);
 
@@ -28,10 +29,10 @@ export async function generateMetadata({
         description: prodotto.descrizione,
         images: [
           {
-            url: prodotto.immagine_di_copertina.image,
+            url: prodotto.immagini[0].image,
             width: 600,
             height: 600,
-            alt: prodotto.immagine_di_copertina.alt,
+            alt: prodotto.immagini[0].alt,
           },
         ],
       },
@@ -58,11 +59,12 @@ export async function generateStaticParams() {
   }
 }
 
-export default async function Product({
-  params,
-}: {
-  params: { name: string };
-}) {
+export default async function Product(
+  props: {
+    params: Promise<{ name: string }>;
+  }
+) {
+  const params = await props.params;
   const prodotto: ProdottoType = await getProdottoBySlug(params.name);
   const prodotti: ProdottoType[] = await getProdotti();
   if (!prodotto) return null;
@@ -70,7 +72,7 @@ export default async function Product({
     <>
       <Navbar />
       <div className=" flex flex-col mx-auto">
-        <div className="flex flex-col md:flex-row items-start gap-8  mx-auto py-12 md:py-24 lg:py-32 xl:py-48 max-w-4xl">
+        <div className="mx-auto max-w-4xl flex flex-col lg:flex-row items-center justify-center gap-16 lg:gap-20 lg:items-start px-8 py-8 lg:py-20">
           <ProdottoGallery images={prodotto.immagini} />
           <div className="flex-1 grid gap-4">
             <h1 className="text-[44px] font-bold">{prodotto.nome}</h1>

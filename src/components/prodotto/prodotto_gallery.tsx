@@ -39,7 +39,7 @@ export default function ProdottoGallery({ images }: { images: Immagine[] }) {
       >
         {images.map((element: Immagine, index: number) => (
           <li
-            key={index}
+            key={`thumbnail-${index}`}
             className={
               imgIndex === index
                 ? `${styles.productThumbnail} ${styles.productThumbnailActive}`
@@ -68,9 +68,9 @@ export default function ProdottoGallery({ images }: { images: Immagine[] }) {
         className={styles.productGallerySlider}
         style={{ transform: `translateX(-${imgIndex * 100}%)` }}
       >
-        {images.map((element: any, index: any) => (
+        {images.map((element: Immagine, index: number) => (
           <img
-            key={element.id}
+            key={`slider-${index}`}
             src={element.image}
             alt={`Product Image ${index}`}
           />

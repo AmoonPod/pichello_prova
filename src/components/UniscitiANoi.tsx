@@ -16,7 +16,7 @@ export default function UniscitiANoi() {
           </p>
           <div className="w-full max-w-sm mx-auto mt-8">
             <Button variant="outline" asChild>
-              <Link href="#" className="text-black">
+              <Link href="/contatti" className="text-black">
                 Contattaci
               </Link>
             </Button>

@@ -7,8 +7,8 @@ import ScrittaPiccolina from "./scrittaPiccolina";
 
 export default function ChiSiamo() {
   return (
-    <section className="gap-16 lg:gap-20 lg:items-start px-8 py-8 lg:py-20 bg-secondary text-secondary-foreground">
-      <div className=" px-4 md:px-6 max-w-7xl">
+    <section className=" bg-secondary text-secondary-foreground">
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-center gap-16 lg:gap-20 lg:items-start px-8 py-8 lg:py-20 md:px-6">
         <div className="grid gap-6 lg:grid-cols-[400px_1fr] lg:gap-12 xl:grid-cols-[600px_1fr]">
           <Image
             src={ChiSiamoImage}
@@ -31,7 +31,7 @@ export default function ChiSiamo() {
             </div>
             <div className="w-full max-w-sm space-y-2">
               <Button variant="outline" className="text-black" asChild>
-                <Link href="#">Leggi di più</Link>
+                <Link href="/chi-siamo">Leggi di più</Link>
               </Button>
             </div>
           </div>

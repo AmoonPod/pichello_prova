@@ -6,16 +6,14 @@ import {
 import Navbar from "@/components/Navbar";
 import ProdottoGallery from "@/components/prodotto/prodotto_gallery";
 import ProductCard from "@/components/ProductCard";
-import { title } from "process";
+import Footer from "@/components/Footer";
 
-export async function generateMetadata(
-  props: {
-    params: Promise<{ name: string }>;
-  }
-) {
+export async function generateMetadata(props: {
+  params: Promise<{ name: string }>;
+}) {
   const params = await props.params;
   try {
-    const prodotto: ProdottoType = await getProdottoBySlug(params.name);
+    const prodotto = await getProdottoBySlug(params.name);
 
     if (!prodotto)
       return {
@@ -59,11 +57,9 @@ export async function generateStaticParams() {
   }
 }
 
-export default async function Product(
-  props: {
-    params: Promise<{ name: string }>;
-  }
-) {
+export default async function Product(props: {
+  params: Promise<{ name: string }>;
+}) {
   const params = await props.params;
   const prodotto: ProdottoType = await getProdottoBySlug(params.name);
   const prodotti: ProdottoType[] = await getProdotti();
@@ -71,7 +67,7 @@ export default async function Product(
   return (
     <>
       <Navbar />
-      <div className=" flex flex-col mx-auto">
+      <div className="flex flex-col mx-auto">
         <div className="mx-auto max-w-4xl flex flex-col lg:flex-row items-center justify-center gap-16 lg:gap-20 lg:items-start px-8 py-8 lg:py-20">
           <ProdottoGallery images={prodotto.immagini} />
           <div className="flex-1 grid gap-4">
@@ -79,32 +75,36 @@ export default async function Product(
             <p className="text-muted-foreground text-base">
               {prodotto.descrizione}
             </p>
-          </div>
-        </div>
-        <section className="bg-muted py-12 ">
-          <div className="max-w-4xl mx-auto ">
-            <div>
-              <h2 className="text-2xl md:text-3xl font-bold">
-                Dettagli del prodotto
-              </h2>
-              <div className="mt-4 text-muted-foreground space-y-4">
-                {prodotto.descrizione}
+            <div className="mt-4">
+              {(prodotto.formati?.length > 0 || prodotto.peso) && (
+                <h3 className="text-lg font-semibold">Formati disponibili</h3>
+              )}
+              <div className="mt-2 flex flex-wrap gap-2">
+                {prodotto?.formati?.map((formato) => (
+                  <span
+                    key={formato}
+                    className="text-muted-foreground text-sm bg-gray-200 p-2 rounded-full"
+                  >
+                    {formato}
+                  </span>
+                ))}
               </div>
             </div>
           </div>
-        </section>
-        <section className="bg-background py-12 px-4 md:px-6">
+        </div>
+        <section className="bg-muted py-12 px-4 md:px-6">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-2xl md:text-3xl font-bold mb-6">
               Prodotti correlati
             </h2>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ">
-              {prodotti.slice(0, 4).map((product: ProdottoType) => (
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 ">
+              {prodotti.slice(0, 3).map((product: ProdottoType) => (
                 <ProductCard product={product} key={product._id} />
               ))}
             </div>
           </div>
         </section>
+        <Footer />
       </div>
     </>
   );

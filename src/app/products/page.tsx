@@ -1,67 +1,11 @@
-"use client";
-import { useEffect, useState } from "react";
-import ProductCard from "@/components/ProductCard";
-import { Input } from "@/components/ui/input";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import { getProdotti } from "../../../sanity/sanity.query";
+import ProductsClient from "@/components/Prodotti";
+import { getCategorie, getProdotti } from "../../../sanity/sanity.query";
 import { ProdottoType } from "../../../types";
 
-const ProdottiPage = () => {
-  const [prodotti, setProdotti] = useState<ProdottoType[]>([]);
-  const [searchTerm, setSearchTerm] = useState("");
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getProdotti();
-      setProdotti(data);
-    };
-
-    fetchData();
-  }, []);
-
-  const filteredProdotti = prodotti.filter((product) =>
-    product.nome.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  return (
-    <>
-      <Navbar />
-      <section className="mx-auto flex flex-col lg:flex-row items-center justify-center gap-16 lg:gap-20 lg:items-start px-8 py-8 lg:py-20">
-        <div className="container px-4 md:px-6 max-w-7xl">
-          <div className="flex justify-between items-center mb-8">
-            <div className="space-y-2">
-              <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl xl:text-[56px] text-primary">
-                Prodotti
-              </h1>
-              <p className="text-muted-foreground md:text-lg">
-                Esplora la nostra selezione di prodotti agricoli di alta
-                qualità.
-              </p>
-            </div>
-            <div>
-              <Input
-                type="text"
-                placeholder="Cerca prodotto..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
-          </div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {filteredProdotti.map((product: ProdottoType) => (
-              <ProductCard
-                product={product}
-                key={product._id}
-                showDescription={true}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-      <Footer />
-    </>
-  );
+const ProdottiServer = async () => {
+  const prodotti: ProdottoType[] = await getProdotti();
+  const categories = await getCategorie();
+  return <ProductsClient prodotti={prodotti} categorie={categories} />;
 };
 
-export default ProdottiPage;
+export default ProdottiServer;

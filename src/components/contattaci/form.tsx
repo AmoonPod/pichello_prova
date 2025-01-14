@@ -26,7 +26,7 @@ const ContactForm = () => {
   };
 
   return (
-    <form className="mt-12 grid gap-4" onSubmit={handleSubmit}>
+    <form className="grid gap-4 w-full" onSubmit={handleSubmit}>
       <div>
         <Label htmlFor="name">Nome e cognome</Label>
         <Input

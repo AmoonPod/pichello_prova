@@ -10,7 +10,8 @@ export async function getProdotti() {
       immagini[] {
         "image": asset->url
       },
-      slug
+      slug,
+      "categoria": categoria->nome
     }`
   );
 }
@@ -24,8 +25,22 @@ export async function getProdottoBySlug(slug: string) {
       immagini[] {
         "image": asset->url
       },
-      slug
+      slug,
+      peso,
+      scadenza,
+      formati,
+      "categoria": categoria->nome
     }`,
     { slug }
   );
+}
+
+//get all categories
+export async function getCategorie() {
+  const categorie = await client.fetch(
+    groq`*[_type == "categoria"]{
+      "nome": nome
+    }`
+  );
+  return categorie.map((c: any) => c.nome);
 }

@@ -1,15 +1,15 @@
-import { PortableTextBlock } from "sanity";
-
 export type ProdottoType = {
   _id: string;
   nome: string;
   descrizione: string;
-  immagine_di_copertina: {
-    alt: string;
-    image: string;
-  };
   immagini: Immagine[];
   slug: string;
+  codice_ean: string;
+  peso: number;
+  scadenza: string;
+  pezzi: number;
+  formati: string[];
+  categoria: string;
 };
 
 export type Immagine = {

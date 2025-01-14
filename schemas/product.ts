@@ -37,5 +37,43 @@ export const prodotto = {
           input.toLowerCase().replace(/\s+/g, "-").slice(0, 96),
       },
     },
+    {
+      name: "codice_ean",
+      title: "Codice EAN",
+      type: "string",
+    },
+    {
+      name: "peso",
+      title: "Peso",
+      type: "number",
+    },
+    {
+      name: "scadenza",
+      title: "Scadenza",
+      type: "string",
+    },
+    {
+      name: "pezzi",
+      title: "Pezzi",
+      type: "number",
+    },
+    {
+      name: "formati",
+      title: "Formati disponibili",
+      type: "array",
+      of: [
+        {
+          name: "formato",
+          title: "Formato",
+          type: "string",
+        },
+      ],
+    },
+    {
+      name: "categoria", // Nuovo campo per la categoria
+      title: "Categoria",
+      type: "reference",
+      to: [{ type: "categoria" }], // Riferimento allo schema categoria
+    },
   ],
 };

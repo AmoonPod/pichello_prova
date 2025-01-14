@@ -34,18 +34,23 @@ const ProductsClient = ({
     return matchesSearch && matchesCategory;
   });
 
-  const clearFilters = () => {
-    setSearchTerm("");
-    setSelectedCategory("");
-  };
-
   return (
     <>
       <Navbar />
-      <section className="mx-auto max-w-7xl flex flex-col lg:flex-row px-4 py-6 lg:px-16 lg:py-12">
+      <section className="mx-auto max-w-7xl flex flex-col lg:flex-row px-4 py-6 lg:px-16 lg:py-12 min-h-screen">
         {/* Sidebar for Desktop */}
-        <aside className="hidden lg:block lg:w-1/4 space-y-2 pr-8 w-[30%]">
+        <aside className="hidden lg:block lg:w-1/4 space-y-4 pr-8 w-[30%]">
+          {/* Search Bar */}
+          <Input
+            type="text"
+            placeholder="Cerca prodotto..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full"
+          />
+
           <h2 className="text-xl font-semibold text-primary">Filtra per</h2>
+
           {/* Categories List */}
           <ul className="space-y-1">
             <li
@@ -75,7 +80,7 @@ const ProductsClient = ({
         </aside>
 
         {/* Main Content */}
-        <div className="flex-grow w-[70%]">
+        <div className="flex-grow lg:w-[70%] w-full">
           {/* Filters Section for Mobile */}
           <div className="lg:hidden mb-6 space-y-4">
             <Select
@@ -114,17 +119,19 @@ const ProductsClient = ({
           </div>
 
           {/* Products Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredProdotti.length > 0 ? (
-              filteredProdotti.map((product) => (
+          {filteredProdotti.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredProdotti.map((product) => (
                 <ProductCard product={product} key={product._id} />
-              ))
-            ) : (
-              <p className="text-center col-span-full text-muted-foreground">
+              ))}
+            </div>
+          ) : (
+            <div className="flex items-center justify-center h-full">
+              <p className="text-center text-lg text-muted-foreground">
                 Nessun prodotto trovato.
               </p>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </section>
       <Footer />

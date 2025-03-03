@@ -25,9 +25,8 @@ export default async function Categories() {
         {categories.map((category, index) => (
           <div
             key={index}
-            className={`flex  flex-col-reverse justify-between ${
-              index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-            } items-center gap-6 md:gap-8`}
+            className={`flex  flex-col-reverse justify-between ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+              } items-center gap-6 md:gap-8`}
           >
             {index === 0 ? (
               <div className="text-center md:text-left space-y-4">

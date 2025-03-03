@@ -13,9 +13,9 @@ export default function Navbar() {
   return (
     <header className="max-w-7xl mx-auto px-8 py-5 flex items-center text-primary">
       <div className="w-full max-w-7xl mx-auto px-4">
-        <div className="flex justify-between h-14 items-center">
+        <div className="flex justify-between h-24 items-center">
           <Link href="/" className="flex items-center" prefetch={false}>
-            <Image src={LOGO} className="w-32 object-cover" alt="logo" />
+            <Image src={LOGO} className="w-44 object-cover" alt="logo" />
             <span className="sr-only">Acme Inc</span>
           </Link>
           <Sheet>
@@ -39,7 +39,7 @@ export default function Navbar() {
                   Chi siamo
                 </Link>
                 <Link
-                  href="/products"
+                  href="/prodotti"
                   className="font-medium hover:underline"
                   prefetch={false}
                 >
@@ -58,7 +58,7 @@ export default function Navbar() {
               Chi siamo
             </Link>
             <Link
-              href="/products"
+              href="/prodotti"
               className="font-medium flex items-center text-sm transition-colors hover:underline"
               prefetch={false}
             >

@@ -18,17 +18,15 @@ export default function Hero() {
             <div className="space-y-2">
               <ScrittaPiccolina>100% Prodotti Naturali</ScrittaPiccolina>
               <h1 className="font-extrabold text-4xl lg:text-5xl text-primary tracking-tight md:-mb-4 flex flex-col gap-3 items-center lg:items-start">
-                Natura e qualità a portata di mano
+                Seminiamo Tradizione, Raccogliamo Autenticità
               </h1>
-              <p className="max-w-[600px] text-muted-foreground text-lg font-light">
-                L'Azienda Agricola Il Pichello è il tuo punto di riferimento per
-                gustare e vivere la genuinità, con una gamma di prodotti 100%
-                naturali, coltivati e prodotti con amore e dedizione.
+              <p className="max-w-[600px] text-black text-lg font-light">
+                Nel cuore dell’Appennino Reggiano coltiviamo con passione cereali, legumi e miele, che trasformiamo con cura nel nostro laboratorio aziendale insieme a tante altre nostre produzioni. Al Pichello ogni prodotto nasce dalla terra e arriva sulle tavole con la sincerità di chi rispetta la natura e i suoi tempi.
               </p>
             </div>
             <div className="w-full max-w-sm space-y-2">
               <Button variant="secondary" asChild>
-                <Link href="/contatti">Contattaci</Link>
+                <Link href="#contatti">Contattaci</Link>
               </Button>
             </div>
           </div>

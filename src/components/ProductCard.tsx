@@ -5,7 +5,7 @@ import CategoryTag from "./category_tag";
 export default function ProductCard({ product }: { product: ProdottoType }) {
   let slug = JSON.parse(JSON.stringify(product.slug)).current;
   return (
-    <Link href={`/products/${slug}`}>
+    <Link href={`/prodotti/${slug}`}>
       <div className="grid gap-4 p-4">
         <img
           src={product.immagini[0].image}

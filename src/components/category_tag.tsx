@@ -1,7 +1,5 @@
 //Create a category tag component that will be used to display the category of the blog post.
 import { FC } from "react";
-import { Badge } from "./ui/badge";
-
 interface CategoryTagProps {
   category: string;
 }

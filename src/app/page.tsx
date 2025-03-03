@@ -15,9 +15,7 @@ export default function Index() {
         <Products />
         <UniscitiANoi />
       </main>
-
       <Footer />
-
     </>
   );
 }

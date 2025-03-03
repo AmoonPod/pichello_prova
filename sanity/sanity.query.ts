@@ -37,10 +37,11 @@ export async function getProdottoBySlug(slug: string) {
 
 //get all categories
 export async function getCategorie() {
-  const categorie = await client.fetch(
+  return await client.fetch(
     groq`*[_type == "categoria"]{
-      "nome": nome
+      _id,
+      nome,
+      descrizione
     }`
   );
-  return categorie.map((c: any) => c.nome);
 }

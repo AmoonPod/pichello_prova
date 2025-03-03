@@ -16,3 +16,9 @@ export type Immagine = {
   alt: string;
   image: string;
 };
+
+export type CategoriaType = {
+  _id: string;
+  nome: string;
+  descrizione: string;
+};

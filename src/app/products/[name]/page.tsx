@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 import ProdottoGallery from "@/components/prodotto/prodotto_gallery";
 import ProductCard from "@/components/ProductCard";
 import Footer from "@/components/Footer";
+import CategoryTag from "@/components/category_tag";
 
 export async function generateMetadata(props: {
   params: Promise<{ name: string }>;
@@ -71,7 +72,11 @@ export default async function Product(props: {
         <div className="mx-auto max-w-4xl flex flex-col lg:flex-row items-center justify-center gap-16 lg:gap-20 lg:items-start px-8 py-8 lg:py-20">
           <ProdottoGallery images={prodotto.immagini} />
           <div className="flex-1 grid gap-4">
-            <h1 className="text-[44px] font-bold">{prodotto.nome}</h1>
+            <div>
+              <CategoryTag category={prodotto.categoria} />
+              <h1 className="text-[44px] font-bold">{prodotto.nome}</h1>
+            </div>
+
             <p className="text-muted-foreground text-base">
               {prodotto.descrizione}
             </p>
@@ -97,7 +102,7 @@ export default async function Product(props: {
             <h2 className="text-2xl md:text-3xl font-bold mb-6">
               Prodotti correlati
             </h2>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 ">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 ">
               {prodotti.slice(0, 3).map((product: ProdottoType) => (
                 <ProductCard product={product} key={product._id} />
               ))}

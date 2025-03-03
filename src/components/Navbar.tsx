@@ -15,7 +15,7 @@ export default function Navbar() {
       <div className="w-full max-w-7xl mx-auto px-4">
         <div className="flex justify-between h-14 items-center">
           <Link href="/" className="flex items-center" prefetch={false}>
-            <Image src={LOGO} className="w-24 object-cover" alt="logo" />
+            <Image src={LOGO} className="w-32 object-cover" alt="logo" />
             <span className="sr-only">Acme Inc</span>
           </Link>
           <Sheet>
@@ -41,7 +41,7 @@ export default function Navbar() {
                 <Link
                   href="/products"
                   className="font-medium hover:underline"
-                  prefetch={true}
+                  prefetch={false}
                 >
                   Prodotti
                 </Link>
@@ -60,7 +60,7 @@ export default function Navbar() {
             <Link
               href="/products"
               className="font-medium flex items-center text-sm transition-colors hover:underline"
-              prefetch={true}
+              prefetch={false}
             >
               Prodotti
             </Link>

@@ -12,17 +12,17 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import { ProdottoType } from "../../types";
+import { CategoriaType, ProdottoType } from "../../types";
 
 const ProductsClient = ({
   prodotti,
   categorie,
 }: {
   prodotti: ProdottoType[];
-  categorie: string[];
+  categorie: CategoriaType[];
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const filteredProdotti = prodotti.filter((product) => {
     const matchesSearch = product.nome
@@ -54,7 +54,7 @@ const ProductsClient = ({
           {/* Categories List */}
           <ul className="space-y-1">
             <li
-              onClick={() => setSelectedCategory("")}
+              onClick={() => setSelectedCategory(null)}
               className={`cursor-pointer rounded-md ${
                 !selectedCategory
                   ? "text-primary font-bold"
@@ -63,17 +63,17 @@ const ProductsClient = ({
             >
               Tutte le categorie
             </li>
-            {categorie.map((category) => (
+            {categorie.map((category: CategoriaType) => (
               <li
-                key={category}
-                onClick={() => setSelectedCategory(category)}
+                key={category._id}
+                onClick={() => setSelectedCategory(category.nome)}
                 className={`cursor-pointer rounded-md ${
-                  selectedCategory === category
+                  selectedCategory === category.nome
                     ? "text-primary font-bold"
                     : "hover:text-primary hover:opacity-80"
                 }`}
               >
-                {category}
+                {category.nome}
               </li>
             ))}
           </ul>
@@ -85,15 +85,15 @@ const ProductsClient = ({
           <div className="lg:hidden mb-6 space-y-4">
             <Select
               onValueChange={setSelectedCategory}
-              value={selectedCategory}
+              value={selectedCategory!}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Seleziona una categoria" />
               </SelectTrigger>
               <SelectContent>
                 {categorie.map((category) => (
-                  <SelectItem key={category} value={category}>
-                    {category}
+                  <SelectItem key={category._id} value={category.nome}>
+                    {category.nome}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -120,7 +120,7 @@ const ProductsClient = ({
 
           {/* Products Grid */}
           {filteredProdotti.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
               {filteredProdotti.map((product) => (
                 <ProductCard product={product} key={product._id} />
               ))}

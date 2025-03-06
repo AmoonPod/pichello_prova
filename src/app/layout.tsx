@@ -1,3 +1,5 @@
+import Footer from "@/components/Footer";
+import NavbarV2 from "@/components/new/Navbar";
 import { Metadata } from "next";
 import { Bricolage_Grotesque } from "next/font/google";
 export const metadata: Metadata = {
@@ -25,7 +27,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="it">
-      <body className={`${bricolageGrotesque.className} `}>{children}</body>
+      <body className={`${bricolageGrotesque.className} `}>
+        <NavbarV2 />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }

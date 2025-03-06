@@ -16,5 +16,21 @@ export const categoria = {
       type: "text",
       validation: (Rule: any) => Rule.required().min(1).max(500), // Validazione per la descrizione della categoria
     },
+    {
+      name: "immagine",
+      title: "Immagine",
+      type: "image",
+    },
+    {
+      name: "slug",
+      title: "Slug",
+      type: "slug",
+      options: {
+        source: "nome",
+        maxLength: 96,
+        slugify: (input: string) =>
+          input.toLowerCase().replace(/\s+/g, "-").slice(0, 96),
+      },
+    },
   ],
 };

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProductCard from "@/components/ProductCard";
 import { Input } from "@/components/ui/input";
 import Navbar from "@/components/Navbar";
@@ -13,6 +13,8 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { CategoriaType, ProdottoType } from "../../types";
+import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 const ProductsClient = ({
   prodotti,
@@ -21,23 +23,46 @@ const ProductsClient = ({
   prodotti: ProdottoType[];
   categorie: CategoriaType[];
 }) => {
+  const searchParams = useSearchParams();
+  // Initialize from query param "categoria"
+  const initialCategory = searchParams.get("categoria");
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(
+    initialCategory
+  );
+
+  // Optionally, update the state if the URL changes
+  useEffect(() => {
+    setSelectedCategory(initialCategory);
+  }, [initialCategory]);
+
+  // Aggiungere un useEffect per aggiornare i parametri della query
+  useEffect(() => {
+    const currentCategory = searchParams.get("categoria");
+    if (currentCategory !== selectedCategory) {
+      setSelectedCategory(currentCategory);
+    }
+  }, [searchParams, selectedCategory]);
 
   const filteredProdotti = prodotti.filter((product) => {
     const matchesSearch = product.nome
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
+    console.log(
+      "confronto categoria",
+      JSON.parse(JSON.stringify(product.categoria_slug)).current,
+      selectedCategory
+    );
     const matchesCategory = selectedCategory
-      ? product.categoria === selectedCategory
+      ? JSON.parse(JSON.stringify(product.categoria_slug)).current ===
+        selectedCategory
       : true;
     return matchesSearch && matchesCategory;
   });
 
   return (
-    <>
-      <Navbar />
-      <section className="mx-auto max-w-7xl flex flex-col lg:flex-row px-4 py-6 lg:px-16 lg:py-12 min-h-screen">
+    <div className="relative min-h-screen py-20">
+      <section className="mx-auto max-w-7xl flex flex-col lg:flex-row px-4 py-6 lg:px-16 lg:py-12 min-h-screen ">
         {/* Sidebar for Desktop */}
         <aside className="hidden lg:block lg:w-1/4 space-y-4 pr-8 w-[30%]">
           {/* Search Bar */}
@@ -53,28 +78,34 @@ const ProductsClient = ({
 
           {/* Categories List */}
           <ul className="space-y-1">
-            <li
-              onClick={() => setSelectedCategory(null)}
-              className={`cursor-pointer rounded-md ${
-                !selectedCategory
-                  ? "text-primary font-bold"
-                  : "hover:text-primary opacity-50"
-              }`}
-            >
-              Tutte le categorie
-            </li>
-            {categorie.map((category: CategoriaType) => (
+            <Link href="/prodotti">
               <li
-                key={category._id}
-                onClick={() => setSelectedCategory(category.nome)}
                 className={`cursor-pointer rounded-md ${
-                  selectedCategory === category.nome
+                  !selectedCategory
                     ? "text-primary font-bold"
-                    : "hover:text-primary hover:opacity-80"
+                    : "hover:text-primary opacity-50"
                 }`}
               >
-                {category.nome}
+                Tutte le categorie
               </li>
+            </Link>
+            {categorie.map((category: CategoriaType) => (
+              <Link
+                href={`/prodotti?categoria=${JSON.parse(JSON.stringify(category.slug)).current}`}
+                key={category._id}
+              >
+                <li
+                  key={category._id}
+                  className={`cursor-pointer rounded-md ${
+                    selectedCategory ===
+                    JSON.parse(JSON.stringify(category.slug)).current
+                      ? "text-primary font-bold"
+                      : "hover:text-primary hover:opacity-80"
+                  }`}
+                >
+                  {category.nome}
+                </li>
+              </Link>
             ))}
           </ul>
         </aside>
@@ -134,8 +165,7 @@ const ProductsClient = ({
           )}
         </div>
       </section>
-      <Footer />
-    </>
+    </div>
   );
 };
 

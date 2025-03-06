@@ -11,7 +11,8 @@ export async function getProdotti() {
         "image": asset->url
       },
       slug,
-      "categoria": categoria->nome
+      "categoria": categoria->nome,
+      "categoria_slug": categoria->slug
     }`
   );
 }
@@ -26,10 +27,16 @@ export async function getProdottoBySlug(slug: string) {
         "image": asset->url
       },
       slug,
-      peso,
+      umidita,
       scadenza,
+      pezzi,
       formati,
-      "categoria": categoria->nome
+      "categoria": categoria->nome,
+      umidita,
+      marchi[] {
+      name
+      },
+      valori_nutrizionali
     }`,
     { slug }
   );
@@ -41,7 +48,11 @@ export async function getCategorie() {
     groq`*[_type == "categoria"]{
       _id,
       nome,
-      descrizione
+      descrizione,
+      immagine {
+        "image": asset->url
+      },
+      slug
     }`
   );
 }

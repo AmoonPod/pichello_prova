@@ -1,24 +1,26 @@
-import Hero from "@/components/Hero";
-import ChiSiamo from "@/components/ChiSiamo";
-import Products from "@/components/Products";
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import Mappa from "@/components/contattaci/mappa";
-import Contattaci from "@/components/contattaci/contattaci";
-import LaNostraAzienda from "@/components/LaNostraAzienda";
+import HeroSection from "@/components/new/HeroSection";
+import AboutSection from "@/components/new/LaNostraAzienda";
+import ProductsSection from "@/components/new/Prodotti";
+import LocationSection from "@/components/new/DoveSiamo";
+import ContactSection from "@/components/new/Contatti";
+import "../app/globals.css";
 
 export default function Index() {
   return (
-    <div className="bg-[#FBECC9]">
-      <Navbar />
+    <div>
+      {/* <Navbar /> */}
       <main className="min-h-screen">
-        <Hero />
-        <LaNostraAzienda />
-        <Products />
-        <section className="mx-auto flex-col lg:flex-row items-center justify-center gap-16 lg:gap-20 lg:items-start px-8 py-8 lg:py-8">
-          <Mappa />
-          <Contattaci />
-        </section>
+        {/* <Hero /> */}
+        <HeroSection />
+        <div className="bg-[#FBECC9]">
+          <AboutSection />
+        </div>
+        <ProductsSection />
+        <div className="bg-[#FBECC9]">
+          <LocationSection />
+        </div>
+        <ContactSection />
       </main>
       <Footer />
     </div>

@@ -43,11 +43,6 @@ export const prodotto = {
       type: "string",
     },
     {
-      name: "peso",
-      title: "Peso",
-      type: "number",
-    },
-    {
       name: "scadenza",
       title: "Scadenza",
       type: "string",
@@ -74,6 +69,66 @@ export const prodotto = {
       title: "Categoria",
       type: "reference",
       to: [{ type: "categoria" }], // Riferimento allo schema categoria
+    },
+    //umidità
+    {
+      name: "umidita",
+      title: "Umidità",
+      type: "number",
+    },
+    //here I want marchi, that are booleans: Prodotto di montagna, senza ammollo, senza cereali, riso italiano, varietà antica, macinato a pietra, decorticato a pietra, pianificabile superiore
+    {
+      name: "marchi",
+      title: "Marchi",
+      type: "array",
+      of: [
+        {
+          name: "prodotto_di_montagna",
+          title: "Prodotto di montagna",
+          type: "boolean",
+        },
+        {
+          name: "senza_ammollo",
+          title: "Senza ammollo",
+          type: "boolean",
+        },
+        {
+          name: "senza_cereali",
+          title: "Senza cereali",
+          type: "boolean",
+        },
+        {
+          name: "riso_italiano",
+          title: "Riso italiano",
+          type: "boolean",
+        },
+        {
+          name: "varietà_antica",
+          title: "Varietà antica",
+          type: "boolean",
+        },
+        {
+          name: "macinato_a_pietra",
+          title: "Macinato a pietra",
+          type: "boolean",
+        },
+        {
+          name: "decorticato_a_pietra",
+          title: "Decorticato a pietra",
+          type: "boolean",
+        },
+        {
+          name: "pianificabile_superiore",
+          title: "Pianificabile superiore",
+          type: "boolean",
+        },
+      ],
+    },
+    //now I need valori nutrizionali. here is an example: Energia 2932 KJ-690Kcal - Grassi 5,2 g di cui acidi grassi saturi 0,7 g - Carboidrati 80,1 g di cui zuccheri 3,2 g - Fibre 29 g -Proteine 38 g - Sale 0,01g
+    {
+      name: "valori_nutrizionali",
+      title: "Valori Nutrizionali",
+      type: "text",
     },
   ],
 };

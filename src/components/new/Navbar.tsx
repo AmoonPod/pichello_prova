@@ -3,26 +3,24 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Leaf, Menu, X } from "lucide-react";
+import { Menu as MenuIcon } from "lucide-react"; // using MenuIcon for clarity
 import { cn } from "@/lib/utils";
 import LOGO from "../../../public/LOGO.png";
 import Image from "next/image";
 
+// Import Sheet components from your UI library
+import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
+
 const NavbarV2 = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const scrollToSection = (id: string) => {
-    setIsMobileMenuOpen(false);
     const element = document.getElementById(id);
     if (element) {
       const offsetTop =
@@ -37,10 +35,11 @@ const NavbarV2 = () => {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        isScrolled
-          ? "bg-white/90 backdrop-blur-md shadow-md py-2"
-          : "bg-transparent py-4"
+        "w-full transition-all duration-300",
+        // Fixed only on desktop (md and up)
+        "md:fixed md:top-0 md:left-0 md:right-0",
+        "bg-white py-4",
+        isScrolled ? "bg-white/90 backdrop-blur-md shadow-md" : ""
       )}
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
@@ -70,52 +69,48 @@ const NavbarV2 = () => {
           <Button onClick={() => scrollToSection("contact")}>Contattaci</Button>
         </nav>
 
-        {/* Mobile Menu Button */}
-        <button
-          className="md:hidden text-foreground"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        >
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </div>
-
-      {/* Mobile Navigation */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden bg-background border-t">
-          <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
-            <button
-              onClick={() => scrollToSection("about")}
-              className="py-2 text-foreground hover:text-primary transition-colors"
-            >
-              Chi Siamo
-            </button>
-            <button
-              onClick={() => scrollToSection("products")}
-              className="py-2 text-foreground hover:text-primary transition-colors"
-            >
-              Prodotti
-            </button>
-            <button
-              onClick={() => scrollToSection("location")}
-              className="py-2 text-foreground hover:text-primary transition-colors"
-            >
-              Dove Siamo
-            </button>
-            <button
-              onClick={() => scrollToSection("contact")}
-              className="py-2 text-foreground hover:text-primary transition-colors"
-            >
-              Contatti
-            </button>
-            <Button
-              onClick={() => scrollToSection("contact")}
-              className="w-full"
-            >
-              Ordina Ora
-            </Button>
-          </div>
+        {/* Mobile Navigation using Sheet */}
+        <div className="md:hidden">
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="outline" size="icon">
+                <MenuIcon className="h-6 w-6" />
+                <span className="sr-only">Toggle navigation menu</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[200px] bg-white p-4">
+              <nav className="grid gap-4">
+                <Link
+                  href="#"
+                  onClick={() => scrollToSection("about")}
+                  className="font-medium hover:underline"
+                  prefetch={false}
+                >
+                  Chi siamo
+                </Link>
+                <Link
+                  href="/prodotti"
+                  className="font-medium hover:underline"
+                  prefetch={false}
+                >
+                  Prodotti
+                </Link>
+                <Link
+                  href="#"
+                  onClick={() => scrollToSection("location")}
+                  className="font-medium hover:underline"
+                  prefetch={false}
+                >
+                  Dove siamo
+                </Link>
+                <Button onClick={() => scrollToSection("contact")}>
+                  Contattaci
+                </Button>
+              </nav>
+            </SheetContent>
+          </Sheet>
         </div>
-      )}
+      </div>
     </header>
   );
 };

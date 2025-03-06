@@ -22,7 +22,6 @@ export default function Index() {
         </div>
         <ContactSection />
       </main>
-      <Footer />
     </div>
   );
 }

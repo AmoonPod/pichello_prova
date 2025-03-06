@@ -37,9 +37,9 @@ const NavbarV2 = () => {
       className={cn(
         "w-full transition-all duration-300",
         // Fixed only on desktop (md and up)
-        "md:fixed md:top-0 md:left-0 md:right-0",
+        "sticky md:top-0 md:left-0 md:right-0",
         "bg-white py-4",
-        isScrolled ? "bg-white/90 backdrop-blur-md shadow-md" : ""
+        isScrolled ? "bg-white/90 backdrop-blur-sm z-50 shadow-md" : ""
       )}
     >
       <div className="container mx-auto px-4 flex justify-between items-center">

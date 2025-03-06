@@ -29,7 +29,7 @@ const HeroSection = () => {
       <div className="absolute -right-20 bottom-1/4 w-40 h-40 rounded-full bg-primary/20 blur-3xl"></div>
 
       {/* Content */}
-      <div className="container mx-auto px-4 z-10 text-center py-20">
+      <div className="container mx-auto px-4 z-10 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}

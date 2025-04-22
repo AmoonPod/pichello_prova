@@ -20,7 +20,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background hero-pattern">
+    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-background hero-pattern">
       {/* Decorative elements */}
       <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-primary/10 to-transparent"></div>
       <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-primary/10 to-transparent"></div>

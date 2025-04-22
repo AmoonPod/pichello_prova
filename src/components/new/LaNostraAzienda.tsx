@@ -64,7 +64,7 @@ const AboutSection = () => {
                 <div className="h-12 w-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
                   <Leaf className="h-6 w-6 text-primary" />
                 </div>
-                <h4 className="font-bold mb-2">Biologico</h4>
+                <h4 className="font-bold mb-2">Biorazionale</h4>
                 <p className="text-sm text-muted-foreground">
                   Coltiviamo senza pesticidi o additivi chimici
                 </p>

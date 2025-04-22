@@ -10,7 +10,7 @@ export default function Index() {
   return (
     <div>
       {/* <Navbar /> */}
-      <main className="min-h-screen">
+      <main className="min-h-[90vh]">
         {/* <Hero /> */}
         <HeroSection />
         <div className="bg-[#FBECC9]">

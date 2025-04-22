@@ -12,16 +12,7 @@ export type ProdottoType = {
   categoria: string;
   categoria_slug: string;
   umidita?: number;
-  marchi?: {
-    prodotto_di_montagna?: boolean;
-    senza_ammollo?: boolean;
-    senza_cereali?: boolean;
-    riso_italiano?: boolean;
-    varietà_antica?: boolean;
-    macinato_a_pietra?: boolean;
-    decorticato_a_pietra?: boolean;
-    pianificabile_superiore?: boolean;
-  };
+  marchi?: any;
   valori_nutrizionali?: string;
 };
 

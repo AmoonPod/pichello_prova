@@ -80,8 +80,8 @@ export const prodotto = {
     {
       name: "marchi",
       title: "Marchi",
-      type: "array",
-      of: [
+      type: "object",
+      fields: [
         {
           name: "prodotto_di_montagna",
           title: "Prodotto di montagna",
@@ -103,7 +103,7 @@ export const prodotto = {
           type: "boolean",
         },
         {
-          name: "varietà_antica",
+          name: "varieta_antica",
           title: "Varietà antica",
           type: "boolean",
         },
@@ -123,6 +123,9 @@ export const prodotto = {
           type: "boolean",
         },
       ],
+      options: {
+        layout: "checkbox",
+      },
     },
     //now I need valori nutrizionali. here is an example: Energia 2932 KJ-690Kcal - Grassi 5,2 g di cui acidi grassi saturi 0,7 g - Carboidrati 80,1 g di cui zuccheri 3,2 g - Fibre 29 g -Proteine 38 g - Sale 0,01g
     {

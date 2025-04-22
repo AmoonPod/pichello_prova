@@ -8,7 +8,6 @@ import {
 import "../../globals.css";
 import ProdottoGallery from "@/components/prodotto/prodotto_gallery";
 import ProductCard from "@/components/ProductCard";
-import Footer from "@/components/Footer";
 import CategoryTag from "@/components/category_tag";
 
 export default async function Product(props: {
@@ -18,12 +17,11 @@ export default async function Product(props: {
   const prodotto: ProdottoType = await getProdottoBySlug(params.name);
   const prodotti: ProdottoType[] = await getProdotti();
   if (!prodotto) return null;
-
   return (
     <>
-      <div className="flex flex-col mx-auto lg:py-20 md:py-12 py-2 min-h-screen px-4 sm:px-8">
+      <div className="flex flex-col mx-auto py-4 min-h-screen px-4 sm:px-8">
         {/* Main product section */}
-        <div className="mx-auto max-w-5xl flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-20 lg:items-start py-8 lg:py-20">
+        <div className="mx-auto max-w-5xl flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-20 lg:items-start py-8 lg:py-12">
           <ProdottoGallery images={prodotto.immagini} />
           <div className="flex-1 space-y-4">
             <div>
@@ -69,44 +67,68 @@ export default async function Product(props: {
             {/* Brands Section */}
             <div className="mt-4">
               <h3 className="text-lg font-semibold mb-2">Marchi</h3>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-4 items-center">
                 {prodotto.marchi?.prodotto_di_montagna && (
-                  <span className="bg-primary text-white px-2 py-1 rounded-full text-xs">
-                    Prodotto di montagna
-                  </span>
+                  <img
+                    src="/logo-Prodotto-di-Montagna.jpg"
+                    alt="Prodotto di Montagna"
+                    title="Prodotto di Montagna"
+                    className="h-16 w-auto"
+                  />
                 )}
                 {prodotto.marchi?.senza_ammollo && (
-                  <span className="bg-primary text-white px-2 py-1 rounded-full text-xs">
-                    Senza ammollo
-                  </span>
+                  <img
+                    src="/senza ammollo.jpg"
+                    alt="Senza Ammollo"
+                    title="Senza Ammollo"
+                    className="h-16 w-auto"
+                  />
                 )}
                 {prodotto.marchi?.senza_cereali && (
-                  <span className="bg-primary text-white px-2 py-1 rounded-full text-xs">
-                    Senza cereali
-                  </span>
+                  <img
+                    src="/senza cereali.jpg"
+                    alt="Senza Cereali"
+                    title="Senza Cereali"
+                    className="h-16 w-auto"
+                  />
                 )}
                 {prodotto.marchi?.riso_italiano && (
-                  <span className="bg-primary text-white px-2 py-1 rounded-full text-xs">
-                    Riso italiano
-                  </span>
+                  <img
+                    src="/riso italiano.jpg"
+                    alt="Riso Italiano"
+                    title="Riso Italiano"
+                    className="h-16 w-auto"
+                  />
                 )}
-                {prodotto.marchi?.varietà_antica && (
-                  <span className="bg-primary text-white px-2 py-1 rounded-full text-xs">
-                    Varietà antica
-                  </span>
+                {prodotto.marchi?.varieta_antica && (
+                  <img
+                    src="/varieta.antica.jpg"
+                    alt="Varietà Antica"
+                    title="Varietà Antica"
+                    className="h-16 w-auto"
+                  />
                 )}
                 {prodotto.marchi?.macinato_a_pietra && (
-                  <span className="bg-primary text-white px-2 py-1 rounded-full text-xs">
-                    Macinato a pietra
-                  </span>
+                  <img
+                    src="/macinata a pietra.jpg"
+                    alt="Macinato a Pietra"
+                    title="Macinato a Pietra"
+                    className="h-16 w-auto"
+                  />
                 )}
                 {prodotto.marchi?.decorticato_a_pietra && (
-                  <span className="bg-primary text-white px-2 py-1 rounded-full text-xs">
-                    Decorticato a pietra
-                  </span>
+                  <img
+                    src="/decorticato a pietra.jpg"
+                    alt="Decorticato a Pietra"
+                    title="Decorticato a Pietra"
+                    className="h-16 w-auto"
+                  />
                 )}
                 {prodotto.marchi?.pianificabile_superiore && (
-                  <span className="bg-primary text-white px-2 py-1 rounded-full text-xs">
+                  <span
+                    className="bg-primary text-white px-3 py-1.5 rounded-full text-sm font-medium"
+                    title="Pianificabile Superiore"
+                  >
                     Pianificabile superiore
                   </span>
                 )}
@@ -121,7 +143,7 @@ export default async function Product(props: {
                 </h3>
                 <div className="text-sm text-muted-foreground">
                   {prodotto.valori_nutrizionali
-                    .split("\n")
+                    ?.split("\n")
                     .map((line, index) => {
                       if (!line.trim()) return null;
                       const firstSpaceIndex = line.indexOf(" ");

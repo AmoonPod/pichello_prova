@@ -8,7 +8,8 @@ export async function getProdotti() {
       nome,
       descrizione,
       immagini[] {
-        "image": asset->url
+        "image": asset->url,
+        alt
       },
       slug,
       "categoria": categoria->nome,

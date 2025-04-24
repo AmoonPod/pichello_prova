@@ -9,6 +9,7 @@ import "../../globals.css";
 import ProdottoGallery from "@/components/prodotto/prodotto_gallery";
 import ProductCard from "@/components/ProductCard";
 import CategoryTag from "@/components/category_tag";
+import { Image as ImageIcon } from "lucide-react";
 
 export default async function Product(props: {
   params: Promise<{ name: string }>;
@@ -17,12 +18,21 @@ export default async function Product(props: {
   const prodotto: ProdottoType = await getProdottoBySlug(params.name);
   const prodotti: ProdottoType[] = await getProdotti();
   if (!prodotto) return null;
+
+  const hasImages = prodotto.immagini && prodotto.immagini.length > 0;
+
   return (
     <>
       <div className="flex flex-col mx-auto py-4 min-h-screen px-4 sm:px-8">
         {/* Main product section */}
         <div className="mx-auto max-w-5xl flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-20 lg:items-start py-8 lg:py-12">
-          <ProdottoGallery images={prodotto.immagini} />
+          {hasImages ? (
+            <ProdottoGallery images={prodotto.immagini} />
+          ) : (
+            <div className="flex-1 w-full max-w-[500px] aspect-square bg-gray-100 rounded-2xl flex items-center justify-center">
+              <ImageIcon className="w-24 h-24 text-gray-400" />
+            </div>
+          )}
           <div className="flex-1 space-y-4">
             <div>
               <CategoryTag category={prodotto.categoria} />
@@ -73,7 +83,7 @@ export default async function Product(props: {
                     src="/logo-Prodotto-di-Montagna.jpg"
                     alt="Prodotto di Montagna"
                     title="Prodotto di Montagna"
-                    className="h-16 w-auto"
+                    className="w-24 h-auto"
                   />
                 )}
                 {prodotto.marchi?.senza_ammollo && (
@@ -81,7 +91,7 @@ export default async function Product(props: {
                     src="/senza ammollo.jpg"
                     alt="Senza Ammollo"
                     title="Senza Ammollo"
-                    className="h-16 w-auto"
+                    className="w-24 h-auto"
                   />
                 )}
                 {prodotto.marchi?.senza_cereali && (
@@ -89,7 +99,7 @@ export default async function Product(props: {
                     src="/senza cereali.jpg"
                     alt="Senza Cereali"
                     title="Senza Cereali"
-                    className="h-16 w-auto"
+                    className="w-24 h-auto"
                   />
                 )}
                 {prodotto.marchi?.riso_italiano && (
@@ -97,7 +107,7 @@ export default async function Product(props: {
                     src="/riso italiano.jpg"
                     alt="Riso Italiano"
                     title="Riso Italiano"
-                    className="h-16 w-auto"
+                    className="w-24 h-auto"
                   />
                 )}
                 {prodotto.marchi?.varieta_antica && (
@@ -105,7 +115,7 @@ export default async function Product(props: {
                     src="/varieta.antica.jpg"
                     alt="Varietà Antica"
                     title="Varietà Antica"
-                    className="h-16 w-auto"
+                    className="w-24 h-auto"
                   />
                 )}
                 {prodotto.marchi?.macinato_a_pietra && (
@@ -113,7 +123,7 @@ export default async function Product(props: {
                     src="/macinata a pietra.jpg"
                     alt="Macinato a Pietra"
                     title="Macinato a Pietra"
-                    className="h-16 w-auto"
+                    className="w-24 h-auto"
                   />
                 )}
                 {prodotto.marchi?.decorticato_a_pietra && (
@@ -121,7 +131,7 @@ export default async function Product(props: {
                     src="/decorticato a pietra.jpg"
                     alt="Decorticato a Pietra"
                     title="Decorticato a Pietra"
-                    className="h-16 w-auto"
+                    className="w-24 h-auto"
                   />
                 )}
                 {prodotto.marchi?.pianificabile_superiore && (

@@ -32,7 +32,7 @@ export default function Navbar() {
             <SheetContent side="right" className="w-[200px] bg-background p-4">
               <nav className="grid gap-4">
                 <Link
-                  href="#"
+                  href="/#chi-siamo"
                   className="font-medium hover:underline"
                   prefetch={false}
                 >
@@ -45,13 +45,15 @@ export default function Navbar() {
                 >
                   Prodotti
                 </Link>
-                <Button variant="default"> Contattaci </Button>
+                <Link href="/#contatti" prefetch={false}>
+                  <Button variant="default"> Contattaci </Button>
+                </Link>
               </nav>
             </SheetContent>
           </Sheet>
           <nav className="hidden md:flex lg:flex gap-4">
             <Link
-              href="/chi-siamo"
+              href="/#chi-siamo"
               className="font-medium flex items-center text-sm transition-colors hover:underline"
               prefetch={false}
             >
@@ -66,8 +68,8 @@ export default function Navbar() {
             </Link>
           </nav>
           <div className="lg:flex md:flex hidden">
-            <Link href="/contatti">
-              <Button variant="secondary">Contattaci</Button>{" "}
+            <Link href="/#contatti" prefetch={false}>
+              <Button variant="secondary">Contattaci</Button>
             </Link>
           </div>
         </div>

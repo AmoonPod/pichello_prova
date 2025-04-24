@@ -17,13 +17,29 @@ import {
 } from "@/components/ui/sheet";
 
 const NavbarV2 = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10); // Trigger effect after scrolling 10px
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    // Initial check in case the page loads already scrolled
+    handleScroll();
+
+    // Cleanup function to remove the event listener
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []); // Empty dependency array ensures this runs only once on mount and cleanup on unmount
+
   return (
     <header
       className={cn(
-        "w-full transition-all duration-300",
-        // Fixed only on desktop (md and up)
-        "relative md:top-0 md:left-0 md:right-0",
-        "bg-white py-4"
+        "fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300",
+        // Apply background, shadow, and slightly reduced padding when scrolled
+        isScrolled
+          ? "bg-white/95 backdrop-blur-sm shadow-md py-3"
+          : "bg-transparent py-4" // Transparent background initially, standard padding
       )}
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
@@ -31,31 +47,31 @@ const NavbarV2 = () => {
           <Image src={LOGO} className="w-44 object-cover" alt="logo" />
         </Link>
 
-        {/* Desktop Navigation - Update to use Links for sections */}
+        {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
-          {" "}
-          {/* Increased spacing */}
           <Link
-            href="/#about"
-            className="text-foreground hover:text-primary transition-colors text-sm font-medium"
+            href="/#chi-siamo"
+            className="text-foreground hover:text-primary transition-all duration-200 text-sm font-medium hover:-translate-y-0.5 transform"
           >
             Chi Siamo
           </Link>
           <Link
             href="/prodotti"
-            className="text-foreground hover:text-primary transition-colors text-sm font-medium"
+            className="text-foreground hover:text-primary transition-all duration-200 text-sm font-medium hover:-translate-y-0.5 transform"
           >
             Prodotti
           </Link>
           <Link
-            href="/#location"
-            className="text-foreground hover:text-primary transition-colors text-sm font-medium"
+            href="/#dove-siamo"
+            className="text-foreground hover:text-primary transition-all duration-200 text-sm font-medium hover:-translate-y-0.5 transform"
           >
             Dove Siamo
           </Link>
-          <Link href="/#contact">
-            <Button size="sm">Contattaci</Button>{" "}
-            {/* Use Link wrapping Button */}
+          <Link
+            href="/#contact"
+            className="transform transition-transform duration-200 hover:-translate-y-0.5"
+          >
+            <Button size="sm">Contattaci</Button>
           </Link>
         </nav>
 
@@ -63,7 +79,13 @@ const NavbarV2 = () => {
         <div className="md:hidden">
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="outline" size="icon">
+              <Button
+                variant="outline"
+                size="icon"
+                className={cn(isScrolled ? "bg-white/80" : "bg-white")}
+              >
+                {" "}
+                {/* Ensure button is visible */}
                 <MenuIcon className="h-6 w-6" />
                 <span className="sr-only">Toggle navigation menu</span>
               </Button>
@@ -102,7 +124,7 @@ const NavbarV2 = () => {
                 </SheetClose>
                 <SheetClose asChild>
                   <Link
-                    href="/#location"
+                    href="/#dove-siamo"
                     className="font-medium text-lg hover:text-primary transition-colors"
                     prefetch={false}
                   >

@@ -48,7 +48,7 @@ const ProductsClient = ({
   });
 
   return (
-    <div className="relative min-h-screen bg-gray-50">
+    <div className="max-w-7xl mx-auto px-4 py-12 pt-28">
       {/* Header/Banner Section */}
       <div className="bg-primary py-12 md:py-16 lg:py-20">
         <div className="container mx-auto px-4 text-center">
@@ -63,11 +63,11 @@ const ProductsClient = ({
       </div>
 
       {/* Main Content Section (Filters + Grid) */}
-      <section className="mx-auto container lg:flex lg:flex-row py-8 lg:py-12 min-h-screen gap-12">
+      <section className="mx-auto container lg:flex lg:flex-row py-8 lg:py-12 min-h-screen gap-12 bg-gray-50">
         {/* Sidebar for Desktop - Refined Styling */}
         <aside className="hidden lg:block lg:w-1/4">
           {/* Make sidebar content sticky */}
-          <div className="sticky top-28 p-6 bg-background rounded-xl shadow-md">
+          <div className="sticky top-28 p-6 bg-white rounded-xl shadow-md">
             <Input
               type="text"
               placeholder="Cerca prodotto..."

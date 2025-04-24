@@ -79,7 +79,7 @@ const FooterV2 = () => {
               </li>
               <li>
                 <Link
-                  href="#location"
+                  href="#dove-siamo"
                   className="text-secondary/80 hover:text-primary transition-colors"
                 >
                   Dove Siamo

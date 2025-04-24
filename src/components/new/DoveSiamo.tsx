@@ -10,7 +10,7 @@ const LocationSection = () => {
 
   return (
     <section
-      id="location"
+      id="dove-siamo"
       className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-center gap-16 lg:gap-20 lg:items-start px-8 py-8 lg:py-20 md:px-6"
     >
       <div className="container mx-auto px-4 space-y-4">

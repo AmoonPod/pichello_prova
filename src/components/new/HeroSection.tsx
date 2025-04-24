@@ -83,7 +83,7 @@ const HeroSection = () => {
 
       {/* Scroll Down Indicator - Hide on mobile */}
       <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10 hidden md:block">
-        <Link href="#about">
+        <Link href="#chi-siamo">
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}

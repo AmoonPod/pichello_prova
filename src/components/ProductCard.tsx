@@ -18,8 +18,8 @@ export default function ProductCard({ product }: { product: ProdottoType }) {
   if (!slug) return null;
 
   return (
-    <Link href={`/prodotti/${slug}`}>
-      <div className="grid gap-4 p-4 border rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 h-full bg-white">
+    <Link href={`/prodotti/${slug}`} className="group">
+      <div className="grid gap-4 p-4 border rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 h-full bg-white">
         {imageUrl ? (
           <img
             src={imageUrl}

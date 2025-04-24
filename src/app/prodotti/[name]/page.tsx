@@ -24,7 +24,7 @@ export default async function Product(props: {
 
   return (
     <>
-      <div className="flex flex-col mx-auto py-4 min-h-screen px-4 sm:px-8">
+      <div className="flex flex-col mx-auto py-4 min-h-screen px-4 sm:px-8 pt-28">
         {/* Main product section */}
         <div className="mx-auto max-w-5xl flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-20 lg:items-start py-8 lg:py-12">
           {hasImages ? (

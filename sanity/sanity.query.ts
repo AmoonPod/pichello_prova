@@ -35,6 +35,7 @@ export async function getProdottoBySlug(slug: string) {
       "categoria": categoria->nome,
       umidita,
       marchi,
+      codice_ean,
       valori_nutrizionali
     }`,
     { slug }

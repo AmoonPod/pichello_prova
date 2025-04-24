@@ -10,6 +10,7 @@ import ProdottoGallery from "@/components/prodotto/prodotto_gallery";
 import ProductCard from "@/components/ProductCard";
 import CategoryTag from "@/components/category_tag";
 import { Image as ImageIcon } from "lucide-react";
+import BarcodeDisplay from "@/components/BarcodeDisplay";
 
 export default async function Product(props: {
   params: Promise<{ name: string }>;
@@ -47,24 +48,37 @@ export default async function Product(props: {
             {/* Product Details */}
             <div className="border-t border-gray-200 pt-4">
               <h3 className="text-lg font-semibold mb-2">Dettagli Prodotto</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="text-sm">
-                  <p>
-                    <span className="font-medium">EAN:</span>{" "}
-                    {prodotto.codice_ean}
-                  </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-4">
+                <div className="text-sm space-y-1">
+                  {prodotto.codice_ean ? (
+                    <div>
+                      <span className="font-medium block mb-1">EAN:</span>
+                      <BarcodeDisplay
+                        value={prodotto.codice_ean}
+                        height={40}
+                        displayValue={true}
+                      />
+                    </div>
+                  ) : (
+                    <p>
+                      <span className="font-medium">EAN:</span> N/D
+                    </p>
+                  )}
                   <p>
                     <span className="font-medium">Scadenza:</span>{" "}
-                    {prodotto.scadenza}
+                    {prodotto.scadenza || "N/D"}
                   </p>
                   <p>
-                    <span className="font-medium">Pezzi:</span> {prodotto.pezzi}
+                    <span className="font-medium">Pezzi:</span>{" "}
+                    {prodotto.pezzi ?? "N/D"}
                   </p>
                 </div>
-                <div className="text-sm">
+                <div className="text-sm space-y-1">
                   <p>
                     <span className="font-medium">Grado di umidità:</span>{" "}
-                    {prodotto.umidita}%
+                    {prodotto.umidita !== null && prodotto.umidita !== undefined
+                      ? `${prodotto.umidita}%`
+                      : "N/D"}
                   </p>
                   <p>
                     <span className="font-medium">Allergeni:</span> Può

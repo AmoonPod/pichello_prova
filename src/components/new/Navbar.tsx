@@ -8,38 +8,22 @@ import { cn } from "@/lib/utils";
 import LOGO from "../../../public/LOGO.png";
 import Image from "next/image";
 
-// Import Sheet components from your UI library
-import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
+// Import Sheet components and SheetClose
+import {
+  Sheet,
+  SheetTrigger,
+  SheetContent,
+  SheetClose,
+} from "@/components/ui/sheet";
 
 const NavbarV2 = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      const offsetTop =
-        element.getBoundingClientRect().top + window.pageYOffset;
-      window.scrollTo({
-        top: offsetTop - 100,
-        behavior: "smooth",
-      });
-    }
-  };
-
   return (
     <header
       className={cn(
         "w-full transition-all duration-300",
         // Fixed only on desktop (md and up)
-        "sticky md:top-0 md:left-0 md:right-0",
-        "bg-white py-4",
-        isScrolled ? "bg-white/90 backdrop-blur-sm z-50 shadow-md" : ""
+        "relative md:top-0 md:left-0 md:right-0",
+        "bg-white py-4"
       )}
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
@@ -47,26 +31,32 @@ const NavbarV2 = () => {
           <Image src={LOGO} className="w-44 object-cover" alt="logo" />
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8">
-          <button
-            onClick={() => scrollToSection("about")}
-            className="text-foreground hover:text-primary transition-colors"
+        {/* Desktop Navigation - Update to use Links for sections */}
+        <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
+          {" "}
+          {/* Increased spacing */}
+          <Link
+            href="/#about"
+            className="text-foreground hover:text-primary transition-colors text-sm font-medium"
           >
             Chi Siamo
-          </button>
-          <Link href="/prodotti">
-            <button className="text-foreground hover:text-primary transition-colors">
-              Prodotti
-            </button>
           </Link>
-          <button
-            onClick={() => scrollToSection("location")}
-            className="text-foreground hover:text-primary transition-colors"
+          <Link
+            href="/prodotti"
+            className="text-foreground hover:text-primary transition-colors text-sm font-medium"
+          >
+            Prodotti
+          </Link>
+          <Link
+            href="/#location"
+            className="text-foreground hover:text-primary transition-colors text-sm font-medium"
           >
             Dove Siamo
-          </button>
-          <Button onClick={() => scrollToSection("contact")}>Contattaci</Button>
+          </Link>
+          <Link href="/#contact">
+            <Button size="sm">Contattaci</Button>{" "}
+            {/* Use Link wrapping Button */}
+          </Link>
         </nav>
 
         {/* Mobile Navigation using Sheet */}
@@ -78,34 +68,53 @@ const NavbarV2 = () => {
                 <span className="sr-only">Toggle navigation menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[200px] bg-white p-4">
-              <nav className="grid gap-4">
-                <Link
-                  href="#"
-                  onClick={() => scrollToSection("about")}
-                  className="font-medium hover:underline"
-                  prefetch={false}
-                >
-                  Chi siamo
+            <SheetContent side="right" className="w-[250px] bg-white p-6">
+              {" "}
+              {/* Increased width & padding */}
+              {/* Add Logo at the top */}
+              <div className="mb-8 border-b pb-4">
+                <Link href="/" className="flex items-center gap-2">
+                  <Image src={LOGO} className="w-36 object-cover" alt="logo" />
                 </Link>
-                <Link
-                  href="/prodotti"
-                  className="font-medium hover:underline"
-                  prefetch={false}
-                >
-                  Prodotti
-                </Link>
-                <Link
-                  href="#"
-                  onClick={() => scrollToSection("location")}
-                  className="font-medium hover:underline"
-                  prefetch={false}
-                >
-                  Dove siamo
-                </Link>
-                <Button onClick={() => scrollToSection("contact")}>
-                  Contattaci
-                </Button>
+              </div>
+              {/* Navigation Links */}
+              <nav className="grid gap-6">
+                {" "}
+                {/* Increased gap */}
+                {/* Use SheetClose to close panel on click */}
+                <SheetClose asChild>
+                  <Link
+                    href="/#about"
+                    className="font-medium text-lg hover:text-primary transition-colors"
+                    prefetch={false}
+                  >
+                    Chi siamo
+                  </Link>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Link
+                    href="/prodotti"
+                    className="font-medium text-lg hover:text-primary transition-colors"
+                    prefetch={false}
+                  >
+                    Prodotti
+                  </Link>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Link
+                    href="/#location"
+                    className="font-medium text-lg hover:text-primary transition-colors"
+                    prefetch={false}
+                  >
+                    Dove siamo
+                  </Link>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Link href="/#contact">
+                    {/* Use Link wrapping Button for consistency */}
+                    <Button className="w-full">Contattaci</Button>
+                  </Link>
+                </SheetClose>
               </nav>
             </SheetContent>
           </Sheet>

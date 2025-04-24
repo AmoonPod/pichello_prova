@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { ArrowDown, Leaf } from "lucide-react";
+import Link from "next/link";
 
 const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -11,13 +12,6 @@ const HeroSection = () => {
   useEffect(() => {
     setIsVisible(true);
   }, []);
-
-  const scrollToAbout = () => {
-    const aboutSection = document.getElementById("about");
-    if (aboutSection) {
-      aboutSection.scrollIntoView({ behavior: "smooth" });
-    }
-  };
 
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-background hero-pattern">
@@ -52,7 +46,7 @@ const HeroSection = () => {
           </p>
 
           <p className="text-lg mb-10 max-w-2xl mx-auto">
-            Nel cuore dell’Appennino Reggiano coltiviamo con passione cereali,
+            Nel cuore dell'Appennino Reggiano coltiviamo con passione cereali,
             legumi e miele, che trasformiamo con cura nel nostro laboratorio
             aziendale insieme a tante altre nostre produzioni. Al Pichello ogni
             prodotto nasce dalla terra e arriva sulle tavole con la sincerità di
@@ -87,22 +81,23 @@ const HeroSection = () => {
         </motion.div>
       </div>
 
-      {/* Scroll Down Indicator */}
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10">
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 1,
-            delay: 1.5,
-            repeat: Infinity,
-            repeatType: "reverse",
-          }}
-          onClick={scrollToAbout}
-          className="cursor-pointer"
-        >
-          <ArrowDown className="h-10 w-10 text-primary" />
-        </motion.div>
+      {/* Scroll Down Indicator - Hide on mobile */}
+      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10 hidden md:block">
+        <Link href="#about">
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 1,
+              delay: 1.5,
+              repeat: Infinity,
+              repeatType: "reverse",
+            }}
+            className="cursor-pointer"
+          >
+            <ArrowDown className="h-10 w-10 text-primary" />
+          </motion.div>
+        </Link>
       </div>
     </section>
   );

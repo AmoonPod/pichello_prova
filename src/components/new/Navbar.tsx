@@ -17,29 +17,12 @@ import {
 } from "@/components/ui/sheet";
 
 const NavbarV2 = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10); // Trigger effect after scrolling 10px
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    // Initial check in case the page loads already scrolled
-    handleScroll();
-
-    // Cleanup function to remove the event listener
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []); // Empty dependency array ensures this runs only once on mount and cleanup on unmount
-
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300",
+        "relative top-0 left-0 right-0 z-50 w-full transition-all duration-300",
         // Apply background, shadow, and slightly reduced padding when scrolled
-        isScrolled
-          ? "bg-white/95 backdrop-blur-sm shadow-md py-3"
-          : "bg-transparent py-4" // Transparent background initially, standard padding
+        "bg-transparent py-4" // Transparent background initially, standard padding
       )}
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
@@ -79,11 +62,7 @@ const NavbarV2 = () => {
         <div className="md:hidden">
           <Sheet>
             <SheetTrigger asChild>
-              <Button
-                variant="outline"
-                size="icon"
-                className={cn(isScrolled ? "bg-white/80" : "bg-white")}
-              >
+              <Button variant="outline" size="icon" className={cn("bg-white")}>
                 {" "}
                 {/* Ensure button is visible */}
                 <MenuIcon className="h-6 w-6" />

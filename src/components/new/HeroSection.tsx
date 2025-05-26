@@ -14,7 +14,7 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-background pt-24 md:pt-20">
+    <section className="relative flex items-center overflow-hidden bg-background m-0 p-0">
       {/* Decorative Elements */}
       <div className="absolute top-32 left-10 w-24 h-24 rounded-full bg-primary/10 blur-xl animate-pulse" />
       <div className="absolute bottom-32 right-10 w-32 h-32 rounded-full bg-secondary/10 blur-2xl animate-pulse delay-1000" />
@@ -23,8 +23,8 @@ const HeroSection = () => {
         style={{ animationDuration: "4s" }}
       />
 
-      <div className="container mx-auto px-4 z-10 relative max-w-7xl">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center min-h-[80vh]">
+      <div className="mx-auto px-4 z-10 relative container">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           {/* Left Content */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}

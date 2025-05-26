@@ -1,4 +1,3 @@
-import Footer from "@/components/Footer";
 import HeroSection from "@/components/new/HeroSection";
 import AboutSection from "@/components/new/LaNostraAzienda";
 import ProductsSection from "@/components/new/Prodotti";

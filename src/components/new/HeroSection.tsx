@@ -1,10 +1,52 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { ArrowRight, Wheat, Truck, Bean, MapPin } from "lucide-react";
 import Link from "next/link";
+
+// Counter animation component
+const AnimatedCounter = ({
+  end,
+  duration = 2000,
+  suffix = "",
+}: {
+  end: number;
+  duration?: number;
+  suffix?: string;
+}) => {
+  const [count, setCount] = useState(0);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+
+  useEffect(() => {
+    if (isInView && !hasAnimated) {
+      setHasAnimated(true);
+      let startTime: number | null = null;
+      const animate = (currentTime: number) => {
+        if (startTime === null) startTime = currentTime;
+        const progress = Math.min((currentTime - startTime) / duration, 1);
+
+        const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+        setCount(Math.floor(easeOutQuart * end));
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        }
+      };
+      requestAnimationFrame(animate);
+    }
+  }, [isInView, end, duration, hasAnimated]);
+
+  return (
+    <span ref={ref}>
+      {count}
+      {suffix}
+    </span>
+  );
+};
 
 const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -197,7 +239,7 @@ const HeroSection = () => {
         >
           <div className="text-center bg-card/50 border border-border/50 rounded-xl p-4 lg:p-6 hover:bg-card transition-colors">
             <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary mb-2">
-              25+
+              <AnimatedCounter end={25} suffix="+" />
             </div>
             <div className="text-xs md:text-sm lg:text-base text-muted-foreground font-medium">
               Anni di Esperienza
@@ -205,7 +247,7 @@ const HeroSection = () => {
           </div>
           <div className="text-center bg-card/50 border border-border/50 rounded-xl p-4 lg:p-6 hover:bg-card transition-colors">
             <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-secondary mb-2">
-              120+
+              <AnimatedCounter end={120} suffix="+" />
             </div>
             <div className="text-xs md:text-sm lg:text-base text-muted-foreground font-medium">
               Prodotti Autentici

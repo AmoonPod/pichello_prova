@@ -18,33 +18,32 @@ const AboutSection = () => {
     <section
       id="chi-siamo"
       ref={ref}
-      className="relative py-16 lg:py-24 bg-backgroundvariant overflow-hidden"
+      className="relative py-12  bg-backgroundvariant overflow-hidden"
     >
       {/* Decorative Elements */}
       <div className="absolute top-20 right-10 w-32 h-32 rounded-full bg-primary/5 blur-2xl animate-pulse delay-500" />
       <div className="absolute bottom-20 left-10 w-40 h-40 rounded-full bg-secondary/5 blur-3xl animate-pulse delay-1000" />
 
-      <div className="container mx-auto px-4 max-w-7xl">
+      <div className=" mx-auto px-4 container">
         {/* Header Section */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-center mb-16 lg:mb-20"
+          className="text-center mb-12 lg:mb-16"
         >
-          <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-6 py-3 text-sm text-primary mb-6">
+          <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-2 text-sm text-primary mb-4">
             <Mountain className="w-4 h-4" />
             <span className="font-medium">Tradizione dell'Appennino</span>
           </div>
 
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-            La Nostra
-            <span className="block text-primary mt-2">Azienda</span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3">
+            La Nostra <span className="text-primary">Azienda</span>
           </h2>
 
-          <div className="w-24 h-1 bg-primary rounded-full mx-auto mb-6" />
+          <div className="w-20 h-1 bg-primary rounded-full mx-auto mb-4" />
 
-          <p className="text-lg md:text-xl text-secondary font-medium max-w-3xl mx-auto">
+          <p className="text-base md:text-lg text-secondary font-medium max-w-2xl mx-auto">
             Dal cuore dell'Appennino Reggiano, una storia di passione e
             autenticità
           </p>
@@ -59,64 +58,62 @@ const AboutSection = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="space-y-8"
           >
-            {/* Story Card */}
-            <div className="bg-card border border-border rounded-2xl p-6 lg:p-8 shadow-lg">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                  <Heart className="w-6 h-6 text-primary" />
+            {/* Unified Story Section */}
+            <div className="space-y-6">
+              <div className="flex items-center gap-3 mb-8">
+                <div className="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center">
+                  <Heart className="w-7 h-7 text-primary" />
                 </div>
-                <h3 className="text-xl lg:text-2xl font-bold text-foreground">
+                <h3 className="text-2xl lg:text-3xl font-bold text-foreground">
                   La Nostra Storia
                 </h3>
               </div>
 
-              <div className="space-y-4 text-base lg:text-lg text-muted-foreground leading-relaxed">
+              <div className="prose prose-lg max-w-none space-y-6 text-base lg:text-lg text-muted-foreground leading-relaxed">
                 <p>
                   L'azienda agricola{" "}
-                  <span className="font-semibold text-primary">
+                  <span className="font-semibold text-primary text-xl">
                     Il Pichello
                   </span>{" "}
                   deve il suo nome alla storica casa contadina chiamata da
-                  sempre <em>'pichel'</em> in dialetto reggiano, italianizzato
-                  sulle carte antiche come <strong>Pichello</strong>.
+                  sempre{" "}
+                  <em className="text-secondary font-medium">'pichel'</em> in
+                  dialetto reggiano, italianizzato sulle carte antiche come{" "}
+                  <strong className="text-primary">Pichello</strong>.
                 </p>
 
                 <p>
                   Nel cuore dell'
-                  <span className="font-semibold text-secondary">
+                  <span className="font-bold text-secondary text-lg">
                     Appennino Reggiano
                   </span>
                   , la nostra famiglia coltiva da generazioni seguendo i ritmi
-                  naturali delle stagioni, studiando le composizioni dei terreni
-                  e selezionando le piante migliori con metodi tramandati nel
-                  tempo.
+                  naturali delle stagioni, studiando con sapienza le
+                  composizioni dei terreni e selezionando le piante migliori con
+                  metodi tramandati nel tempo.
                 </p>
-              </div>
-            </div>
 
-            {/* Philosophy Card */}
-            <div className="bg-card border border-border rounded-2xl p-6 lg:p-8 shadow-lg">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center">
-                  <Leaf className="w-6 h-6 text-secondary" />
-                </div>
-                <h3 className="text-xl lg:text-2xl font-bold text-foreground">
-                  La Nostra Filosofia
-                </h3>
-              </div>
+                <p>
+                  Il nostro{" "}
+                  <span className="font-bold text-primary text-lg">
+                    metodo biorazionale
+                  </span>{" "}
+                  rappresenta la nostra filosofia di vita: un'agricoltura
+                  sostenibile di montagna che rifiuta pesticidi e stratagemmi
+                  moderni. Solo il rispetto profondo per la natura e la sapienza
+                  contadina dell'Appennino ci guidano nel creare prodotti
+                  <strong className="text-secondary">
+                    {" "}
+                    sinceri, autentici e genuini
+                  </strong>
+                  .
+                </p>
 
-              <p className="text-base lg:text-lg text-muted-foreground leading-relaxed">
-                Il nostro{" "}
-                <span className="font-semibold text-primary">
-                  metodo biorazionale
-                </span>{" "}
-                rappresenta la nostra idea di agricoltura sostenibile in
-                montagna: senza pesticidi, senza stratagemmi moderni, solo il
-                rispetto per la natura e la sapienza contadina per offrirti un
-                prodotto
-                <strong className="text-secondary"> sincero e autentico</strong>
-                .
-              </p>
+                <blockquote className="border-l-4 border-primary pl-6 italic text-lg text-secondary font-medium">
+                  "Ogni prodotto nasce dalla terra e arriva sulle tavole con la
+                  sincerità di chi rispetta la natura e le tradizioni montane."
+                </blockquote>
+              </div>
             </div>
           </motion.div>
 
@@ -128,7 +125,7 @@ const AboutSection = () => {
             className="relative"
           >
             {/* Main Image */}
-            <div className="relative h-96 lg:h-[500px] rounded-3xl overflow-hidden shadow-2xl mb-6">
+            <div className="relative h-96 lg:h-[300px] rounded-3xl overflow-hidden shadow-2xl mb-6">
               <Image
                 src="https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80"
                 alt="Azienda Agricola Il Pichello - Appennino Reggiano"
@@ -146,26 +143,26 @@ const AboutSection = () => {
             <div className="grid grid-cols-2 gap-4">
               <div className="relative h-32 lg:h-40 rounded-xl overflow-hidden shadow-lg">
                 <Image
-                  src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-                  alt="Cereali biorazionali"
+                  src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                  alt="Paesaggio Appennino Reggiano"
                   fill
                   className="object-cover"
                 />
                 <div className="absolute inset-0 bg-primary/20" />
                 <div className="absolute bottom-2 left-2 text-white text-sm font-medium">
-                  Cereali
+                  Il Territorio
                 </div>
               </div>
               <div className="relative h-32 lg:h-40 rounded-xl overflow-hidden shadow-lg">
                 <Image
-                  src="https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-                  alt="Produzione miele"
+                  src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                  alt="Laboratorio artigianale trasformazione"
                   fill
                   className="object-cover"
                 />
                 <div className="absolute inset-0 bg-secondary/20" />
                 <div className="absolute bottom-2 left-2 text-white text-sm font-medium">
-                  Miele
+                  Laboratorio
                 </div>
               </div>
             </div>
@@ -180,46 +177,79 @@ const AboutSection = () => {
           className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8"
         >
           {/* Biorazionale */}
-          <div className="bg-card border border-border rounded-2xl p-6 lg:p-8 text-center hover:shadow-lg transition-shadow group">
-            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-primary/20 transition-colors">
-              <Leaf className="w-8 h-8 text-primary" />
+          <div className="group relative overflow-hidden h-full">
+            <div className="absolute inset-2 bg-gradient-to-br from-primary/3 via-primary/5 to-primary/8 rounded-3xl transform rotate-0.5 group-hover:rotate-1 transition-transform duration-500" />
+            <div className="relative bg-card/90 backdrop-blur-sm border border-primary/20 rounded-3xl p-6 lg:p-8 hover:border-primary/40 transition-colors h-full flex flex-col">
+              <div className="flex items-start gap-4 mb-6">
+                <div className="relative">
+                  <div className="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center transform -rotate-6 group-hover:rotate-0 transition-transform duration-300">
+                    <Leaf className="w-6 h-6 text-primary-foreground" />
+                  </div>
+                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-secondary rounded-full animate-pulse" />
+                </div>
+                <div className="flex-1">
+                  <h4 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
+                    Biorazionale
+                  </h4>
+                  <div className="w-12 h-0.5 bg-primary rounded-full mb-4" />
+                </div>
+              </div>
+              <p className="text-muted-foreground leading-relaxed text-sm lg:text-base flex-1">
+                Coltiviamo seguendo i ritmi naturali, senza pesticidi o additivi
+                chimici, rispettando la terra che ci nutre da generazioni.
+              </p>
             </div>
-            <h4 className="text-xl font-bold text-foreground mb-4">
-              Biorazionale
-            </h4>
-            <p className="text-muted-foreground leading-relaxed">
-              Coltiviamo seguendo i ritmi naturali, senza pesticidi o additivi
-              chimici, rispettando la terra che ci nutre da generazioni.
-            </p>
           </div>
 
           {/* Qualità */}
-          <div className="bg-card border border-border rounded-2xl p-6 lg:p-8 text-center hover:shadow-lg transition-shadow group">
-            <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-secondary/20 transition-colors">
-              <Award className="w-8 h-8 text-secondary" />
+          <div className="group relative overflow-hidden h-full">
+            <div className="absolute inset-2 bg-gradient-to-br from-secondary/3 via-secondary/5 to-secondary/8 rounded-3xl transform -rotate-0.5 group-hover:-rotate-1 transition-transform duration-500" />
+            <div className="relative bg-card/90 backdrop-blur-sm border border-secondary/20 rounded-3xl p-6 lg:p-8 hover:border-secondary/40 transition-colors h-full flex flex-col">
+              <div className="flex items-start gap-4 mb-6">
+                <div className="relative">
+                  <div className="w-12 h-12 bg-secondary rounded-2xl flex items-center justify-center transform rotate-6 group-hover:rotate-0 transition-transform duration-300">
+                    <Award className="w-6 h-6 text-secondary-foreground" />
+                  </div>
+                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-primary rounded-full animate-pulse delay-300" />
+                </div>
+                <div className="flex-1">
+                  <h4 className="text-xl font-bold text-foreground mb-2 group-hover:text-secondary transition-colors">
+                    Qualità Autentica
+                  </h4>
+                  <div className="w-12 h-0.5 bg-secondary rounded-full mb-4" />
+                </div>
+              </div>
+              <p className="text-muted-foreground leading-relaxed text-sm lg:text-base flex-1">
+                Ogni prodotto è selezionato e controllato con cura maniacale,
+                dal campo alla tavola, garantendo eccellenza e genuinità.
+              </p>
             </div>
-            <h4 className="text-xl font-bold text-foreground mb-4">
-              Qualità Autentica
-            </h4>
-            <p className="text-muted-foreground leading-relaxed">
-              Ogni prodotto è selezionato e controllato con cura maniacale, dal
-              campo alla tavola, garantendo eccellenza e genuinità.
-            </p>
           </div>
 
           {/* Tradizione */}
-          <div className="bg-card border border-border rounded-2xl p-6 lg:p-8 text-center hover:shadow-lg transition-shadow group">
-            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-primary/20 transition-colors">
-              <TreePine className="w-8 h-8 text-primary" />
+          <div className="group relative overflow-hidden h-full">
+            <div className="absolute inset-2 bg-gradient-to-br from-primary/3 via-primary/5 to-primary/8 rounded-3xl transform rotate-0.3 group-hover:rotate-0.8 transition-transform duration-500" />
+            <div className="relative bg-card/90 backdrop-blur-sm border border-primary/20 rounded-3xl p-6 lg:p-8 hover:border-primary/40 transition-colors h-full flex flex-col">
+              <div className="flex items-start gap-4 mb-6">
+                <div className="relative">
+                  <div className="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center transform -rotate-3 group-hover:rotate-0 transition-transform duration-300">
+                    <TreePine className="w-6 h-6 text-primary-foreground" />
+                  </div>
+                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-secondary rounded-full animate-pulse delay-700" />
+                </div>
+                <div className="flex-1">
+                  <h4 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
+                    Tradizione Montana
+                  </h4>
+                  <div className="w-12 h-0.5 bg-primary rounded-full mb-4" />
+                </div>
+              </div>
+              <p className="text-muted-foreground leading-relaxed text-sm lg:text-base flex-1">
+                Metodi tramandati di generazione in generazione nell'Appennino
+                Reggiano, dove la sapienza contadina incontra l'innovazione
+                sostenibile.
+              </p>
             </div>
-            <h4 className="text-xl font-bold text-foreground mb-4">
-              Tradizione Montana
-            </h4>
-            <p className="text-muted-foreground leading-relaxed">
-              Metodi tramandati di generazione in generazione nell'Appennino
-              Reggiano, dove la sapienza contadina incontra l'innovazione
-              sostenibile.
-            </p>
           </div>
         </motion.div>
       </div>

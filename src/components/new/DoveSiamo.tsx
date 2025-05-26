@@ -212,25 +212,6 @@ const LocationSection = () => {
             </div>
           </motion.div>
         </motion.div>
-
-        {/* Call to Action */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="text-center mt-16 lg:mt-20"
-        >
-          <div className="max-w-2xl mx-auto">
-            <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-              Un Territorio da <span className="text-primary">Scoprire</span>
-            </h3>
-            <p className="text-muted-foreground leading-relaxed">
-              Vieni a visitare la nostra azienda e scopri di persona come nasce
-              l'autenticità dei nostri prodotti biorazionali nel cuore
-              dell'Appennino.
-            </p>
-          </div>
-        </motion.div>
       </div>
     </section>
   );

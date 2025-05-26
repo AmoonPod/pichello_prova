@@ -104,17 +104,23 @@ const LocationSection = () => {
                 <div className="w-16 h-0.5 bg-primary rounded-full mb-4" />
 
                 <p className="text-muted-foreground leading-relaxed mb-4">
-                  Il Pichello si trova in località Marola, nel comune di
-                  Carpineti. A differenza del resto del carpinetano nella valle
-                  del Tresinaro, noi ci troviamo sul versante opposto, nella{" "}
-                  <strong>valle del torrente Tassobbio</strong>.
+                  Il Pichello si trova nella rinomata località di{" "}
+                  <strong>Marola</strong>, frazione del comune di{" "}
+                  <strong>Carpineti (RE)</strong>. A differenza del resto del
+                  territorio carpinetano, storicamente legato alla valle del
+                  Tresinaro, la nostra azienda agricola fiorisce sul versante
+                  opposto, nella fertile <strong>Valle del Tassobbio</strong>,
+                  un gioiello dell'<strong>Appennino Reggiano</strong>.
                 </p>
 
                 <p className="text-muted-foreground leading-relaxed">
-                  Coltiviamo <strong>300.000 metri quadri</strong> su terreni
-                  castagnini della formazione di Bismantova, circondata dai
-                  castelli matildici e alle porte del Parco Nazionale
-                  dell'Appennino Tosco-Emiliano.
+                  Qui, a <strong>Marola</strong>, coltiviamo con passione{" "}
+                  <strong>300.000 metri quadri</strong> di terreno. I nostri
+                  campi poggiano sui caratteristici suoli castagnini della
+                  formazione geologica di Bismantova, un'area di pregio
+                  naturalistico dell'<strong>Appennino di Reggio Emilia</strong>
+                  , circondata dalla storia dei castelli matildici e alle porte
+                  del Parco Nazionale dell'Appennino Tosco-Emiliano.
                 </p>
               </div>
             </div>
@@ -189,7 +195,10 @@ const LocationSection = () => {
                         Vieni a Trovarci
                       </h3>
                       <p className="text-sm text-muted-foreground">
-                        Valle Tassobbio, Appennino Reggiano
+                        Valle Tassobbio, Appennino Reggiano.
+                        <br />
+                        Scopri la bellezza dei nostri terreni a Marola, nel
+                        cuore dell'Appennino.
                       </p>
                     </div>
                   </div>
@@ -205,6 +214,7 @@ const LocationSection = () => {
                     allowFullScreen
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
+                    title="Mappa Google per raggiungere l'Azienda Agricola Il Pichello a Marola, Carpineti"
                     className="transition-all duration-300 group-hover:saturate-110"
                   />
                 </div>

@@ -6,15 +6,7 @@ import { Input } from "@/components/ui/input";
 import { CategoriaType, ProdottoType } from "../../types";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import {
-  Search,
-  Filter,
-  Grid,
-  List,
-  SlidersHorizontal,
-  Leaf,
-  ShoppingBag,
-} from "lucide-react";
+import { Search, Filter, Grid, List, Leaf, ShoppingBag } from "lucide-react";
 import { motion, useInView } from "framer-motion";
 
 const ProductsClient = ({

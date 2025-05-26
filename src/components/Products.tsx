@@ -22,9 +22,7 @@ function CategoryCard({ category }: CategoryCardProps) {
           <h3 className="text-xl font-bold text-primary mb-2">
             {category.nome}
           </h3>
-          <p className="text-gray-700 text-sm mb-4 line-clamp-3">
-            {category.descrizione}
-          </p>
+          <p className="text-gray-700 text-sm mb-4">{category.descrizione}</p>
         </div>
         <Link
           href={`/prodotti?categoria=${encodeURIComponent(category.nome)}`}

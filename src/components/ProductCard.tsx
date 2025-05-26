@@ -48,7 +48,7 @@ export default function ProductCard({
                 </h3>
                 <CategoryTag category={product.categoria} />
                 {product.descrizione && (
-                  <p className="text-gray-600 text-sm mt-2 line-clamp-2">
+                  <p className="text-gray-600 text-sm mt-2 line-clamp-3">
                     {product.descrizione}
                   </p>
                 )}
@@ -79,12 +79,12 @@ export default function ProductCard({
         </div>
 
         <div className="p-4">
-          <h3 className="font-semibold text-base text-gray-900 line-clamp-2 mb-2">
+          <h3 className="font-semibold text-base text-gray-900 mb-2">
             {product.nome}
           </h3>
           <CategoryTag category={product.categoria} />
           {product.descrizione && (
-            <p className="text-gray-600 text-sm mt-2 line-clamp-2">
+            <p className="text-gray-600 text-sm mt-2 line-clamp-3">
               {product.descrizione}
             </p>
           )}

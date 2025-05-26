@@ -78,19 +78,14 @@ const FinalCTASection = () => {
                 <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
-
-            <Button
-              size="lg"
-              className="w-full sm:w-auto bg-secondary hover:bg-secondary/90 text-secondary-foreground font-semibold px-10 py-4 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
-              onClick={() => {
-                const productsSection = document.getElementById("products");
-                if (productsSection) {
-                  productsSection.scrollIntoView({ behavior: "smooth" });
-                }
-              }}
-            >
-              Esplora i Prodotti
-            </Button>
+            <Link href="/prodotti">
+              <Button
+                size="lg"
+                className="w-full sm:w-auto bg-secondary hover:bg-secondary/90 text-secondary-foreground font-semibold px-10 py-4 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                Esplora i Prodotti
+              </Button>
+            </Link>
           </div>
 
           {/* Contact Info Highlights */}

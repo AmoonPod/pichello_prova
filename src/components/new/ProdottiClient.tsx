@@ -161,7 +161,7 @@ export default function ProductsSectionClient({
                         <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors truncate">
                           {category.nome}
                         </h3>
-                        <p className="text-sm text-muted-foreground line-clamp-1 mt-1">
+                        <p className="text-sm text-muted-foreground mt-1">
                           {category.descrizione ||
                             "Scopri i prodotti di questa categoria"}
                         </p>
@@ -267,7 +267,7 @@ export default function ProductsSectionClient({
                       {/* Content Section */}
                       <div className="p-5 lg:p-6">
                         <div className="flex items-start justify-between mb-3">
-                          <h3 className="text-lg lg:text-xl font-bold text-foreground group-hover:text-primary transition-colors line-clamp-1">
+                          <h3 className="text-lg lg:text-xl font-bold text-foreground group-hover:text-primary transition-colors">
                             {category.nome}
                           </h3>
                           <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-secondary transform translate-x-0 group-hover:translate-x-1 transition-all duration-300 flex-shrink-0 ml-2" />
@@ -275,7 +275,7 @@ export default function ProductsSectionClient({
 
                         <div className="w-12 h-0.5 bg-secondary rounded-full mb-3 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
 
-                        <p className="text-sm lg:text-base text-muted-foreground line-clamp-2 leading-relaxed">
+                        <p className="text-sm lg:text-base text-muted-foreground leading-relaxed">
                           {category.descrizione ||
                             "Scopri i prodotti genuini di questa categoria, coltivati con metodi tradizionali."}
                         </p>
@@ -322,20 +322,15 @@ export default function ProductsSectionClient({
                   <ChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
-
-              <Button
-                size="lg"
-                variant="outline"
-                className="w-full sm:w-auto border-2 border-primary text-primary hover:bg-primary/5 font-semibold px-8 py-4 text-lg rounded-full transition-all duration-300"
-                onClick={() => {
-                  const contactSection = document.getElementById("contact");
-                  if (contactSection) {
-                    contactSection.scrollIntoView({ behavior: "smooth" });
-                  }
-                }}
-              >
-                Contattaci Ora
-              </Button>
+              <Link href="/contatti">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="w-full sm:w-auto border-2 border-primary text-primary hover:bg-primary/5 font-semibold px-8 py-4 text-lg rounded-full transition-all duration-300"
+                >
+                  Contattaci Ora
+                </Button>
+              </Link>
             </div>
           </div>
         </motion.div>

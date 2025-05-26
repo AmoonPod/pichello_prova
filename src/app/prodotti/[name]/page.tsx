@@ -50,20 +50,6 @@ export default async function Product(props: {
               <h3 className="text-lg font-semibold mb-2">Dettagli Prodotto</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-4">
                 <div className="text-sm space-y-1">
-                  {prodotto.codice_ean ? (
-                    <div>
-                      <span className="font-medium block mb-1">EAN:</span>
-                      <BarcodeDisplay
-                        value={prodotto.codice_ean}
-                        height={40}
-                        displayValue={true}
-                      />
-                    </div>
-                  ) : (
-                    <p>
-                      <span className="font-medium">EAN:</span> N/D
-                    </p>
-                  )}
                   <p>
                     <span className="font-medium">Scadenza:</span>{" "}
                     {prodotto.scadenza || "N/D"}
@@ -87,6 +73,74 @@ export default async function Product(props: {
                 </div>
               </div>
             </div>
+
+            {/* Available Formats and EAN Codes */}
+            {prodotto.formati && prodotto.formati.length > 0 && (
+              <div className="border-t border-gray-200 pt-4">
+                <h3 className="text-lg font-semibold mb-3">
+                  Formati Disponibili
+                </h3>
+                <div className="space-y-3">
+                  {(() => {
+                    // Group formats by EAN code
+                    const groupedFormats = prodotto.formati.reduce(
+                      (groups, item) => {
+                        const ean = item.codice_ean || "no-ean";
+                        if (!groups[ean]) {
+                          groups[ean] = [];
+                        }
+                        groups[ean].push(item.formato);
+                        return groups;
+                      },
+                      {} as Record<string, string[]>
+                    );
+
+                    return Object.entries(groupedFormats).map(
+                      ([ean, formats], index) => (
+                        <div
+                          key={index}
+                          className="bg-gray-50 rounded-lg p-4 border border-gray-200"
+                        >
+                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                            <div className="flex-1">
+                              <div className="flex flex-wrap gap-2 mb-2">
+                                {formats.map((formato, formatIndex) => (
+                                  <span
+                                    key={formatIndex}
+                                    className="inline-block bg-primary text-white px-3 py-1 rounded-full text-sm font-medium"
+                                  >
+                                    {formato}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                            <div className="flex-1">
+                              {ean !== "no-ean" ? (
+                                <div>
+                                  <span className="font-medium text-sm block mb-2">
+                                    Codice EAN:
+                                  </span>
+                                  <BarcodeDisplay
+                                    value={ean}
+                                    height={35}
+                                    displayValue={true}
+                                  />
+                                </div>
+                              ) : (
+                                <p className="text-sm text-muted-foreground">
+                                  <span className="font-medium">EAN:</span> Non
+                                  disponibile
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      )
+                    );
+                  })()}
+                </div>
+              </div>
+            )}
 
             {/* Brands Section */}
             <div className="mt-4">
@@ -188,23 +242,6 @@ export default async function Product(props: {
                 </div>
               </div>
             )}
-
-            {/* Available Formats */}
-            <div className="mt-4">
-              {(prodotto.formati?.length > 0 || prodotto.peso) && (
-                <h3 className="text-lg font-semibold">Formati disponibili</h3>
-              )}
-              <div className="mt-2 flex flex-wrap gap-2">
-                {prodotto?.formati?.map((formato) => (
-                  <span
-                    key={formato}
-                    className="text-xs text-muted-foreground bg-gray-200 px-2 py-1 rounded-full"
-                  >
-                    {formato}
-                  </span>
-                ))}
-              </div>
-            </div>
           </div>
         </div>
 

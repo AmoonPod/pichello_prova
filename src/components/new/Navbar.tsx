@@ -27,7 +27,11 @@ const NavbarV2 = () => {
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
         <Link href="/" className="flex items-center gap-2">
-          <Image src={LOGO} className="w-44 object-cover" alt="logo" />
+          <Image
+            src={LOGO}
+            className="w-44 object-cover"
+            alt="Logo Azienda Agricola Il Pichello"
+          />
         </Link>
 
         {/* Desktop Navigation */}
@@ -75,7 +79,11 @@ const NavbarV2 = () => {
               {/* Add Logo at the top */}
               <div className="mb-8 border-b pb-4">
                 <Link href="/" className="flex items-center gap-2">
-                  <Image src={LOGO} className="w-36 object-cover" alt="logo" />
+                  <Image
+                    src={LOGO}
+                    className="w-36 object-cover"
+                    alt="Logo Azienda Agricola Il Pichello"
+                  />
                 </Link>
               </div>
               {/* Navigation Links */}

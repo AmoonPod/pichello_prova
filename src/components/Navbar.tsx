@@ -15,8 +15,12 @@ export default function Navbar() {
       <div className="w-full container mx-auto px-4">
         <div className="flex justify-between h-24 items-center">
           <Link href="/" className="flex items-center" prefetch={false}>
-            <Image src={LOGO} className="w-44 object-cover" alt="logo" />
-            <span className="sr-only">Acme Inc</span>
+            <Image
+              src={LOGO}
+              className="w-44 object-cover"
+              alt="Logo Azienda Agricola Il Pichello"
+            />
+            <span className="sr-only">Azienda Agricola Il Pichello</span>
           </Link>
           <Sheet>
             <SheetTrigger asChild>

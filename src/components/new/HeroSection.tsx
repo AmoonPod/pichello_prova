@@ -3,7 +3,16 @@
 import { useEffect, useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { motion, useInView } from "framer-motion";
-import { ArrowRight, Wheat, Truck, Bean, MapPin } from "lucide-react";
+import {
+  ArrowRight,
+  Wheat,
+  Truck,
+  Bean,
+  MapPin,
+  Coffee,
+  Droplets,
+  TreePine,
+} from "lucide-react";
 import Link from "next/link";
 
 // Counter animation component
@@ -48,12 +57,73 @@ const AnimatedCounter = ({
   );
 };
 
+// Categorie prodotti per rotazione
+const productCategories = [
+  {
+    name: "Prodotti dall'alveare",
+    icon: "🐝",
+    description: "Dolcezza e benessere naturale",
+  },
+  {
+    name: "Cereali e Farine",
+    icon: <Wheat className="w-5 h-5 text-primary-foreground" />,
+    description: "Macinati a pietra dell'Appennino",
+  },
+  {
+    name: "Legumi e farine",
+    icon: <Bean className="w-5 h-5 text-primary-foreground" />,
+    description: "Varietà tradizionali montane",
+  },
+  {
+    name: "Tisane e infusi",
+    icon: <Coffee className="w-5 h-5 text-primary-foreground" />,
+    description: "Aromi dell'Appennino per il relax",
+  },
+  {
+    name: "Zuppe e risotti",
+    icon: <Droplets className="w-5 h-5 text-primary-foreground" />,
+    description: "Ricette della tradizione",
+  },
+  {
+    name: "Grano saraceno e castagne",
+    icon: <TreePine className="w-5 h-5 text-primary-foreground" />,
+    description: "Tesori di montagna genuini",
+  },
+  {
+    name: "Prodotti freschi",
+    icon: "🌱",
+    description: "Stagionalità dell'Appennino",
+  },
+];
+
 const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
 
   useEffect(() => {
     setIsVisible(true);
   }, []);
+
+  // Rotazione automatica delle categorie ogni 5 secondi (più lenta)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentCategoryIndex((prev) => (prev + 1) % productCategories.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Ottieni le 3 categorie da mostrare (quella corrente + le 2 successive)
+  const getVisibleCategories = () => {
+    const categories = [];
+    for (let i = 0; i < 3; i++) {
+      const index = (currentCategoryIndex + i) % productCategories.length;
+      categories.push(productCategories[index]);
+    }
+    return categories;
+  };
+
+  const visibleCategories = getVisibleCategories();
 
   return (
     <section className="relative flex items-center overflow-hidden bg-background m-0 p-0">
@@ -94,59 +164,57 @@ const HeroSection = () => {
               Seminiamo Tradizione, Raccogliamo Autenticità
             </p>
 
-            {/* Description */}
+            {/* Description - Testo ottimizzato per includere più categorie e keywords SEO */}
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-              Nel cuore dell'Appennino Reggiano coltiviamo con passione cereali,
-              legumi e produciamo miele, trasformandoli nel nostro laboratorio
-              aziendale. Ogni prodotto nasce dalla terra e arriva sulle tavole
-              con la sincerità di chi rispetta la natura.
+              Nel cuore dell'Appennino Reggiano coltiviamo con passione una
+              ricca varietà di prodotti della terra: dal miele biologico ai
+              cereali antichi macinati a pietra, dai legumi tradizionali alle
+              erbe per tisane, dalle castagne di montagna ai prodotti freschi
+              stagionali. Ogni prodotto nasce dalla terra di Marola e arriva
+              sulle tavole con la sincerità di chi rispetta la natura e preserva
+              le tradizioni dell'Appennino.
             </p>
 
-            {/* Features */}
-            <div className="grid grid-cols-3 gap-2 md:gap-3">
-              <div className="flex flex-col md:flex-row items-center md:gap-3 bg-card border border-border rounded-lg p-2 md:p-3 shadow-sm hover:shadow-md transition-shadow text-center md:text-left">
-                <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mb-2 md:mb-0">
-                  <Wheat className="w-5 h-5 text-primary-foreground" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-foreground text-xs md:text-sm">
-                    Cereali
-                  </h3>
-                  <p className="text-xs text-muted-foreground hidden md:block">
-                    Coltivazione biorazionale
-                  </p>
-                </div>
-              </div>
-              <div className="flex flex-col md:flex-row items-center md:gap-3 bg-card border border-border rounded-lg p-2 md:p-3 shadow-sm hover:shadow-md transition-shadow text-center md:text-left">
-                <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mb-2 md:mb-0">
-                  <span className="text-primary-foreground text-lg">🐝</span>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-foreground text-xs md:text-sm">
-                    Miele
-                  </h3>
-                  <p className="text-xs text-muted-foreground hidden md:block">
-                    Produzione artigianale
-                  </p>
-                </div>
-              </div>
-              <div className="flex flex-col md:flex-row items-center md:gap-3 bg-card border border-border rounded-lg p-2 md:p-3 shadow-sm hover:shadow-md transition-shadow text-center md:text-left">
-                <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mb-2 md:mb-0">
-                  <Bean className="w-5 h-5 text-primary-foreground" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-foreground text-xs md:text-sm">
-                    Legumi
-                  </h3>
-                  <p className="text-xs text-muted-foreground hidden md:block">
-                    Varietà tradizionali
-                  </p>
-                </div>
+            {/* Features - Griglia rotante con tutte le 7 categorie */}
+            <div className="h-24 md:h-28 mb-4">
+              <div className="grid grid-cols-3 gap-2 md:gap-3 h-full">
+                {visibleCategories.map((category, index) => (
+                  <motion.div
+                    key={`${currentCategoryIndex}-${index}`}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{
+                      duration: 0.8,
+                      delay: index * 0.2,
+                      ease: "easeInOut",
+                    }}
+                    className="flex flex-col md:flex-row items-center md:gap-3 bg-card border border-border rounded-lg p-2 md:p-3 shadow-sm hover:shadow-md transition-all duration-300 text-center md:text-left"
+                  >
+                    <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mb-2 md:mb-0">
+                      {typeof category.icon === "string" ? (
+                        <span className="text-primary-foreground text-lg">
+                          {category.icon}
+                        </span>
+                      ) : (
+                        category.icon
+                      )}
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-foreground text-xs md:text-sm">
+                        {category.name}
+                      </h3>
+                      <p className="text-xs text-muted-foreground hidden md:block">
+                        {category.description}
+                      </p>
+                    </div>
+                  </motion.div>
+                ))}
               </div>
             </div>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 pt-6">
+            {/* CTA Buttons - Corretto il link "Contattaci" */}
+            <div className="flex flex-col sm:flex-row gap-4 pt-8 mt-4">
               <Link href="/prodotti">
                 <Button
                   size="lg"
@@ -156,19 +224,15 @@ const HeroSection = () => {
                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
-              <Button
-                size="lg"
-                variant="outline"
-                className="w-full sm:w-auto border-2 border-primary text-primary hover:bg-primary/5 font-semibold px-8 py-3 text-lg rounded-full transition-all duration-300"
-                onClick={() => {
-                  const contactSection = document.getElementById("contact");
-                  if (contactSection) {
-                    contactSection.scrollIntoView({ behavior: "smooth" });
-                  }
-                }}
-              >
-                Contattaci
-              </Button>
+              <Link href="/contatti">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="w-full sm:w-auto border-2 border-primary text-primary hover:bg-primary/5 font-semibold px-8 py-3 text-lg rounded-full transition-all duration-300"
+                >
+                  Contattaci
+                </Button>
+              </Link>
             </div>
           </motion.div>
 
@@ -184,7 +248,7 @@ const HeroSection = () => {
               <div className="relative w-full h-80 sm:h-96 lg:h-[500px] rounded-3xl overflow-hidden shadow-2xl">
                 <img
                   src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-                  alt="Prodotti Il Pichello - Cereali e legumi biologici"
+                  alt="Cesto di prodotti biorazionali dell'Azienda Agricola Il Pichello: miele, farine macinate a pietra, cereali e legumi dell'Appennino Reggiano"
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
@@ -192,7 +256,9 @@ const HeroSection = () => {
                   <h3 className="text-xl lg:text-2xl font-bold">
                     I Nostri Prodotti
                   </h3>
-                  <p className="text-sm text-white/90">Genuini e autentici</p>
+                  <p className="text-sm text-white/90">
+                    Genuini e autentici dell'Appennino
+                  </p>
                 </div>
               </div>
 

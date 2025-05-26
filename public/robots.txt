@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Allow: /css/
+Allow: /js/
+Allow: /images/
+Allow: /_next/static/
+Disallow: /api/
+Disallow: /admin/
+Disallow: /studio/
+Disallow: /_next/static/webpack/
+
+Sitemap: https://www.agricolailpichello.it/sitemap.xml 

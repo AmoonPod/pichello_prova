@@ -1,0 +1,25 @@
+# Immagini necessarie per SEO
+
+## Immagini da creare/spostare:
+
+1. **logo.png** (400x400px) - Copiare da /public/LOGO.png
+   - Utilizzato in JSON-LD LocalBusiness schema
+   - URL: https://www.agricolailpichello.it/images/logo.png
+
+2. **og-image.jpg** (1200x630px) - Rinominare og-image.png esistente
+   - Utilizzato in Open Graph per condivisione social
+   - URL: https://www.agricolailpichello.it/images/og-image.jpg
+
+3. **prodotti-og-image.jpg** (1200x630px) - Da creare
+   - Specifico per pagina prodotti
+   - Mostrare collage di prodotti (miele, cereali, legumi)
+
+4. **contatti-og-image.jpg** (1200x630px) - Da creare
+   - Specifico per pagina contatti
+   - Mostrare mappa + logo + info contatto
+
+## Comandi per copiare/rinominare:
+```bash
+copy "public\LOGO.png" "public\images\logo.png"
+ren "public\images\og-image.png" "og-image.jpg"
+``` 

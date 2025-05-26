@@ -48,7 +48,7 @@ const LocationSection = () => {
         style={{ animationDuration: "6s" }}
       />
 
-      <div className="container mx-auto px-4 container">
+      <div className="container mx-auto px-4">
         {/* Header Section */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}

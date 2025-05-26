@@ -304,7 +304,7 @@ export default async function Product(props: {
         </div>
 
         {/* Related Products */}
-        <section className="bg-gradient-to-br from-gray-100 to-gray-50 py-16 mt-16">
+        <section className="bg-[#FBECC9] py-16 mt-16">
           <div className="mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">

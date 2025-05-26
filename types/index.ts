@@ -1,7 +1,4 @@
-export type Slug = {
-  _type: "slug";
-  current: string;
-};
+export type Slug = { _type: 'slug'; current: string };
 
 export type ProdottoType = {
   _id: string;
@@ -9,11 +6,10 @@ export type ProdottoType = {
   descrizione: string;
   immagini: Immagine[];
   slug: Slug;
-  codice_ean: string;
   peso: number;
   scadenza: string;
   pezzi: number | null;
-  formati: string[];
+  formati: { formato: string; codice_ean?: string }[];
   categoria: string;
   categoria_slug: Slug;
   umidita?: number | null;
@@ -31,14 +27,11 @@ export type ProdottoType = {
 };
 
 export type Immagine = {
-  _type: "immagine" | "image";
+  _type: 'immagine' | 'image';
   _key?: string;
   alt?: string;
   image?: string;
-  asset?: {
-    _type: "reference";
-    _ref: string;
-  };
+  asset?: { _type: 'reference'; _ref: string };
 };
 
 export type CategoriaType = {

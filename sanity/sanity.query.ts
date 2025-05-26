@@ -1,5 +1,5 @@
-import { groq } from "next-sanity";
-import client from "./sanity.client";
+import { groq } from 'next-sanity';
+import client from './sanity.client';
 
 export async function getProdotti() {
   return client.fetch(
@@ -31,11 +31,13 @@ export async function getProdottoBySlug(slug: string) {
       umidita,
       scadenza,
       pezzi,
-      formati,
+      formati[] {
+        formato,
+        codice_ean
+      },
       "categoria": categoria->nome,
       umidita,
       marchi,
-      codice_ean,
       valori_nutrizionali
     }`,
     { slug }

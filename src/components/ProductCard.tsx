@@ -17,9 +17,20 @@ export default function ProductCard({
     product.immagini.length > 0 &&
     product.immagini[0]?.image;
   const imageUrl = hasImage ? product.immagini[0].image : null;
-  const imageAlt = hasImage
-    ? product.immagini[0].alt || product.nome
-    : product.nome;
+
+  // Generate SEO-optimized alt text
+  const generateAltText = () => {
+    if (hasImage && product.immagini[0].alt) {
+      return product.immagini[0].alt;
+    }
+
+    const categoryName = product.categoria || "";
+    const productName = product.nome;
+
+    return `${productName} biorazionale dell'Azienda Agricola Il Pichello - ${categoryName} dall'Appennino Reggiano`;
+  };
+
+  const imageAlt = generateAltText();
 
   if (!slug) return null;
 

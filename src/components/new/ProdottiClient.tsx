@@ -21,12 +21,24 @@ export default function ProductsSectionClient({
   categories,
 }: ProductsSectionClientProps) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.1 });
+  const isInView = useInView(ref, {
+    once: true,
+    amount: 0.1,
+    margin: "0px 0px -100px 0px", // Trigger earlier
+  });
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     if (isInView) setIsVisible(true);
   }, [isInView]);
+
+  // Fallback per assicurarsi che la sezione sia visibile anche se isInView non funziona
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -68,7 +80,7 @@ export default function ProductsSectionClient({
         {/* Header Section */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-center mb-16 lg:mb-20"
         >
@@ -168,7 +180,7 @@ export default function ProductsSectionClient({
           <motion.div
             variants={containerVariants}
             initial="hidden"
-            animate={isVisible ? "visible" : "hidden"}
+            animate="visible"
             className="hidden lg:grid gap-6 lg:gap-8 justify-items-center mx-auto"
             style={{
               gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
@@ -285,7 +297,7 @@ export default function ProductsSectionClient({
         {/* Call to Action */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
           className="text-center pt-12 lg:pt-16"
         >

@@ -25,7 +25,11 @@ const ProductsClient = ({
   categorie: CategoriaType[];
 }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.1 });
+  const isInView = useInView(ref, {
+    once: true,
+    amount: 0.1,
+    margin: "0px 0px -100px 0px", // Trigger earlier
+  });
   const [isVisible, setIsVisible] = useState(false);
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get("categoria");
@@ -40,6 +44,14 @@ const ProductsClient = ({
   useEffect(() => {
     if (isInView) setIsVisible(true);
   }, [isInView]);
+
+  // Fallback per assicurarsi che la sezione sia visibile anche se isInView non funziona
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Check if the screen is mobile
   useEffect(() => {
@@ -406,7 +418,7 @@ const ProductsClient = ({
                 <motion.div
                   variants={containerVariants}
                   initial="hidden"
-                  animate={isVisible ? "visible" : "hidden"}
+                  animate="visible"
                   className={`${
                     viewMode === "grid"
                       ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"

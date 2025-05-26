@@ -65,11 +65,14 @@ const AboutSection = () => {
                   <Heart className="w-7 h-7 text-primary" />
                 </div>
                 <h3 className="text-2xl lg:text-3xl font-bold text-foreground">
-                  La Nostra Storia
+                  La Nostra Storia e Filosofia
                 </h3>
               </div>
 
               <div className="prose prose-lg max-w-none space-y-6 text-base lg:text-lg text-muted-foreground leading-relaxed">
+                <h4 className="text-xl font-semibold text-primary mt-0 mb-4 first:mt-0">
+                  L'Origine del Nome: da 'Pichel' a Pichello
+                </h4>
                 <p>
                   L'azienda agricola{" "}
                   <span className="font-semibold text-primary text-xl">
@@ -82,6 +85,9 @@ const AboutSection = () => {
                   <strong className="text-primary">Pichello</strong>.
                 </p>
 
+                <h4 className="text-xl font-semibold text-primary mt-8 mb-4">
+                  Una Tradizione Radicata nell'Appennino Reggiano
+                </h4>
                 <p>
                   Nel cuore dell'
                   <span className="font-bold text-secondary text-lg">
@@ -90,18 +96,34 @@ const AboutSection = () => {
                   , la nostra famiglia coltiva da generazioni seguendo i ritmi
                   naturali delle stagioni, studiando con sapienza le
                   composizioni dei terreni e selezionando le piante migliori con
-                  metodi tramandati nel tempo.
+                  metodi tramandati nel tempo, proprio qui a{" "}
+                  <span className="font-semibold text-primary">Marola</span>,
+                  nel cuore dell'Appennino di{" "}
+                  <span className="font-semibold text-secondary">
+                    Carpineti
+                  </span>
+                  .
                 </p>
 
+                <h4 className="text-xl font-semibold text-primary mt-8 mb-4">
+                  Il Nostro Impegno: Metodo Biorazionale a Marola
+                </h4>
                 <p>
                   Il nostro{" "}
                   <span className="font-bold text-primary text-lg">
                     metodo biorazionale
                   </span>{" "}
                   rappresenta la nostra filosofia di vita: un'agricoltura
-                  sostenibile di montagna che rifiuta pesticidi e stratagemmi
-                  moderni. Solo il rispetto profondo per la natura e la sapienza
-                  contadina dell'Appennino ci guidano nel creare prodotti
+                  sostenibile di montagna, praticata con orgoglio sui nostri
+                  terreni a{" "}
+                  <span className="font-semibold text-secondary">
+                    Marola (Carpineti, RE)
+                  </span>
+                  , che rifiuta pesticidi e stratagemmi moderni. Attraverso la
+                  rotazione delle colture, l'uso di concimi naturali
+                  dell'Appennino e la tutela della biodiversità locale,
+                  rispettiamo profondamente la natura e la sapienza contadina
+                  dell'Appennino per creare prodotti
                   <strong className="text-secondary">
                     {" "}
                     sinceri, autentici e genuini
@@ -109,9 +131,30 @@ const AboutSection = () => {
                   .
                 </p>
 
-                <blockquote className="border-l-4 border-primary pl-6 italic text-lg text-secondary font-medium">
-                  "Ogni prodotto nasce dalla terra e arriva sulle tavole con la
-                  sincerità di chi rispetta la natura e le tradizioni montane."
+                <h4 className="text-xl font-semibold text-primary mt-8 mb-4">
+                  La Passione di Famiglia: Mirco e Viviana
+                </h4>
+                <p>
+                  Oggi,{" "}
+                  <span className="font-bold text-primary">
+                    Mirco e Viviana
+                  </span>{" "}
+                  portano avanti questa eredità con la stessa passione,
+                  dedicandosi ogni giorno alla cura dei nostri campi nell'alta{" "}
+                  <span className="font-semibold text-secondary">
+                    Val Tassobbio
+                  </span>{" "}
+                  e alla produzione di alimenti che raccontano l'anima dell'
+                  <span className="font-semibold text-primary">
+                    Appennino Reggiano
+                  </span>
+                  .
+                </p>
+
+                <blockquote className="border-l-4 border-primary pl-6 italic text-lg text-secondary font-medium mt-8">
+                  "Ogni prodotto nasce dalla terra di Marola e arriva sulle
+                  tavole con la sincerità di chi rispetta la natura e le
+                  tradizioni montane dell'Appennino."
                 </blockquote>
               </div>
             </div>
@@ -128,7 +171,7 @@ const AboutSection = () => {
             <div className="relative h-96 lg:h-[300px] rounded-3xl overflow-hidden shadow-2xl mb-6">
               <Image
                 src="https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80"
-                alt="Azienda Agricola Il Pichello - Appennino Reggiano"
+                alt="La storica casa contadina 'Il Pichello' a Marola, Appennino Reggiano - Azienda Agricola biorazionale"
                 fill
                 className="object-cover"
               />
@@ -144,7 +187,7 @@ const AboutSection = () => {
               <div className="relative h-32 lg:h-40 rounded-xl overflow-hidden shadow-lg">
                 <Image
                   src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-                  alt="Paesaggio Appennino Reggiano"
+                  alt="Suggestivo paesaggio dell'Appennino Reggiano vicino a Marola, territorio dell'Agricola Il Pichello"
                   fill
                   className="object-cover"
                 />
@@ -156,7 +199,7 @@ const AboutSection = () => {
               <div className="relative h-32 lg:h-40 rounded-xl overflow-hidden shadow-lg">
                 <Image
                   src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-                  alt="Laboratorio artigianale trasformazione"
+                  alt="Interno del laboratorio artigianale dell'Agricola Il Pichello dove trasformiamo i prodotti dell'Appennino"
                   fill
                   className="object-cover"
                 />
@@ -195,8 +238,10 @@ const AboutSection = () => {
                 </div>
               </div>
               <p className="text-muted-foreground leading-relaxed text-sm lg:text-base flex-1">
-                Coltiviamo seguendo i ritmi naturali, senza pesticidi o additivi
-                chimici, rispettando la terra che ci nutre da generazioni.
+                Coltiviamo seguendo i ritmi naturali sui terreni di Marola,
+                senza pesticidi o additivi chimici, rispettando la terra
+                dell'Appennino Reggiano che ci nutre da generazioni con metodi
+                sostenibili.
               </p>
             </div>
           </div>
@@ -246,8 +291,9 @@ const AboutSection = () => {
               </div>
               <p className="text-muted-foreground leading-relaxed text-sm lg:text-base flex-1">
                 Metodi tramandati di generazione in generazione nell'Appennino
-                Reggiano, dove la sapienza contadina incontra l'innovazione
-                sostenibile.
+                Reggiano, in particolare nella zona di Marola e Carpineti, dove
+                la sapienza contadina dell'alta Val Tassobbio incontra
+                l'innovazione sostenibile.
               </p>
             </div>
           </div>

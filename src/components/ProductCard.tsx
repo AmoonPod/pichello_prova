@@ -32,7 +32,7 @@ export default function ProductCard({
               <img
                 src={imageUrl}
                 alt={imageAlt}
-                className="w-24 h-24 object-cover rounded-lg group-hover:scale-105 transition-transform duration-300"
+                className="w-32 h-32 object-cover rounded-lg group-hover:scale-105 transition-transform duration-300"
               />
             ) : (
               <div className="w-24 h-24 bg-gray-100 rounded-lg flex items-center justify-center">

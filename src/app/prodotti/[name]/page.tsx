@@ -26,7 +26,7 @@ export default async function Product(props: {
     <>
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
         {/* Hero Section */}
-        <div className="relative bg-white pt-20">
+        <div className="relative bg-white">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
             {/* Breadcrumb */}
             <nav className="flex mb-6" aria-label="Breadcrumb">

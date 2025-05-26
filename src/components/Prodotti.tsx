@@ -79,8 +79,8 @@ const ProductsClient = ({
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <div className="relative pt-32">
-        <div className="relative max-w-7xl mx-auto px-4 py-16 sm:py-20 lg:py-24 bg-primary rounded-md ">
+      <div className="relative ">
+        <div className="relative mx-auto px-4 py-16 sm:py-20 lg:py-24 bg-primary ">
           <div className="text-center text-white">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
               I Nostri Prodotti
@@ -109,7 +109,7 @@ const ProductsClient = ({
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Desktop Sidebar */}
           <aside className="hidden lg:block lg:w-80 lg:flex-shrink-0">

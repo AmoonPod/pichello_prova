@@ -4,7 +4,7 @@ import ScrittaPiccolina from "../scrittaPiccolina";
 
 export default function Contattaci() {
   return (
-    <section className="max-w-7xl mx-auto px-4 py-8 lg:px-8 lg:py-16">
+    <section className="container mx-auto px-4 py-8 lg:px-8 lg:py-16">
       <h1 className="font-extrabold text-4xl lg:text-5xl text-primary tracking-tight">
         Contattaci
       </h1>

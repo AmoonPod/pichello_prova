@@ -42,7 +42,7 @@ export default async function Categories() {
   const categories: CategoriaType[] = await getCategorie();
 
   return (
-    <section className="max-w-7xl mx-auto py-16 px-4">
+    <section className="container mx-auto py-16 px-4">
       <div className="text-center mb-8">
         <h2 className="font-extrabold text-4xl text-primary tracking-tight">
           Le Nostre Categorie

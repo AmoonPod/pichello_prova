@@ -1,152 +1,134 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { CheckCircle2 } from "lucide-react";
+import { ArrowRight, Phone, Mail, MessageCircle } from "lucide-react";
+import Link from "next/link";
 
-const ContactSection = () => {
+const FinalCTASection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
-  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // In a real application, you would handle the form submission here
-    setFormSubmitted(true);
-
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setFormSubmitted(false);
-      const form = e.target as HTMLFormElement;
-      form.reset();
-    }, 3000);
-  };
+  useEffect(() => {
+    if (isInView) setIsVisible(true);
+  }, [isInView]);
 
   return (
     <section
       id="contact"
-      className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-center gap-16 lg:gap-20 lg:items-start px-8 py-8 lg:py-20 md:px-6 bg-white"
+      className="relative py-20 lg:py-32 bg-primary overflow-hidden"
     >
-      <div className="container mx-auto px-4">
-        <h2 className="font-extrabold text-4xl lg:text-5xl tracking-tight  flex flex-col gap-3 items-center  text-primary">
-          Contattaci
-        </h2>
+      {/* Decorative Elements */}
+      <div className="absolute top-20 left-10 w-40 h-40 rounded-full bg-white/5 blur-3xl animate-pulse delay-300" />
+      <div className="absolute bottom-20 right-10 w-32 h-32 rounded-full bg-white/5 blur-2xl animate-pulse delay-700" />
+      <div
+        className="absolute top-1/2 left-1/4 w-24 h-24 rounded-full bg-white/3 blur-xl animate-bounce"
+        style={{ animationDuration: "7s" }}
+      />
 
-        <div ref={ref} className="max-w-4xl mx-auto mt-12">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.6 }}
-            className="bg-white rounded-2xl shadow-lg overflow-hidden"
-          >
-            <div className="grid grid-cols-1 md:grid-cols-2">
-              {/* Left Column - Form */}
-              <div className="p-8">
-                <h3 className="text-2xl font-bold mb-6">
-                  Inviaci un Messaggio
-                </h3>
+      {/* Pattern Overlay */}
+      <div className="absolute inset-0 opacity-10">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `radial-gradient(circle at 25% 25%, white 2px, transparent 2px)`,
+            backgroundSize: "60px 60px",
+          }}
+        />
+      </div>
 
-                {formSubmitted ? (
-                  <div className="flex flex-col items-center justify-center h-full py-8">
-                    <CheckCircle2 className="h-16 w-16 text-primary mb-4" />
-                    <h4 className="text-xl font-bold mb-2">
-                      Messaggio Inviato!
-                    </h4>
-                    <p className="text-center text-muted-foreground">
-                      Grazie per averci contattato. Ti risponderemo al più
-                      presto.
-                    </p>
-                  </div>
-                ) : (
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="firstName">Nome</Label>
-                        <Input
-                          id="firstName"
-                          placeholder="Il tuo nome"
-                          required
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="lastName">Cognome</Label>
-                        <Input
-                          id="lastName"
-                          placeholder="Il tuo cognome"
-                          required
-                        />
-                      </div>
-                    </div>
+      <div className="container mx-auto px-4 max-w-6xl relative z-10">
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, y: 40 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="text-center"
+        >
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 text-sm text-white mb-6">
+            <MessageCircle className="w-4 h-4" />
+            <span className="font-medium">Inizia il Tuo Viaggio</span>
+          </div>
 
-                    <div className="space-y-2">
-                      <Label htmlFor="email">Email</Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        placeholder="La tua email"
-                        required
-                      />
-                    </div>
+          {/* Main Headline */}
+          <h2 className="text-3xl md:text-4xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+            Pronto a Gustare
+            <br />
+            <span className="text-white/90">l'Autenticità?</span>
+          </h2>
 
-                    <div className="space-y-2">
-                      <Label htmlFor="phone">Telefono</Label>
-                      <Input
-                        id="phone"
-                        placeholder="Il tuo numero di telefono"
-                      />
-                    </div>
+          {/* Description */}
+          <p className="text-lg md:text-xl text-white/80 font-medium max-w-3xl mx-auto mb-10 lg:mb-12 leading-relaxed">
+            Scopri i sapori genuini dell'Appennino Reggiano. Contattaci per
+            ordinare i nostri prodotti biorazionali o per ricevere informazioni
+            personalizzate sulla nostra offerta.
+          </p>
 
-                    <div className="space-y-2">
-                      <Label htmlFor="message">Messaggio</Label>
-                      <Textarea
-                        id="message"
-                        placeholder="Il tuo messaggio"
-                        rows={4}
-                        required
-                      />
-                    </div>
+          {/* Main CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12 lg:mb-16">
+            <Link href="/contatti">
+              <Button
+                size="lg"
+                className="w-full sm:w-auto bg-white hover:bg-white/90 text-primary font-bold px-10 py-4 text-lg rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 group border-2 border-transparent hover:border-white/20"
+              >
+                Contattaci Ora
+                <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
 
-                    <Button type="submit" className="w-full">
-                      Invia Messaggio
-                    </Button>
-                  </form>
-                )}
+            <Button
+              size="lg"
+              className="w-full sm:w-auto bg-secondary hover:bg-secondary/90 text-secondary-foreground font-semibold px-10 py-4 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+              onClick={() => {
+                const productsSection = document.getElementById("products");
+                if (productsSection) {
+                  productsSection.scrollIntoView({ behavior: "smooth" });
+                }
+              }}
+            >
+              Esplora i Prodotti
+            </Button>
+          </div>
+
+          {/* Contact Info Highlights */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 max-w-3xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6 hover:bg-white/15 transition-all duration-300"
+            >
+              <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Phone className="w-6 h-6 text-white" />
               </div>
+              <h3 className="text-white font-semibold mb-2">Chiamaci</h3>
+              <p className="text-white/70 text-sm leading-relaxed">
+                Parla direttamente con noi per ordini e informazioni immediate
+              </p>
+            </motion.div>
 
-              {/* Right Column - Image */}
-              <div className="relative hidden md:block">
-                <div
-                  className="absolute inset-0 bg-cover bg-center"
-                  style={{
-                    backgroundImage:
-                      "url('https://images.unsplash.com/photo-1523741543316-beb7fc7023d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80')",
-                  }}
-                >
-                  <div className="absolute inset-0 bg-primary/30"></div>
-                </div>
-                <div className="absolute inset-0 flex items-center justify-center p-8">
-                  <div className="bg-white/90 backdrop-blur-sm p-6 rounded-lg text-center max-w-xs">
-                    <h4 className="text-xl font-bold mb-2">Contattaci</h4>
-                    <p className="text-muted-foreground mb-4">
-                      Sei interessato ai nostri prodotti o vuoi saperne di più
-                      sulla nostra azienda?
-                    </p>
-                    <p className="font-semibold">
-                      Compila il form e verrai ricontattato al più presto.
-                    </p>
-                  </div>
-                </div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6 hover:bg-white/15 transition-all duration-300"
+            >
+              <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Mail className="w-6 h-6 text-white" />
               </div>
-            </div>
-          </motion.div>
-        </div>
+              <h3 className="text-white font-semibold mb-2">Scrivici</h3>
+              <p className="text-white/70 text-sm leading-relaxed">
+                Invia una richiesta dettagliata per offerte personalizzate
+              </p>
+            </motion.div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
 };
 
-export default ContactSection;
+export default FinalCTASection;

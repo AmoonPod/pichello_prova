@@ -8,7 +8,7 @@ import ScrittaPiccolina from "./scrittaPiccolina";
 export default function ChiSiamo() {
   return (
     <section className=" bg-primary   text-secondary-foreground">
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-center gap-16 lg:gap-20 lg:items-start px-8 py-8 lg:py-20 md:px-6">
+      <div className="container mx-auto flex flex-col lg:flex-row items-center justify-center gap-16 lg:gap-20 lg:items-start px-8 py-8 lg:py-20 md:px-6">
         <div className="grid gap-6 lg:grid-cols-[400px_1fr] lg:gap-12 xl:grid-cols-[600px_1fr]">
           <Image
             src={ChiSiamoImage}

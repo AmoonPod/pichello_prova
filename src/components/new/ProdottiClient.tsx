@@ -64,7 +64,7 @@ export default function ProductsSectionClient({
         style={{ animationDuration: "5s" }}
       />
 
-      <div className="container mx-auto px-4 max-w-7xl">
+      <div className="container mx-auto px-4 container">
         {/* Header Section */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}

@@ -27,7 +27,7 @@ export default async function Product(props: {
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
         {/* Hero Section */}
         <div className="relative bg-white">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
+          <div className="mx-auto px-4 sm:px-6 lg:px-8 py-8">
             {/* Breadcrumb */}
             <nav className="flex mb-6" aria-label="Breadcrumb">
               <ol className="flex items-center space-x-2 text-sm">
@@ -305,7 +305,7 @@ export default async function Product(props: {
 
         {/* Related Products */}
         <section className="bg-gradient-to-br from-gray-100 to-gray-50 py-16 mt-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 Prodotti correlati

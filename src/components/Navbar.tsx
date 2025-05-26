@@ -11,8 +11,8 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="max-w-7xl mx-auto px-8 py-5 flex items-center text-primary">
-      <div className="w-full max-w-7xl mx-auto px-4">
+    <header className="container mx-auto px-8 py-5 flex items-center text-primary">
+      <div className="w-full container mx-auto px-4">
         <div className="flex justify-between h-24 items-center">
           <Link href="/" className="flex items-center" prefetch={false}>
             <Image src={LOGO} className="w-44 object-cover" alt="logo" />

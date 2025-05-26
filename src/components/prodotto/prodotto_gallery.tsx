@@ -32,20 +32,22 @@ export default function ProdottoGallery({ images }: { images: Immagine[] }) {
 
   return (
     <div className="flex-1 w-full max-w-[500px] relative">
-      {/* Desktop/Tablet Gallery */}
-      {!isMobile && (
-        <>
-          <div
-            className="cursor-pointer mb-4 flex justify-center"
-            onClick={() => setShowLightbox(true)}
-          >
-            <img
-              src={images[imgIndex].image}
-              alt="gallery-cover-image"
-              className="aspect-square object-cover w-full sm:w-96 rounded-2xl"
-            />
-          </div>
+      {/* Main Image - Both Desktop and Mobile */}
+      <div
+        className="cursor-pointer mb-4 flex justify-center"
+        onClick={() => setShowLightbox(true)}
+      >
+        <img
+          src={images[imgIndex].image}
+          alt="gallery-cover-image"
+          className="aspect-square object-cover w-full rounded-2xl shadow-lg"
+        />
+      </div>
 
+      {/* Thumbnails - Both Desktop and Mobile */}
+      <div className={`${isMobile ? "block" : "hidden sm:block"}`}>
+        {/* Desktop Thumbnails */}
+        {!isMobile && (
           <ul
             className={`${styles.productThumbnails} ${utils.flex} justify-center`}
           >
@@ -67,54 +69,31 @@ export default function ProdottoGallery({ images }: { images: Immagine[] }) {
               </li>
             ))}
           </ul>
-        </>
-      )}
+        )}
 
-      {/* Mobile Slider */}
-      {isMobile && (
-        <>
-          <div
-            className={styles.productGallerySlider}
-            style={{ transform: `translateX(-${imgIndex * 100}%)` }}
-          >
+        {/* Mobile Thumbnails */}
+        {isMobile && images.length > 1 && (
+          <div className="flex gap-2 justify-center px-2 overflow-x-auto py-2">
             {images.map((element: Immagine, index: number) => (
-              <img
-                key={`slider-${index}`}
-                src={element.image}
-                alt={`Product Image ${index}`}
-                className="aspect-square object-cover w-full rounded-2xl flex-shrink-0"
-              />
+              <button
+                key={`mobile-thumbnail-${index}`}
+                className={`flex-shrink-0 rounded-lg overflow-hidden border-2 transition-all duration-200 ${
+                  imgIndex === index
+                    ? "border-primary shadow-lg scale-105"
+                    : "border-gray-200 hover:border-gray-300"
+                }`}
+                onClick={() => setImgIndex(index)}
+              >
+                <img
+                  src={element.image}
+                  alt={`product thumbnail ${index}`}
+                  className="aspect-square object-cover w-16 h-16"
+                />
+              </button>
             ))}
           </div>
-
-          {images.length > 1 && (
-            <>
-              <button className={styles.btnSliderPrev} onClick={goToPrevSlide}>
-                <svg viewBox="0 0 12 18" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M11 1 3 9l8 8"
-                    stroke="#1D2026"
-                    strokeWidth="3"
-                    fill="none"
-                    fillRule="evenodd"
-                  />
-                </svg>
-              </button>
-              <button className={styles.btnSliderNext} onClick={goToNextSlide}>
-                <svg viewBox="0 0 13 18" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="m2 1 8 8-8 8"
-                    stroke="#1D2026"
-                    strokeWidth="3"
-                    fill="none"
-                    fillRule="evenodd"
-                  />
-                </svg>
-              </button>
-            </>
-          )}
-        </>
-      )}
+        )}
+      </div>
     </div>
   );
 }

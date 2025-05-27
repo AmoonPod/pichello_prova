@@ -105,9 +105,10 @@ const HeroSection = () => {
   }, []);
 
   // Rotazione automatica delle categorie ogni 5 secondi (più lenta)
+  // Incrementa di 3 per mostrare 3 categorie completamente nuove ogni volta
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentCategoryIndex((prev) => (prev + 1) % productCategories.length);
+      setCurrentCategoryIndex((prev) => (prev + 3) % productCategories.length);
     }, 5000);
 
     return () => clearInterval(interval);

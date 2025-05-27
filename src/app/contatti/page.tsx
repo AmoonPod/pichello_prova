@@ -1,5 +1,5 @@
 "use client";
-
+import "../globals.css";
 import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -21,10 +21,33 @@ const ContactsPage = () => {
   const isInView = useInView(ref, { once: true, amount: 0.1 });
   const [isVisible, setIsVisible] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [prefilledProduct, setPrefilledProduct] = useState("");
+  const [selectedSubject, setSelectedSubject] = useState("");
+  const [messageContent, setMessageContent] = useState("");
 
   useEffect(() => {
     if (isInView) setIsVisible(true);
   }, [isInView]);
+
+  // Handle URL parameters for pre-filling the form
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const productParam = urlParams.get('prodotto');
+    if (productParam) {
+      setPrefilledProduct(productParam);
+      setSelectedSubject("ordine");
+      setMessageContent(`Sono interessato al prodotto "${productParam}". Vorrei sapere disponibilità, quantità minime e prezzo. Grazie.`);
+    }
+  }, []);
+
+  // Function to clear pre-compilation and redirect to clean /contatti
+  const clearPrecompilation = () => {
+    setPrefilledProduct("");
+    setSelectedSubject("");
+    setMessageContent("");
+    // Redirect to clean /contatti URL without parameters
+    window.history.pushState({}, '', '/contatti');
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -181,10 +204,36 @@ const ContactsPage = () => {
                       Inviaci un Messaggio
                     </h2>
                     <p className="text-muted-foreground text-sm mt-1">
-                      Per ordini, informazioni sui prodotti o richieste personalizzate
+                      {prefilledProduct
+                        ? `Richiesta per: ${prefilledProduct}`
+                        : "Per ordini, informazioni sui prodotti o richieste personalizzate"
+                      }
                     </p>
                   </div>
                 </div>
+
+                {prefilledProduct && (
+                  <div className="mb-6 p-3 bg-primary/10 border border-primary/20 rounded-lg">
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-2 text-sm text-primary">
+                        <ShoppingCart className="w-4 h-4" />
+                        <span className="font-medium">
+                          Form pre-compilato per il prodotto: <strong>{prefilledProduct}</strong>
+                        </span>
+                      </div>
+                      <button
+                        onClick={clearPrecompilation}
+                        className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/20 hover:bg-primary/30 text-primary hover:text-primary/80 transition-all duration-200 group"
+                        title="Rimuovi pre-compilazione"
+                        type="button"
+                      >
+                        <svg className="w-3 h-3 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                )}
 
                 <div className="w-16 h-0.5 bg-primary rounded-full mb-6" />
 
@@ -272,6 +321,8 @@ const ContactsPage = () => {
                         id="subject"
                         className="w-full px-3 py-2 border border-border rounded-md focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                         required
+                        value={selectedSubject}
+                        onChange={(e) => setSelectedSubject(e.target.value)}
                       >
                         <option value="">Seleziona...</option>
                         <option value="ordine">Effettuare un ordine</option>
@@ -292,6 +343,8 @@ const ContactsPage = () => {
                       <Textarea
                         id="message"
                         placeholder="Descrivi la tua richiesta, i prodotti che ti interessano, quantità desiderate..."
+                        value={messageContent}
+                        onChange={(e) => setMessageContent(e.target.value)}
                         rows={5}
                         required
                         className="border-border focus:border-primary resize-none"

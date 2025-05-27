@@ -55,7 +55,7 @@ const NavbarV2 = () => {
             Dove Siamo
           </Link>
           <Link
-            href="/#contact"
+            href="/contatti"
             className="transform transition-transform duration-200 hover:-translate-y-0.5"
           >
             <Button size="sm">Contattaci</Button>
@@ -119,7 +119,7 @@ const NavbarV2 = () => {
                   </Link>
                 </SheetClose>
                 <SheetClose asChild>
-                  <Link href="/#contact">
+                  <Link href="/contatti">
                     {/* Use Link wrapping Button for consistency */}
                     <Button className="w-full">Contattaci</Button>
                   </Link>

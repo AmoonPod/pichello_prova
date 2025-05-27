@@ -11,8 +11,9 @@ import {
   Phone,
   Mail,
   MapPin,
-  Clock,
   MessageCircle,
+  ShoppingCart,
+  Info,
 } from "lucide-react";
 
 const ContactsPage = () => {
@@ -43,77 +44,117 @@ const ContactsPage = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15,
+        staggerChildren: 0.1,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.6,
+        duration: 0.5,
         ease: [0.22, 1, 0.36, 1],
       },
     },
   };
 
   return (
-    <div className="min-h-screen bg-backgroundvariant">
-      {/* Hero Section */}
-      <section className="relative py-20 lg:py-32 bg-primary overflow-hidden">
-        {/* Decorative Elements */}
-        <div className="absolute top-20 left-10 w-40 h-40 rounded-full bg-white/5 blur-3xl animate-pulse delay-300" />
-        <div className="absolute bottom-20 right-10 w-32 h-32 rounded-full bg-white/5 blur-2xl animate-pulse delay-700" />
-        <div
-          className="absolute top-1/2 left-1/4 w-24 h-24 rounded-full bg-white/3 blur-xl animate-bounce"
-          style={{ animationDuration: "7s" }}
-        />
-
-        {/* Pattern Overlay */}
-        <div className="absolute inset-0 opacity-10">
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: `radial-gradient(circle at 25% 25%, white 2px, transparent 2px)`,
-              backgroundSize: "60px 60px",
-            }}
-          />
-        </div>
+    <div className="min-h-screen bg-background">
+      {/* Compact Hero Section */}
+      <section className="relative py-12 lg:py-16 bg-primary overflow-hidden">
+        {/* Decorative Elements - Reduced */}
+        <div className="absolute top-10 left-10 w-20 h-20 rounded-full bg-white/5 blur-2xl animate-pulse delay-300" />
+        <div className="absolute bottom-10 right-10 w-16 h-16 rounded-full bg-white/5 blur-xl animate-pulse delay-700" />
 
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
             className="text-center"
           >
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 text-sm text-white mb-6">
-              <MessageCircle className="w-4 h-4" />
-              <span className="font-medium">Inizia la Conversazione</span>
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 text-sm text-white mb-4">
+              <Phone className="w-4 h-4" />
+              <span className="font-medium">Per Ordini o Informazioni</span>
             </div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-              Parliamo dei Tuoi
-              <br />
-              <span className="text-white/90">Prossimi Sapori</span>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight">
+              Contattaci
             </h1>
 
-            <p className="text-lg md:text-xl text-white/80 font-medium max-w-3xl mx-auto leading-relaxed">
-              Siamo qui per rispondere alle tue domande e aiutarti a scoprire i
-              nostri prodotti biorazionali dell'Appennino Reggiano
+            <p className="text-base md:text-lg text-white/90 font-medium max-w-2xl mx-auto leading-relaxed">
+              Siamo qui per rispondere alle tue domande sui nostri prodotti biorazionali dell'Appennino Reggiano e per ricevere i tuoi ordini
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Main Content */}
-      <section className="py-16 lg:py-24 relative">
-        {/* Background decorative elements */}
-        <div className="absolute top-40 left-10 w-32 h-32 rounded-full bg-primary/5 blur-2xl animate-pulse delay-300" />
-        <div className="absolute bottom-40 right-10 w-28 h-28 rounded-full bg-secondary/5 blur-xl animate-pulse delay-700" />
+      {/* Quick Contact Bar - NEW: Immediately visible contact options */}
+      <section className="py-8 bg-white border-b border-border shadow-sm">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6"
+          >
+            {/* Quick Phone Contact */}
+            <div className="flex items-center justify-center md:justify-start gap-3 p-4 bg-primary/5 rounded-xl border border-primary/20 hover:bg-primary/10 transition-colors">
+              <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                <Phone className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-foreground text-sm">Chiama Ora</h3>
+                <div className="space-y-1">
+                  <a href="tel:3408200080" className="block text-primary font-bold hover:underline text-sm">
+                    Mirco: 340/8200080
+                  </a>
+                  <a href="tel:3397981644" className="block text-primary font-bold hover:underline text-sm">
+                    Viviana: 339/7981644
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Quick Email Contact */}
+            <div className="flex items-center justify-center md:justify-start gap-3 p-4 bg-secondary/5 rounded-xl border border-secondary/20 hover:bg-secondary/10 transition-colors">
+              <div className="w-10 h-10 bg-secondary rounded-full flex items-center justify-center">
+                <Mail className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-foreground text-sm">Scrivi Email</h3>
+                <a href="mailto:info@agricolailpichello.it" className="text-secondary font-bold hover:underline text-sm">
+                  info@agricolailpichello.it
+                </a>
+              </div>
+            </div>
+
+            {/* Location */}
+            <div className="flex items-center justify-center md:justify-start gap-3 p-4 bg-primary/5 rounded-xl border border-primary/20 hover:bg-primary/10 transition-colors">
+              <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                <MapPin className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-foreground text-sm">Vieni a Trovarci</h3>
+                <div className="space-y-1">
+                  <p className="text-primary font-bold text-sm">Via Dante Alighieri 141</p>
+                  <p className="text-primary font-bold text-sm">42033 Marola, Carpineti (RE)</p>
+                  <p className="text-primary font-semibold text-xs">Lun-Ven: 9:00-18:00 | Sab: 9:00-13:00</p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Main Content - Reduced padding */}
+      <section className="py-12 lg:py-16 relative">
+        {/* Background decorative elements - Reduced */}
+        <div className="absolute top-20 left-10 w-20 h-20 rounded-full bg-primary/5 blur-xl animate-pulse delay-300" />
+        <div className="absolute bottom-20 right-10 w-16 h-16 rounded-full bg-secondary/5 blur-lg animate-pulse delay-700" />
 
         <div className="container mx-auto px-4">
           <motion.div
@@ -121,23 +162,28 @@ const ContactsPage = () => {
             variants={containerVariants}
             initial="hidden"
             animate={isVisible ? "visible" : "hidden"}
-            className="grid lg:grid-cols-3 gap-8 lg:gap-12"
+            className="max-w-4xl mx-auto"
           >
-            {/* Contact Form - Takes 2 columns */}
+            {/* Contact Form - Full width */}
             <motion.div
               variants={itemVariants}
-              className="lg:col-span-2 relative group"
+              className="relative group"
             >
               <div className="absolute inset-2 bg-gradient-to-br from-primary/5 via-primary/10 to-primary/15 rounded-3xl transform rotate-1 group-hover:rotate-0 transition-transform duration-500" />
 
-              <div className="relative bg-white border border-border rounded-3xl p-8 lg:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_20px_60px_rgb(0,0,0,0.2)] transition-all duration-300">
+              <div className="relative bg-white border border-border rounded-3xl p-6 lg:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_20px_60px_rgb(0,0,0,0.2)] transition-all duration-300">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
                     <MessageCircle className="w-6 h-6 text-primary" />
                   </div>
-                  <h2 className="text-2xl lg:text-3xl font-bold text-foreground">
-                    Inviaci un Messaggio
-                  </h2>
+                  <div>
+                    <h2 className="text-2xl lg:text-3xl font-bold text-foreground">
+                      Inviaci un Messaggio
+                    </h2>
+                    <p className="text-muted-foreground text-sm mt-1">
+                      Per ordini, informazioni sui prodotti o richieste personalizzate
+                    </p>
+                  </div>
                 </div>
 
                 <div className="w-16 h-0.5 bg-primary rounded-full mb-6" />
@@ -217,6 +263,27 @@ const ContactsPage = () => {
 
                     <div className="space-y-2">
                       <Label
+                        htmlFor="subject"
+                        className="text-foreground font-medium"
+                      >
+                        Motivo del Contatto
+                      </Label>
+                      <select
+                        id="subject"
+                        className="w-full px-3 py-2 border border-border rounded-md focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                        required
+                      >
+                        <option value="">Seleziona...</option>
+                        <option value="ordine">Effettuare un ordine</option>
+                        <option value="info-prodotti">Informazioni sui prodotti</option>
+                        <option value="disponibilita">Disponibilità prodotti</option>
+                        <option value="prezzi">Richiesta prezzi</option>
+                        <option value="altro">Altro</option>
+                      </select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label
                         htmlFor="message"
                         className="text-foreground font-medium"
                       >
@@ -224,7 +291,7 @@ const ContactsPage = () => {
                       </Label>
                       <Textarea
                         id="message"
-                        placeholder="Scrivi qui la tua richiesta, domande sui prodotti, ordini personalizzati..."
+                        placeholder="Descrivi la tua richiesta, i prodotti che ti interessano, quantità desiderate..."
                         rows={5}
                         required
                         className="border-border focus:border-primary resize-none"
@@ -242,107 +309,7 @@ const ContactsPage = () => {
               </div>
             </motion.div>
 
-            {/* Contact Information - Takes 1 column */}
-            <motion.div variants={itemVariants} className="space-y-6">
-              {/* Phone Numbers */}
-              <div className="relative group">
-                <div className="absolute inset-2 bg-gradient-to-br from-secondary/5 via-secondary/10 to-secondary/15 rounded-3xl transform -rotate-1 group-hover:rotate-0 transition-transform duration-500" />
 
-                <div className="relative bg-white border border-border rounded-3xl p-6 lg:p-8 hover:shadow-md transition-all duration-300">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center">
-                      <Phone className="w-6 h-6 text-secondary" />
-                    </div>
-                    <h3 className="text-xl lg:text-2xl font-bold text-foreground">
-                      Chiamaci
-                    </h3>
-                  </div>
-
-                  <div className="w-16 h-0.5 bg-secondary rounded-full mb-4" />
-
-                  <div className="space-y-3">
-                    <div>
-                      <a
-                        href="tel:3408200080"
-                        className="block text-lg font-semibold text-foreground hover:text-secondary transition-colors"
-                      >
-                        Mirco: 340/8200080
-                      </a>
-                    </div>
-                    <div>
-                      <a
-                        href="tel:3397981644"
-                        className="block text-lg font-semibold text-foreground hover:text-secondary transition-colors"
-                      >
-                        Viviana: 339/7981644
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Email */}
-              <div className="relative group">
-                <div className="absolute inset-2 bg-gradient-to-br from-primary/5 via-primary/10 to-primary/15 rounded-3xl transform rotate-1 group-hover:rotate-0 transition-transform duration-500" />
-
-                <div className="relative bg-white border border-border rounded-3xl p-6 lg:p-8 hover:shadow-md transition-all duration-300">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                      <Mail className="w-6 h-6 text-primary" />
-                    </div>
-                    <h3 className="text-xl lg:text-2xl font-bold text-foreground">
-                      Scrivici
-                    </h3>
-                  </div>
-
-                  <div className="w-16 h-0.5 bg-primary rounded-full mb-4" />
-
-                  <a
-                    href="mailto:info@agricolailpichello.it"
-                    className="text-lg font-semibold text-foreground hover:text-primary transition-colors"
-                  >
-                    info@agricolailpichello.it
-                  </a>
-                </div>
-              </div>
-
-              {/* Address & Hours */}
-              <div className="grid grid-cols-1 gap-4">
-                <div className="relative group">
-                  <div className="absolute inset-1 bg-gradient-to-br from-secondary/5 to-secondary/10 rounded-2xl transform -rotate-1 group-hover:rotate-0 transition-transform duration-300" />
-
-                  <div className="relative bg-white border border-border rounded-2xl p-4 transition-all duration-300 hover:shadow-md">
-                    <div className="flex items-center gap-3 mb-2">
-                      <MapPin className="w-5 h-5 text-secondary" />
-                      <h4 className="font-semibold text-foreground">
-                        Indirizzo
-                      </h4>
-                    </div>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      Via Dante Alighieri 141
-                      <br />
-                      42033 Marola, Carpineti (RE)
-                    </p>
-                  </div>
-                </div>
-
-                <div className="relative group">
-                  <div className="absolute inset-1 bg-gradient-to-br from-primary/5 to-primary/10 rounded-2xl transform rotate-1 group-hover:rotate-0 transition-transform duration-300" />
-
-                  <div className="relative bg-white border border-border rounded-2xl p-4 transition-all duration-300 hover:shadow-md">
-                    <div className="flex items-center gap-3 mb-2">
-                      <Clock className="w-5 h-5 text-primary" />
-                      <h4 className="font-semibold text-foreground">Orari</h4>
-                    </div>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      Lun-Ven: 9:00 - 18:00
-                      <br />
-                      Sabato: 9:00 - 13:00
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
           </motion.div>
         </div>
       </section>

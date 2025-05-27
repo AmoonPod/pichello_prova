@@ -6,6 +6,10 @@ import ContactSection from "@/components/new/Contatti";
 import "../app/globals.css";
 import { Metadata } from "next";
 
+// Force static generation with revalidation for homepage
+export const dynamic = 'force-static';
+export const revalidate = 1800; // Revalidate every 30 minutes (homepage changes more frequently)
+
 export const metadata: Metadata = {
   title:
     "Azienda Agricola Il Pichello | Prodotti Biorazionali Appennino Reggiano",

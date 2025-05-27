@@ -9,18 +9,23 @@ type Props = {
   searchParams: { categoria?: string };
 };
 
+// Force static generation with revalidation
+export const dynamic = 'force-static';
+export const revalidate = 3600; // Revalidate every hour (adjust as needed)
+
 export async function generateMetadata({
   searchParams,
 }: Props): Promise<Metadata> {
+  // Use the same cached data from the page component
   const categories: CategoriaType[] = await getCategorie();
   const categoriaSlug = searchParams.categoria;
 
   // Find the category if a filter is applied
   const currentCategory = categoriaSlug
     ? categories.find((cat) => {
-        const slug = JSON.parse(JSON.stringify(cat.slug)).current;
-        return slug === categoriaSlug;
-      })
+      const slug = JSON.parse(JSON.stringify(cat.slug)).current;
+      return slug === categoriaSlug;
+    })
     : null;
 
   if (currentCategory) {
@@ -102,8 +107,12 @@ export async function generateMetadata({
 }
 
 const ProdottiServer = async ({ searchParams }: Props) => {
-  const prodotti: ProdottoType[] = await getProdotti();
-  const categories: CategoriaType[] = await getCategorie();
+  // Fetch prodotti and categories in parallel for better performance
+  const [prodotti, categories] = await Promise.all([
+    getProdotti(),
+    getCategorie()
+  ]);
+
   return (
     <Suspense>
       <ProductsClient

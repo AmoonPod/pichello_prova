@@ -2,6 +2,7 @@ import { ProdottoType } from "../../../../types";
 import {
   getProdotti,
   getProdottoBySlug,
+  getCategorie,
 } from "../../../../sanity/sanity.query";
 import "../../globals.css";
 import ProdottoGallery from "@/components/prodotto/prodotto_gallery";
@@ -9,6 +10,7 @@ import ProductCard from "@/components/ProductCard";
 import CategoryTag from "@/components/category_tag";
 import { Image as ImageIcon } from "lucide-react";
 import BarcodeDisplay from "@/components/BarcodeDisplay";
+import FooterV2 from "@/components/new/Footer";
 import Link from "next/link";
 
 // Force static generation with revalidation for product pages
@@ -32,10 +34,11 @@ export default async function Product(props: {
 }) {
   const params = await props.params;
 
-  // Fetch product and all products in parallel for better performance
-  const [prodotto, prodotti] = await Promise.all([
+  // Fetch product, all products, and categories in parallel for better performance
+  const [prodotto, prodotti, categorie] = await Promise.all([
     getProdottoBySlug(params.name),
-    getProdotti()
+    getProdotti(),
+    getCategorie()
   ]);
 
   if (!prodotto) return null;
@@ -432,6 +435,7 @@ export default async function Product(props: {
           </div>
         </section>
       </div>
+      <FooterV2 prodotti={prodotti} categorie={categorie} />
     </>
   );
 }

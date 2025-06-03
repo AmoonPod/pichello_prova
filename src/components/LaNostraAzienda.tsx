@@ -12,7 +12,7 @@ export default function LaNostraAzienda() {
         <div className="grid gap-6 lg:grid-cols-[400px_1fr] lg:gap-12 xl:grid-cols-[600px_1fr]">
           <Image
             src={ChiSiamoImage}
-            alt="Chi siamo"
+            alt="La Nostra Azienda"
             className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full"
           />
           <div className="flex flex-col justify-center space-y-4">

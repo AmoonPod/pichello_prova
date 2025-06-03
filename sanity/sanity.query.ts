@@ -12,6 +12,16 @@ export async function getProdotti() {
         alt
       },
       slug,
+      umidita,
+      scadenza,
+      pezzi,
+      formati[] {
+        formato,
+        codice_ean
+      },
+      midita,
+      marchi,
+      valori_nutrizionali,
       "categoria": categoria->nome,
       "categoria_slug": categoria->slug
     }`

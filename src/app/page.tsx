@@ -3,6 +3,8 @@ import AboutSection from "@/components/new/LaNostraAzienda";
 import ProductsSection from "@/components/new/Prodotti";
 import LocationSection from "@/components/new/DoveSiamo";
 import ContactSection from "@/components/new/Contatti";
+import FooterV2 from "@/components/new/Footer";
+import { getProdotti, getCategorie } from "../../sanity/sanity.query";
 import "../app/globals.css";
 import { Metadata } from "next";
 
@@ -158,7 +160,13 @@ const jsonLd = {
   ],
 };
 
-export default function Index() {
+export default async function Index() {
+  // Fetch data for the footer catalog download
+  const [prodotti, categorie] = await Promise.all([
+    getProdotti(),
+    getCategorie()
+  ]);
+
   return (
     <div>
       <script
@@ -180,6 +188,7 @@ export default function Index() {
         </div>
         <ContactSection />
       </main>
+      <FooterV2 prodotti={prodotti} categorie={categorie} />
     </div>
   );
 }

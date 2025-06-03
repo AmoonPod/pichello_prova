@@ -1,172 +1,250 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
-  Leaf,
-  Facebook,
-  Instagram,
-  Twitter,
-  Youtube,
   MapPin,
   Phone,
   Mail,
+  Wheat,
+  Clock,
+  Heart,
+  ExternalLink,
 } from "lucide-react";
+import { ProdottoType, CategoriaType } from "../../../types";
 
-const FooterV2 = () => {
+interface FooterV2Props {
+  prodotti?: ProdottoType[];
+  categorie?: CategoriaType[];
+}
+
+const FooterV2: React.FC<FooterV2Props> = ({ prodotti = [], categorie = [] }) => {
   return (
-    <footer className="bg-secondary-foreground text-secondary">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Column 1 - About */}
-          <div>
-            <div className="flex items-center gap-2 mb-4">
-              <Leaf className="h-6 w-6 text-primary" />
-              <span className="text-xl font-playfair font-bold text-white">
-                Il Pichello
-              </span>
+    <footer className="relative bg-white text-gray-900 overflow-hidden">
+      {/* Decorative Background Elements */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-10 left-10 w-32 h-32 rounded-full bg-primary blur-3xl animate-pulse" />
+        <div className="absolute bottom-20 right-10 w-40 h-40 rounded-full bg-secondary blur-3xl animate-pulse delay-1000" />
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full bg-primary/30 blur-[100px]" />
+      </div>
+
+      {/* Pattern Overlay */}
+      <div className="absolute inset-0 opacity-[0.02]">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `radial-gradient(circle at 25% 25%, #374151 1px, transparent 1px)`,
+            backgroundSize: "40px 40px",
+          }}
+        />
+      </div>
+
+      <div className="container mx-auto px-4 py-16 relative z-10">
+        {/* Top Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 mb-16">
+          {/* Column 1 - Brand & Description */}
+          <div className="lg:col-span-2">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
+                <Wheat className="h-6 w-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-gray-900">
+                  Azienda Agricola Il Pichello
+                </h3>
+                <p className="text-primary text-sm font-medium">
+                  Appennino Reggiano dal 1985
+                </p>
+              </div>
             </div>
-            <p className="text-secondary/80 mb-6">
-              Azienda agricola biologica che produce e vende prodotti genuini
-              dal 1985, rispettando la natura e le tradizioni.
+
+            <p className="text-gray-600 leading-relaxed mb-8 text-lg">
+              Nel cuore dell'Appennino Reggiano coltiviamo con passione prodotti biorazionali genuini.
+              Dalla terra di Marola alle vostre tavole, preservando le tradizioni contadine e
+              rispettando i ritmi della natura.
             </p>
-            <div className="flex space-x-4">
+
+            {/* Download Catalog Button */}
+            <div className="mb-8">
               <Link
-                href="#"
-                className="text-secondary/80 hover:text-primary transition-colors"
+                href="/api/catalogo-pdf"
+                className="inline-flex items-center gap-3 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
               >
-                <Facebook className="h-5 w-5" />
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                Scarica Catalogo PDF
               </Link>
-              <Link
-                href="#"
-                className="text-secondary/80 hover:text-primary transition-colors"
+            </div>
+
+            {/* Contact Info Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <a
+                href="tel:3408200080"
+                className="bg-gray-50 rounded-xl p-4 border border-gray-200 hover:bg-gray-100 transition-all duration-300 block group"
               >
-                <Instagram className="h-5 w-5" />
-              </Link>
-              <Link
-                href="#"
-                className="text-secondary/80 hover:text-primary transition-colors"
+                <div className="flex items-center gap-3">
+                  <Phone className="h-5 w-5 text-primary group-hover:scale-110 transition-transform" />
+                  <div>
+                    <p className="text-gray-900 font-semibold text-sm">Mirco</p>
+                    <p className="text-gray-600 text-xs group-hover:text-primary transition-colors">340/8200080</p>
+                  </div>
+                </div>
+              </a>
+
+              <a
+                href="tel:3397981644"
+                className="bg-gray-50 rounded-xl p-4 border border-gray-200 hover:bg-gray-100 transition-all duration-300 block group"
               >
-                <Twitter className="h-5 w-5" />
-              </Link>
-              <Link
-                href="#"
-                className="text-secondary/80 hover:text-primary transition-colors"
+                <div className="flex items-center gap-3">
+                  <Phone className="h-5 w-5 text-primary group-hover:scale-110 transition-transform" />
+                  <div>
+                    <p className="text-gray-900 font-semibold text-sm">Viviana</p>
+                    <p className="text-gray-600 text-xs group-hover:text-primary transition-colors">339/7981644</p>
+                  </div>
+                </div>
+              </a>
+
+              <a
+                href="mailto:info@agricolailpichello.it"
+                className="bg-gray-50 rounded-xl p-4 border border-gray-200 hover:bg-gray-100 transition-all duration-300 block group"
               >
-                <Youtube className="h-5 w-5" />
-              </Link>
+                <div className="flex items-center gap-3">
+                  <Mail className="h-5 w-5 text-secondary group-hover:scale-110 transition-transform" />
+                  <div>
+                    <p className="text-gray-900 font-semibold text-sm">Email</p>
+                    <p className="text-gray-600 text-xs group-hover:text-secondary transition-colors">info@agricolailpichello.it</p>
+                  </div>
+                </div>
+              </a>
             </div>
           </div>
 
-          {/* Column 2 - Quick Links */}
+          {/* Column 2 - Navigation */}
           <div>
-            <h3 className="text-lg font-bold mb-4 text-white">Link Rapidi</h3>
-            <ul className="space-y-2">
+            <h4 className="text-xl font-bold mb-6 text-gray-900 flex items-center gap-2">
+              <div className="w-2 h-2 bg-primary rounded-full" />
+              Navigazione
+            </h4>
+            <ul className="space-y-3">
               <li>
                 <Link
-                  href="#about"
-                  className="text-secondary/80 hover:text-primary transition-colors"
+                  href="/"
+                  className="text-gray-600 hover:text-primary transition-colors duration-300 flex items-center gap-2 group"
                 >
-                  Chi Siamo
+                  <span className="w-1 h-1 bg-gray-400 rounded-full group-hover:bg-primary transition-colors" />
+                  Home
                 </Link>
               </li>
               <li>
                 <Link
-                  href="#products"
-                  className="text-secondary/80 hover:text-primary transition-colors"
+                  href="/#la-nostra-azienda"
+                  className="text-gray-600 hover:text-primary transition-colors duration-300 flex items-center gap-2 group"
                 >
-                  I Nostri Prodotti
+                  <span className="w-1 h-1 bg-gray-400 rounded-full group-hover:bg-primary transition-colors" />
+                  La Nostra Azienda
                 </Link>
               </li>
               <li>
                 <Link
-                  href="#dove-siamo"
-                  className="text-secondary/80 hover:text-primary transition-colors"
+                  href="/prodotti"
+                  className="text-gray-600 hover:text-primary transition-colors duration-300 flex items-center gap-2 group"
                 >
+                  <span className="w-1 h-1 bg-gray-400 rounded-full group-hover:bg-primary transition-colors" />
+                  Prodotti
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/api/catalogo-pdf"
+                  className="text-gray-600 hover:text-primary transition-colors duration-300 flex items-center gap-2 group"
+                >
+                  <span className="w-1 h-1 bg-gray-400 rounded-full group-hover:bg-primary transition-colors" />
+                  Catalogo PDF
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/#dove-siamo"
+                  className="text-gray-600 hover:text-primary transition-colors duration-300 flex items-center gap-2 group"
+                >
+                  <span className="w-1 h-1 bg-gray-400 rounded-full group-hover:bg-primary transition-colors" />
                   Dove Siamo
                 </Link>
               </li>
               <li>
                 <Link
-                  href="#contact"
-                  className="text-secondary/80 hover:text-primary transition-colors"
+                  href="/contatti"
+                  className="text-gray-600 hover:text-primary transition-colors duration-300 flex items-center gap-2 group"
                 >
-                  Contattaci
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="text-secondary/80 hover:text-primary transition-colors"
-                >
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="text-secondary/80 hover:text-primary transition-colors"
-                >
-                  Termini e Condizioni
+                  <span className="w-1 h-1 bg-gray-400 rounded-full group-hover:bg-primary transition-colors" />
+                  Contatti
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Column 3 - Contact */}
+          {/* Column 3 - Location & Hours */}
           <div>
-            <h3 className="text-lg font-bold mb-4 text-white">Contatti</h3>
-            <ul className="space-y-3">
-              <li className="flex items-start">
-                <MapPin className="h-5 w-5 text-primary mt-1 mr-2 flex-shrink-0" />
-                <span className="text-secondary/80">
-                  Via della Campagna, 123
-                  <br />
-                  53100 Siena (SI)
-                  <br />
-                  Toscana, Italia
-                </span>
-              </li>
-              <li className="flex items-start">
-                <Phone className="h-5 w-5 text-primary mt-1 mr-2 flex-shrink-0" />
-                <span className="text-secondary/80">
-                  +39 0577 123456
-                  <br />
-                  +39 333 1234567
-                </span>
-              </li>
-              <li className="flex items-start">
-                <Mail className="h-5 w-5 text-primary mt-1 mr-2 flex-shrink-0" />
-                <span className="text-secondary/80">
-                  info@ilpichello.it
-                  <br />
-                  ordini@ilpichello.it
-                </span>
-              </li>
-            </ul>
-          </div>
+            <h4 className="text-xl font-bold mb-6 text-gray-900 flex items-center gap-2">
+              <div className="w-2 h-2 bg-secondary rounded-full" />
+              Dove Trovarci
+            </h4>
 
-          {/* Column 4 - Newsletter */}
-          <div>
-            <h3 className="text-lg font-bold mb-4 text-white">Newsletter</h3>
-            <p className="text-secondary/80 mb-4">
-              Iscriviti alla nostra newsletter per ricevere aggiornamenti sui
-              nostri prodotti e offerte speciali.
-            </p>
-            <div className="flex space-x-2">
-              <Input
-                placeholder="La tua email"
-                className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
-              />
-              <Button>Iscriviti</Button>
+            <div className="space-y-4">
+              <div className="flex items-start gap-3">
+                <MapPin className="h-5 w-5 text-secondary mt-1 flex-shrink-0" />
+                <div>
+                  <p className="text-gray-900 font-medium text-sm">Indirizzo</p>
+                  <p className="text-gray-600 text-sm leading-relaxed">
+                    Via Dante Alighieri 141<br />
+                    42033 Marola, Carpineti (RE)<br />
+                    Emilia-Romagna
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <Clock className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                <div>
+                  <p className="text-gray-900 font-medium text-sm">Orari</p>
+                  <p className="text-gray-600 text-sm leading-relaxed">
+                    Lun-Ven: 9:00 - 18:00<br />
+                    Sabato: 9:00 - 13:00<br />
+                    <span className="text-xs italic">Domenica: Chiuso</span>
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="border-t border-white/10 mt-12 pt-6 text-center text-secondary/60">
-          <p>
-            © {new Date().getFullYear()} Azienda Agricola Il Pichello. Tutti i
-            diritti riservati.
-          </p>
+        {/* Bottom Section */}
+        <div className="border-t border-gray-200 pt-8">
+          <div className="flex flex-col lg:flex-row justify-between items-center gap-6">
+            {/* Copyright */}
+            <div className="text-center lg:text-left">
+              <p className="text-gray-600 text-sm">
+                © {new Date().getFullYear()} Azienda Agricola Il Pichello. Tutti i diritti riservati.
+              </p>
+              <p className="text-gray-500 text-xs mt-1">
+                P.IVA: 01234567890 | REA: RE-123456
+              </p>
+            </div>
+
+            {/* Developer Credit */}
+            <div className="flex items-center gap-3 bg-gray-50 rounded-full px-6 py-3 border border-gray-200 hover:bg-gray-100 transition-all duration-300 group">
+              <div className="flex items-center gap-2">
+                <Heart className="h-4 w-4 text-red-400 group-hover:scale-110 transition-transform" />
+                <span className="text-gray-600 text-sm">Sviluppato con passione da</span>
+              </div>
+              <Link
+                href="https://manueldeceglie.it"
+                target="_blank"
+                className="text-primary font-bold text-sm hover:text-secondary transition-colors flex items-center gap-1 group"
+              >
+                Manuel De Ceglie
+                <ExternalLink className="h-3 w-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

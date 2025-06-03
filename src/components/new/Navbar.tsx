@@ -37,16 +37,22 @@ const NavbarV2 = () => {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
           <Link
-            href="/#chi-siamo"
+            href="/#la-nostra-azienda"
             className="text-foreground hover:text-primary transition-all duration-200 text-sm font-medium hover:-translate-y-0.5 transform"
           >
-            Chi Siamo
+            La Nostra Azienda
           </Link>
           <Link
             href="/prodotti"
             className="text-foreground hover:text-primary transition-all duration-200 text-sm font-medium hover:-translate-y-0.5 transform"
           >
             Prodotti
+          </Link>
+          <Link
+            href="/catalogo"
+            className="text-foreground hover:text-primary transition-all duration-200 text-sm font-medium hover:-translate-y-0.5 transform"
+          >
+            Catalogo
           </Link>
           <Link
             href="/#dove-siamo"
@@ -93,11 +99,11 @@ const NavbarV2 = () => {
                 {/* Use SheetClose to close panel on click */}
                 <SheetClose asChild>
                   <Link
-                    href="/#about"
+                    href="/#la-nostra-azienda"
                     className="font-medium text-lg hover:text-primary transition-colors"
                     prefetch={false}
                   >
-                    Chi siamo
+                    La Nostra Azienda
                   </Link>
                 </SheetClose>
                 <SheetClose asChild>
@@ -107,6 +113,15 @@ const NavbarV2 = () => {
                     prefetch={false}
                   >
                     Prodotti
+                  </Link>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Link
+                    href="/catalogo"
+                    className="font-medium text-lg hover:text-primary transition-colors"
+                    prefetch={false}
+                  >
+                    Catalogo
                   </Link>
                 </SheetClose>
                 <SheetClose asChild>

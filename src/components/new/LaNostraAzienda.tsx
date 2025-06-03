@@ -16,7 +16,7 @@ const AboutSection = () => {
 
   return (
     <section
-      id="chi-siamo"
+      id="la-nostra-azienda"
       ref={ref}
       className="relative py-12  bg-backgroundvariant overflow-hidden"
     >

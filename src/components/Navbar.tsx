@@ -36,11 +36,11 @@ export default function Navbar() {
             <SheetContent side="right" className="w-[200px] bg-background p-4">
               <nav className="grid gap-4">
                 <Link
-                  href="/#chi-siamo"
+                  href="/#la-nostra-azienda"
                   className="font-medium hover:underline"
                   prefetch={false}
                 >
-                  Chi siamo
+                  La Nostra Azienda
                 </Link>
                 <Link
                   href="/prodotti"
@@ -57,11 +57,11 @@ export default function Navbar() {
           </Sheet>
           <nav className="hidden md:flex lg:flex gap-4">
             <Link
-              href="/#chi-siamo"
+              href="/#la-nostra-azienda"
               className="font-medium flex items-center text-sm transition-colors hover:underline"
               prefetch={false}
             >
-              Chi siamo
+              La Nostra Azienda
             </Link>
             <Link
               href="/prodotti"

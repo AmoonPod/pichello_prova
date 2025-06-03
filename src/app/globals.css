@@ -109,6 +109,129 @@ body {
   }
 }
 
+/* Print styles for catalog */
+@media print {
+  @page {
+    size: A4;
+    margin: 1.5cm 1cm;
+  }
+
+  body {
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Hide elements not needed in print */
+  .print\\:hidden {
+    display: none !important;
+  }
+
+  /* Show print-only elements */
+  .print\\:block {
+    display: block !important;
+  }
+
+  /* Page breaks */
+  .break-inside-avoid {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .page-break-after {
+    page-break-after: always;
+    break-after: page;
+  }
+
+  .page-break-before {
+    page-break-before: always;
+    break-before: page;
+  }
+
+  /* Ensure colors and backgrounds are printed */
+  * {
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Fix margins and padding for print */
+  .print\\:p-8 {
+    padding: 2rem !important;
+  }
+
+  .print\\:rounded-none {
+    border-radius: 0 !important;
+  }
+
+  /* Ensure text is black for better readability */
+  .print\\:text-black {
+    color: black !important;
+  }
+
+  /* Optimize image sizes for print */
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  /* Ensure barcode visibility */
+  canvas {
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Prevent images from breaking across pages */
+  img {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Ensure tables don't break poorly */
+  table,
+  .nutritional-table {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Prevent orphaned headings */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  /* Control barcode display in print */
+  .barcode-container {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  /* Ensure certification images don't overflow */
+  .certification-grid {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Better spacing for print */
+  .product-card {
+    margin-bottom: 1cm;
+  }
+
+  /* Avoid breaking format sections */
+  .format-section {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
+
 /* .hero-section {
   position: relative;
   overflow: hidden;

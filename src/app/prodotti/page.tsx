@@ -2,6 +2,7 @@ import ProductsClient from "@/components/Prodotti";
 import { getCategorie, getProdotti } from "../../../sanity/sanity.query";
 import { CategoriaType, ProdottoType } from "../../../types";
 import { Suspense } from "react";
+import FooterV2 from "@/components/new/Footer";
 import "../globals.css";
 import { Metadata } from "next";
 
@@ -114,13 +115,16 @@ const ProdottiServer = async ({ searchParams }: Props) => {
   ]);
 
   return (
-    <Suspense>
-      <ProductsClient
-        prodotti={prodotti}
-        categorie={categories}
-        searchParams={searchParams}
-      />
-    </Suspense>
+    <>
+      <Suspense>
+        <ProductsClient
+          prodotti={prodotti}
+          categorie={categories}
+          searchParams={searchParams}
+        />
+      </Suspense>
+      <FooterV2 prodotti={prodotti} categorie={categories} />
+    </>
   );
 };
 

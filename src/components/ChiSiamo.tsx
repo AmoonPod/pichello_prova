@@ -12,7 +12,7 @@ export default function ChiSiamo() {
         <div className="grid gap-6 lg:grid-cols-[400px_1fr] lg:gap-12 xl:grid-cols-[600px_1fr]">
           <Image
             src={ChiSiamoImage}
-            alt="Chi siamo"
+            alt="La Nostra Azienda"
             className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full"
           />
           <div className="flex flex-col justify-center space-y-4">
@@ -31,7 +31,7 @@ export default function ChiSiamo() {
             </div>
             <div className="w-full max-w-sm space-y-2">
               <Button variant="outline" className="text-black" asChild>
-                <Link href="/chi-siamo">Leggi di più</Link>
+                <Link href="/la-nostra-azienda">Leggi di più</Link>
               </Button>
             </div>
           </div>

@@ -49,12 +49,6 @@ const NavbarV2 = () => {
             Prodotti
           </Link>
           <Link
-            href="/catalogo"
-            className="text-foreground hover:text-primary transition-all duration-200 text-sm font-medium hover:-translate-y-0.5 transform"
-          >
-            Catalogo
-          </Link>
-          <Link
             href="/#dove-siamo"
             className="text-foreground hover:text-primary transition-all duration-200 text-sm font-medium hover:-translate-y-0.5 transform"
           >
@@ -113,15 +107,6 @@ const NavbarV2 = () => {
                     prefetch={false}
                   >
                     Prodotti
-                  </Link>
-                </SheetClose>
-                <SheetClose asChild>
-                  <Link
-                    href="/catalogo"
-                    className="font-medium text-lg hover:text-primary transition-colors"
-                    prefetch={false}
-                  >
-                    Catalogo
                   </Link>
                 </SheetClose>
                 <SheetClose asChild>

@@ -1,6 +1,8 @@
 import NavbarV2 from "@/components/new/Navbar";
 import { Metadata } from "next";
 import { Bricolage_Grotesque } from "next/font/google";
+import { headers } from "next/headers";
+import { usePathname } from "next/navigation";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.agricolailpichello.it"),
@@ -164,11 +166,29 @@ const jsonLd = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const heads = await headers();
+  const pathname = heads.get("x-current-path");
+  const isStudio = pathname?.includes("/studio");
+  if (isStudio) {
+    return (
+      <html>
+        <head>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(jsonLd),
+            }}
+          />
+        </head>
+        <body>{children}</body>
+      </html>
+    );
+  }
   return (
     <html lang="it">
       <head>

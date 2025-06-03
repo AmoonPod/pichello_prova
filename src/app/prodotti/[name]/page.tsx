@@ -14,7 +14,7 @@ import FooterV2 from "@/components/new/Footer";
 import Link from "next/link";
 
 // Force static generation with revalidation for product pages
-export const dynamic = 'force-static';
+export const dynamic = "force-static";
 export const revalidate = 3600; // Revalidate every hour
 
 // Generate static paths for all products at build time
@@ -38,7 +38,7 @@ export default async function Product(props: {
   const [prodotto, prodotti, categorie] = await Promise.all([
     getProdottoBySlug(params.name),
     getProdotti(),
-    getCategorie()
+    getCategorie(),
   ]);
 
   if (!prodotto) return null;
@@ -110,7 +110,8 @@ export default async function Product(props: {
                           Ti interessa questo prodotto?
                         </h3>
                         <p className="text-muted-foreground text-sm leading-relaxed">
-                          Contattaci per informazioni su disponibilità, quantità e per effettuare il tuo ordine.
+                          Contattaci per informazioni su disponibilità, quantità
+                          e per effettuare il tuo ordine.
                           <span className="block text-xs mt-1 text-muted-foreground/80">
                             Risposta garantita entro 24 ore
                           </span>
@@ -122,8 +123,18 @@ export default async function Product(props: {
                           href="tel:3408200080"
                           className="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all duration-300 text-sm group"
                         >
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                          <svg
+                            className="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                            />
                           </svg>
                           Chiama Ora
                         </a>
@@ -132,8 +143,18 @@ export default async function Product(props: {
                           href={`/contatti?prodotto=${encodeURIComponent(prodotto.nome)}`}
                           className="inline-flex items-center justify-center gap-2 bg-white hover:bg-gray-50 text-primary font-semibold px-6 py-3 rounded-full border-2 border-primary shadow-sm hover:shadow-md transition-all duration-300 text-sm group"
                         >
-                          <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                          <svg
+                            className="w-4 h-4 group-hover:translate-x-0.5 transition-transform"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                            />
                           </svg>
                           Scrivi Messaggio
                         </a>
@@ -160,7 +181,7 @@ export default async function Product(props: {
                     <div className="text-sm text-gray-500 mb-1">Umidità</div>
                     <div className="font-semibold text-gray-900">
                       {prodotto.umidita !== null &&
-                        prodotto.umidita !== undefined
+                      prodotto.umidita !== undefined
                         ? `${prodotto.umidita}%`
                         : "N/D"}
                     </div>
@@ -168,7 +189,8 @@ export default async function Product(props: {
                   <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
                     <div className="text-sm text-gray-500 mb-1">Allergeni</div>
                     <div className="font-semibold text-gray-900 text-xs">
-                      Può contenere Glutine
+                      Può contenere Glutine in quanto i macchinari utilizzati
+                      lavorano anche cereali
                     </div>
                   </div>
                 </div>
@@ -183,7 +205,7 @@ export default async function Product(props: {
                       {(() => {
                         // Group formats by EAN code
                         const groupedFormats = prodotto.formati.reduce(
-                          (groups, item) => {
+                          (groups: any, item: any) => {
                             const ean = item.codice_ean || "no-ean";
                             if (!groups[ean]) {
                               groups[ean] = [];
@@ -203,14 +225,19 @@ export default async function Product(props: {
                               <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                                 <div className="flex-1">
                                   <div className="flex flex-wrap gap-2 mb-2">
-                                    {formats.map((formato, formatIndex) => (
-                                      <span
-                                        key={formatIndex}
-                                        className="inline-block bg-primary text-white px-4 py-2 rounded-full text-sm font-medium shadow-sm"
-                                      >
-                                        {formato}
-                                      </span>
-                                    ))}
+                                    {(formats as string[]).map(
+                                      (
+                                        formato: string,
+                                        formatIndex: number
+                                      ) => (
+                                        <span
+                                          key={formatIndex}
+                                          className="inline-block bg-primary text-white px-4 py-2 rounded-full text-sm font-medium shadow-sm"
+                                        >
+                                          {formato}
+                                        </span>
+                                      )
+                                    )}
                                   </div>
                                 </div>
                                 <div className="flex-1 lg:max-w-xs">
@@ -337,7 +364,7 @@ export default async function Product(props: {
                       <div className="text-sm text-gray-700 space-y-2">
                         {prodotto.valori_nutrizionali
                           ?.split("\n")
-                          .map((line, index) => {
+                          .map((line: string, index: number) => {
                             if (!line.trim()) return null;
                             const firstSpaceIndex = line.indexOf(" ");
                             let firstWord, rest;
@@ -364,8 +391,6 @@ export default async function Product(props: {
                     </div>
                   </div>
                 )}
-
-
               </div>
             </div>
           </div>
@@ -377,47 +402,66 @@ export default async function Product(props: {
             {/* Header */}
             <div className="text-center mb-12 lg:mb-16">
               <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-2 text-sm text-primary mb-6">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                  />
                 </svg>
                 <span className="font-medium">Prodotti Correlati</span>
               </div>
 
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 leading-tight">
                 Scopri Altri
-                <span className="block text-primary">Sapori dell'Appennino</span>
+                <span className="block text-primary">
+                  Sapori dell'Appennino
+                </span>
               </h2>
 
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                Altri prodotti della nostra selezione che potrebbero interessarti,
-                coltivati con la stessa passione e autenticità
+                Altri prodotti della nostra selezione che potrebbero
+                interessarti, coltivati con la stessa passione e autenticità
               </p>
             </div>
 
             {/* Products Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
-              {prodotti.slice(0, 3).map((product: ProdottoType, index) => (
-                <div
-                  key={product._id}
-                  className="group"
-                  style={{
-                    animationDelay: `${index * 0.1}s`,
-                  }}
-                >
-                  <div className="relative">
-                    {/* Decorative background */}
-                    <div className={`absolute inset-2 rounded-xl transform rotate-1 group-hover:rotate-0 transition-transform duration-500 ${index % 3 === 0 ? 'bg-gradient-to-br from-primary/10 via-primary/15 to-primary/20' :
-                      index % 3 === 1 ? 'bg-gradient-to-br from-secondary/10 via-secondary/15 to-secondary/20' :
-                        'bg-gradient-to-br from-primary/5 via-primary/10 to-primary/15'
-                      }`} />
-
-                    {/* Product Card */}
+              {prodotti
+                .slice(0, 3)
+                .map((product: ProdottoType, index: number) => (
+                  <div
+                    key={product._id}
+                    className="group"
+                    style={{
+                      animationDelay: `${index * 0.1}s`,
+                    }}
+                  >
                     <div className="relative">
-                      <ProductCard product={product} />
+                      {/* Decorative background */}
+                      <div
+                        className={`absolute inset-2 rounded-xl transform rotate-1 group-hover:rotate-0 transition-transform duration-500 ${
+                          index % 3 === 0
+                            ? "bg-gradient-to-br from-primary/10 via-primary/15 to-primary/20"
+                            : index % 3 === 1
+                              ? "bg-gradient-to-br from-secondary/10 via-secondary/15 to-secondary/20"
+                              : "bg-gradient-to-br from-primary/5 via-primary/10 to-primary/15"
+                        }`}
+                      />
+
+                      {/* Product Card */}
+                      <div className="relative">
+                        <ProductCard product={product} />
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
 
             {/* Call to Action */}
@@ -427,8 +471,18 @@ export default async function Product(props: {
                 className="inline-flex items-center gap-3 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 group"
               >
                 <span>Vedi Tutti i Prodotti</span>
-                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                <svg
+                  className="w-5 h-5 group-hover:translate-x-1 transition-transform"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
                 </svg>
               </Link>
             </div>

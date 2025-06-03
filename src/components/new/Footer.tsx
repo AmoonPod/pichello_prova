@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
 import {
   MapPin,
   Phone,
@@ -7,6 +10,8 @@ import {
   Clock,
   Heart,
   ExternalLink,
+  Download,
+  Loader2,
 } from "lucide-react";
 import { ProdottoType, CategoriaType } from "../../../types";
 
@@ -15,7 +20,29 @@ interface FooterV2Props {
   categorie?: CategoriaType[];
 }
 
-const FooterV2: React.FC<FooterV2Props> = ({ prodotti = [], categorie = [] }) => {
+const FooterV2: React.FC<FooterV2Props> = ({
+  prodotti = [],
+  categorie = [],
+}) => {
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  const handleCatalogDownload = async () => {
+    setIsDownloading(true);
+
+    try {
+      // Trigger the download
+      window.open("/api/catalogo-pdf", "_blank");
+
+      // Reset loading state after a delay (since we can't detect when download completes)
+      setTimeout(() => {
+        setIsDownloading(false);
+      }, 5000);
+    } catch (error) {
+      console.error("Error downloading catalog:", error);
+      setIsDownloading(false);
+    }
+  };
+
   return (
     <footer className="relative bg-white text-gray-900 overflow-hidden">
       {/* Decorative Background Elements */}
@@ -56,22 +83,31 @@ const FooterV2: React.FC<FooterV2Props> = ({ prodotti = [], categorie = [] }) =>
             </div>
 
             <p className="text-gray-600 leading-relaxed mb-8 text-lg">
-              Nel cuore dell'Appennino Reggiano coltiviamo con passione prodotti biorazionali genuini.
-              Dalla terra di Marola alle vostre tavole, preservando le tradizioni contadine e
-              rispettando i ritmi della natura.
+              Nel cuore dell'Appennino Reggiano coltiviamo con passione prodotti
+              biorazionali genuini. Dalla terra di Marola alle vostre tavole,
+              preservando le tradizioni contadine e rispettando i ritmi della
+              natura.
             </p>
 
             {/* Download Catalog Button */}
             <div className="mb-8">
-              <Link
-                href="/api/catalogo-pdf"
-                className="inline-flex items-center gap-3 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+              <button
+                onClick={handleCatalogDownload}
+                disabled={isDownloading}
+                className="inline-flex items-center gap-3 bg-primary hover:bg-primary/90 disabled:bg-primary/50 text-primary-foreground font-semibold px-6 py-3 rounded-full shadow-lg hover:shadow-xl disabled:shadow-md transition-all duration-300 transform hover:-translate-y-1 disabled:translate-y-0 disabled:cursor-not-allowed"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-                Scarica Catalogo PDF
-              </Link>
+                {isDownloading ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    Generando PDF...
+                  </>
+                ) : (
+                  <>
+                    <Download className="w-5 h-5" />
+                    Scarica Catalogo PDF
+                  </>
+                )}
+              </button>
             </div>
 
             {/* Contact Info Cards */}
@@ -84,7 +120,9 @@ const FooterV2: React.FC<FooterV2Props> = ({ prodotti = [], categorie = [] }) =>
                   <Phone className="h-5 w-5 text-primary group-hover:scale-110 transition-transform" />
                   <div>
                     <p className="text-gray-900 font-semibold text-sm">Mirco</p>
-                    <p className="text-gray-600 text-xs group-hover:text-primary transition-colors">340/8200080</p>
+                    <p className="text-gray-600 text-xs group-hover:text-primary transition-colors">
+                      340/8200080
+                    </p>
                   </div>
                 </div>
               </a>
@@ -96,8 +134,12 @@ const FooterV2: React.FC<FooterV2Props> = ({ prodotti = [], categorie = [] }) =>
                 <div className="flex items-center gap-3">
                   <Phone className="h-5 w-5 text-primary group-hover:scale-110 transition-transform" />
                   <div>
-                    <p className="text-gray-900 font-semibold text-sm">Viviana</p>
-                    <p className="text-gray-600 text-xs group-hover:text-primary transition-colors">339/7981644</p>
+                    <p className="text-gray-900 font-semibold text-sm">
+                      Viviana
+                    </p>
+                    <p className="text-gray-600 text-xs group-hover:text-primary transition-colors">
+                      339/7981644
+                    </p>
                   </div>
                 </div>
               </a>
@@ -110,7 +152,9 @@ const FooterV2: React.FC<FooterV2Props> = ({ prodotti = [], categorie = [] }) =>
                   <Mail className="h-5 w-5 text-secondary group-hover:scale-110 transition-transform" />
                   <div>
                     <p className="text-gray-900 font-semibold text-sm">Email</p>
-                    <p className="text-gray-600 text-xs group-hover:text-secondary transition-colors">info@agricolailpichello.it</p>
+                    <p className="text-gray-600 text-xs group-hover:text-secondary transition-colors">
+                      info@agricolailpichello.it
+                    </p>
                   </div>
                 </div>
               </a>
@@ -194,8 +238,10 @@ const FooterV2: React.FC<FooterV2Props> = ({ prodotti = [], categorie = [] }) =>
                 <div>
                   <p className="text-gray-900 font-medium text-sm">Indirizzo</p>
                   <p className="text-gray-600 text-sm leading-relaxed">
-                    Via Dante Alighieri 141<br />
-                    42033 Marola, Carpineti (RE)<br />
+                    Via Dante Alighieri 141
+                    <br />
+                    42033 Marola, Carpineti (RE)
+                    <br />
                     Emilia-Romagna
                   </p>
                 </div>
@@ -206,8 +252,10 @@ const FooterV2: React.FC<FooterV2Props> = ({ prodotti = [], categorie = [] }) =>
                 <div>
                   <p className="text-gray-900 font-medium text-sm">Orari</p>
                   <p className="text-gray-600 text-sm leading-relaxed">
-                    Lun-Ven: 9:00 - 18:00<br />
-                    Sabato: 9:00 - 13:00<br />
+                    Lun-Ven: 9:00 - 18:00
+                    <br />
+                    Sabato: 9:00 - 13:00
+                    <br />
                     <span className="text-xs italic">Domenica: Chiuso</span>
                   </p>
                 </div>
@@ -222,7 +270,8 @@ const FooterV2: React.FC<FooterV2Props> = ({ prodotti = [], categorie = [] }) =>
             {/* Copyright */}
             <div className="text-center lg:text-left">
               <p className="text-gray-600 text-sm">
-                © {new Date().getFullYear()} Azienda Agricola Il Pichello. Tutti i diritti riservati.
+                © {new Date().getFullYear()} Azienda Agricola Il Pichello.
+                Tutti i diritti riservati.
               </p>
               <p className="text-gray-500 text-xs mt-1">
                 P.IVA: 01234567890 | REA: RE-123456
@@ -233,7 +282,9 @@ const FooterV2: React.FC<FooterV2Props> = ({ prodotti = [], categorie = [] }) =>
             <div className="flex items-center gap-3 bg-gray-50 rounded-full px-6 py-3 border border-gray-200 hover:bg-gray-100 transition-all duration-300 group">
               <div className="flex items-center gap-2">
                 <Heart className="h-4 w-4 text-red-400 group-hover:scale-110 transition-transform" />
-                <span className="text-gray-600 text-sm">Sviluppato con passione da</span>
+                <span className="text-gray-600 text-sm">
+                  Sviluppato con passione da
+                </span>
               </div>
               <Link
                 href="https://manueldeceglie.it"

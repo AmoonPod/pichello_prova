@@ -14,6 +14,7 @@ import {
   SheetTrigger,
   SheetContent,
   SheetClose,
+  SheetTitle,
 } from "@/components/ui/sheet";
 
 const NavbarV2 = () => {
@@ -76,6 +77,8 @@ const NavbarV2 = () => {
             <SheetContent side="right" className="w-[250px] bg-white p-6">
               {" "}
               {/* Increased width & padding */}
+              {/* Add accessible title for screen readers */}
+              <SheetTitle className="sr-only">Menu di navigazione</SheetTitle>
               {/* Add Logo at the top */}
               <div className="mb-8 border-b pb-4">
                 <Link href="/" className="flex items-center gap-2">

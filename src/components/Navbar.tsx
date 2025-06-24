@@ -5,7 +5,7 @@ import { Button } from "./ui/button";
 import LOGO from "../../public/LOGO.png";
 import Image from "next/image";
 import "../app/globals.css";
-import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "./ui/sheet";
 import { MenuIcon } from "lucide-react";
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,6 +34,8 @@ export default function Navbar() {
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[200px] bg-background p-4">
+              <SheetTitle className="sr-only">Menu di navigazione</SheetTitle>
+
               <nav className="grid gap-4">
                 <Link
                   href="/#la-nostra-azienda"

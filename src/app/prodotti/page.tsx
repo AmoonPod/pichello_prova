@@ -7,26 +7,29 @@ import "../globals.css";
 import { Metadata } from "next";
 
 type Props = {
-  searchParams: { categoria?: string };
+  searchParams: Promise<{ categoria?: string }>;
 };
 
 // Force static generation with revalidation
-export const dynamic = 'force-static';
+export const dynamic = "force-static";
 export const revalidate = 3600; // Revalidate every hour (adjust as needed)
 
 export async function generateMetadata({
   searchParams,
 }: Props): Promise<Metadata> {
+  // Await the searchParams Promise
+  const resolvedSearchParams = await searchParams;
+
   // Use the same cached data from the page component
   const categories: CategoriaType[] = await getCategorie();
-  const categoriaSlug = searchParams.categoria;
+  const categoriaSlug = resolvedSearchParams.categoria;
 
   // Find the category if a filter is applied
   const currentCategory = categoriaSlug
     ? categories.find((cat) => {
-      const slug = JSON.parse(JSON.stringify(cat.slug)).current;
-      return slug === categoriaSlug;
-    })
+        const slug = JSON.parse(JSON.stringify(cat.slug)).current;
+        return slug === categoriaSlug;
+      })
     : null;
 
   if (currentCategory) {
@@ -108,10 +111,13 @@ export async function generateMetadata({
 }
 
 const ProdottiServer = async ({ searchParams }: Props) => {
+  // Await the searchParams Promise
+  const resolvedSearchParams = await searchParams;
+
   // Fetch prodotti and categories in parallel for better performance
   const [prodotti, categories] = await Promise.all([
     getProdotti(),
-    getCategorie()
+    getCategorie(),
   ]);
 
   return (
@@ -120,7 +126,7 @@ const ProdottiServer = async ({ searchParams }: Props) => {
         <ProductsClient
           prodotti={prodotti}
           categorie={categories}
-          searchParams={searchParams}
+          searchParams={resolvedSearchParams}
         />
       </Suspense>
       <FooterV2 prodotti={prodotti} categorie={categories} />

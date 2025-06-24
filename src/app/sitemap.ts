@@ -1,12 +1,21 @@
 import { MetadataRoute } from 'next';
+import { getProdotti, getCategorie } from '../../sanity/sanity.query';
+import { ProdottoType, CategoriaType } from '../../types';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://www.agricolailpichello.it';
 
   // Data dell'ultimo aggiornamento
   const lastModified = new Date();
 
-  return [
+  // Fetch all products and categories
+  const [prodotti, categorie] = await Promise.all([
+    getProdotti(),
+    getCategorie()
+  ]);
+
+  // Base pages
+  const basePages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
       lastModified: lastModified,
@@ -44,7 +53,29 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'yearly',
       priority: 0.6,
     },
-    // TODO: Aggiungere dinamicamente le pagine prodotto individuali quando disponibili
-    // Esempio: /prodotti/miele-acacia, /prodotti/cereali-antichi, etc.
   ];
+
+  // Individual product pages
+  const productPages: MetadataRoute.Sitemap = prodotti.map((prodotto: ProdottoType) => {
+    const slug = JSON.parse(JSON.stringify(prodotto.slug)).current;
+    return {
+      url: `${baseUrl}/prodotti/${slug}`,
+      lastModified: lastModified,
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    };
+  });
+
+  // Category filter pages
+  const categoryPages: MetadataRoute.Sitemap = categorie.map((categoria: CategoriaType) => {
+    const slug = JSON.parse(JSON.stringify(categoria.slug)).current;
+    return {
+      url: `${baseUrl}/prodotti?categoria=${slug}`,
+      lastModified: lastModified,
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
+    };
+  });
+
+  return [...basePages, ...productPages, ...categoryPages];
 }

@@ -9,7 +9,7 @@ import "../app/globals.css";
 import { Metadata } from "next";
 
 // Force static generation with revalidation for homepage
-export const dynamic = 'force-static';
+export const dynamic = "force-static";
 export const revalidate = 1800; // Revalidate every 30 minutes (homepage changes more frequently)
 
 export const metadata: Metadata = {
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
       "Scopri l'Azienda Agricola Il Pichello a Marola (RE), cuore dell'Appennino Reggiano. Coltiviamo con passione prodotti biorazionali: miele, cereali, legumi e trasformati. Tradizione e sostenibilità a km0.",
     images: [
       {
-        url: "/images/og-image.jpg", // Immagine 1200x630px da creare
+        url: "/images/og-image.png", // Fixed extension from .jpg to .png
         width: 1200,
         height: 630,
         alt: "Azienda Agricola Il Pichello - Prodotti Biorazionali Appennino Reggiano",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
       "Azienda Agricola Il Pichello | Prodotti Biorazionali Appennino Reggiano",
     description:
       "Scopri l'Azienda Agricola Il Pichello a Marola (RE), cuore dell'Appennino Reggiano. Coltiviamo con passione prodotti biorazionali: miele, cereali, legumi e trasformati. Tradizione e sostenibilità a km0.",
-    images: ["/images/og-image.jpg"],
+    images: ["/images/og-image.png"],
   },
   alternates: {
     canonical: "https://www.agricolailpichello.it/",
@@ -88,7 +88,7 @@ const jsonLd = {
         width: 400,
         height: 400,
       },
-      image: ["https://www.agricolailpichello.it/images/og-image.jpg"],
+      image: ["https://www.agricolailpichello.it/images/og-image.png"],
       description:
         "Azienda agricola specializzata nella produzione di miele, cereali, legumi e trasformati con metodi biorazionali nell'Appennino Reggiano. Vendita diretta ai mercati e su appuntamento in azienda.",
       address: {
@@ -164,7 +164,7 @@ export default async function Index() {
   // Fetch data for the footer catalog download
   const [prodotti, categorie] = await Promise.all([
     getProdotti(),
-    getCategorie()
+    getCategorie(),
   ]);
 
   return (

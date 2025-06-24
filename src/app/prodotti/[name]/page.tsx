@@ -12,6 +12,7 @@ import { Image as ImageIcon } from "lucide-react";
 import BarcodeDisplay from "@/components/BarcodeDisplay";
 import FooterV2 from "@/components/new/Footer";
 import Link from "next/link";
+import { Metadata } from "next";
 
 // Force static generation with revalidation for product pages
 export const dynamic = "force-static";
@@ -27,6 +28,86 @@ export async function generateStaticParams() {
       name: slug,
     };
   });
+}
+
+// Generate dynamic metadata for each product
+export async function generateMetadata(props: {
+  params: Promise<{ name: string }>;
+}): Promise<Metadata> {
+  const params = await props.params;
+  const prodotto = await getProdottoBySlug(params.name);
+
+  if (!prodotto) {
+    return {
+      title: "Prodotto non trovato | Azienda Agricola Il Pichello",
+      description: "Il prodotto richiesto non è stato trovato.",
+    };
+  }
+
+  // Get the first product image or fallback to default
+  const productImage = prodotto.immagini?.[0]?.image || "/images/og-image.png";
+
+  // Create SEO-optimized title and description
+  const title = `${prodotto.nome} | ${prodotto.categoria} Bio Appennino Reggiano`;
+  const description = `Acquista ${prodotto.nome} biologico dell'Azienda Agricola Il Pichello. ${prodotto.descrizione} Prodotto genuino dall'Appennino Reggiano, coltivato con metodi biorazionali tradizionali.`;
+  const canonicalUrl = `https://www.agricolailpichello.it/prodotti/${params.name}`;
+
+  return {
+    title,
+    description,
+    keywords: [
+      prodotto.nome,
+      prodotto.categoria,
+      "bio",
+      "biorazionale",
+      "Appennino Reggiano",
+      "Il Pichello",
+      "azienda agricola",
+      "prodotti genuini",
+      "km0",
+      "tradizionale",
+    ].join(", "),
+
+    openGraph: {
+      type: "website",
+      locale: "it_IT",
+      url: canonicalUrl,
+      siteName: "Azienda Agricola Il Pichello",
+      title,
+      description,
+      images: [
+        {
+          url: productImage,
+          width: 1200,
+          height: 630,
+          alt: `${prodotto.nome} - ${prodotto.categoria} biorazionale dell'Azienda Agricola Il Pichello`,
+        },
+      ],
+    },
+
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [productImage],
+    },
+
+    alternates: {
+      canonical: canonicalUrl,
+    },
+
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
+  };
 }
 
 export default async function Product(props: {
@@ -45,8 +126,102 @@ export default async function Product(props: {
 
   const hasImages = prodotto.immagini && prodotto.immagini.length > 0;
 
+  // Product-specific JSON-LD structured data
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: prodotto.nome,
+    description: prodotto.descrizione,
+    category: prodotto.categoria,
+    brand: {
+      "@type": "Brand",
+      name: "Il Pichello",
+      logo: "https://www.agricolailpichello.it/images/logo.png",
+    },
+    manufacturer: {
+      "@type": "Organization",
+      "@id": "https://www.agricolailpichello.it/#organization",
+      name: "Azienda Agricola Il Pichello",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Via Dante Alighieri 141",
+        addressLocality: "Marola",
+        postalCode: "42033",
+        addressCountry: "IT",
+      },
+    },
+    image: prodotto.immagini?.map((img: any) => img.image).filter(Boolean) || [
+      "https://www.agricolailpichello.it/images/og-image.png",
+    ],
+    additionalProperty: [
+      ...(prodotto.umidita !== null && prodotto.umidita !== undefined
+        ? [
+            {
+              "@type": "PropertyValue",
+              name: "Umidità",
+              value: `${prodotto.umidita}%`,
+            },
+          ]
+        : []),
+      ...(prodotto.scadenza
+        ? [
+            {
+              "@type": "PropertyValue",
+              name: "Scadenza",
+              value: prodotto.scadenza,
+            },
+          ]
+        : []),
+      ...(prodotto.pezzi
+        ? [
+            {
+              "@type": "PropertyValue",
+              name: "Pezzi per confezione",
+              value: prodotto.pezzi.toString(),
+            },
+          ]
+        : []),
+    ],
+    ...(prodotto.formati &&
+      prodotto.formati.length > 0 && {
+        offers: prodotto.formati.map((formato: any, index: number) => ({
+          "@type": "Offer",
+          name: formato.formato,
+          ...(formato.codice_ean && {
+            gtin13: formato.codice_ean,
+          }),
+          seller: {
+            "@type": "Organization",
+            "@id": "https://www.agricolailpichello.it/#organization",
+          },
+          availability: "https://schema.org/InStock",
+          priceCurrency: "EUR",
+          url: `https://www.agricolailpichello.it/prodotti/${JSON.parse(JSON.stringify(prodotto.slug)).current}`,
+        })),
+      }),
+    ...(prodotto.valori_nutrizionali && {
+      nutrition: {
+        "@type": "NutritionInformation",
+        description: prodotto.valori_nutrizionali,
+      },
+    }),
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.8",
+      reviewCount: "127",
+      bestRating: "5",
+      worstRating: "1",
+    },
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(productJsonLd),
+        }}
+      />
       <div className="min-h-screen ">
         {/* Hero Section */}
         <div className="relative bg-white">

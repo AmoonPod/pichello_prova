@@ -15,7 +15,7 @@ interface BarcodeProps {
 // Function to validate and fix EAN codes
 function validateAndFixEAN(ean: string): string | null {
   // Remove all non-numeric characters and spaces
-  const cleaned = ean.replace(/\D/g, '').trim();
+  const cleaned = ean.replace(/\D/g, "").trim();
 
   // Must have at least some digits
   if (cleaned.length === 0) {
@@ -65,10 +65,10 @@ function calculateEAN13CheckDigit(ean12: string): string {
 const BarcodeDisplay: React.FC<BarcodeProps> = ({
   value,
   format = "EAN13", // Default to EAN13 for EAN codes
-  width = 2,
+  width = 1.5, // Reduced for mobile friendliness
   height = 50,
   displayValue = true, // Show EAN below barcode by default
-  margin = 10,
+  margin = 5, // Reduced margin for mobile
 }) => {
   const svgRef = useRef<SVGSVGElement>(null);
 
@@ -100,7 +100,6 @@ const BarcodeDisplay: React.FC<BarcodeProps> = ({
           fontSize: 14,
         });
       } catch (e) {
-        console.error("Barcode generation failed:", e);
         // Try fallback to CODE128 if EAN13 fails
         try {
           if (format === "EAN13" && svgRef.current) {
@@ -115,7 +114,6 @@ const BarcodeDisplay: React.FC<BarcodeProps> = ({
             });
           }
         } catch (fallbackError) {
-          console.error("Fallback barcode generation also failed:", fallbackError);
           // Clear the SVG on complete failure
           if (svgRef.current) {
             svgRef.current.innerHTML = "";
@@ -131,8 +129,8 @@ const BarcodeDisplay: React.FC<BarcodeProps> = ({
   }
 
   return (
-    <div className="barcode-container">
-      <svg ref={svgRef} />
+    <div className="barcode-container w-full overflow-hidden">
+      <svg ref={svgRef} className="max-w-full h-auto" />
     </div>
   );
 };

@@ -415,9 +415,9 @@ export default async function Product(props: {
                                     )}
                                   </div>
                                 </div>
-                                <div className="flex-1 lg:max-w-xs">
+                                <div className="flex-1 lg:max-w-xs max-w-full min-w-0">
                                   {ean !== "no-ean" ? (
-                                    <div className="bg-white rounded-lg p-3 border border-gray-200">
+                                    <div className="bg-white rounded-lg p-3 border border-gray-200 overflow-hidden">
                                       <span className="font-medium text-sm block mb-2 text-gray-700">
                                         Codice EAN:
                                       </span>

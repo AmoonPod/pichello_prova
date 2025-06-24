@@ -2,7 +2,6 @@ import NavbarV2 from "@/components/new/Navbar";
 import { Metadata } from "next";
 import { Bricolage_Grotesque } from "next/font/google";
 import { headers } from "next/headers";
-import { usePathname } from "next/navigation";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.agricolailpichello.it"),
@@ -26,12 +25,12 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-      { url: "/favicon/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
     ],
     apple: [
       {
-        url: "/favicon/apple-touch-icon.png",
+        url: "/apple-touch-icon.png",
         sizes: "180x180",
         type: "image/png",
       },
@@ -44,7 +43,7 @@ export const metadata: Metadata = {
       },
     ],
   },
-  manifest: "/favicon/site.webmanifest",
+  manifest: "/site.webmanifest",
   other: {
     "msapplication-TileColor": "#da532c",
     "msapplication-config": "/favicon/browserconfig.xml",
@@ -56,6 +55,7 @@ const bricolageGrotesque = Bricolage_Grotesque({
   display: "swap",
   weight: ["200", "300", "400", "500", "600", "700", "800"],
   subsets: ["latin"],
+  preload: true,
 });
 
 // Schema.org JSON-LD structured data
@@ -157,11 +157,11 @@ const jsonLd = {
       },
       openingHoursSpecification: {
         "@type": "OpeningHoursSpecification",
-        description: "Vendita diretta ai mercati e su appuntamento in azienda",
+        description: "Vendita diretta  in azienda",
       },
       priceRange: "€€",
       currenciesAccepted: "EUR",
-      paymentAccepted: "Cash, Credit Card",
+      paymentAccepted: "Contanti, Carta di credito",
     },
   ],
 };
@@ -178,6 +178,14 @@ export default async function RootLayout({
     return (
       <html>
         <head>
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossOrigin="anonymous"
+          />
+          <link rel="preconnect" href="https://cdn.sanity.io" />
+          <link rel="dns-prefetch" href="https://www.google-analytics.com" />
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{
@@ -192,6 +200,17 @@ export default async function RootLayout({
   return (
     <html lang="it">
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link rel="preconnect" href="https://cdn.sanity.io" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+
+        <link rel="preload" href="/globals.css" as="style" />
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -199,7 +218,7 @@ export default async function RootLayout({
           }}
         />
       </head>
-      <body className={`${bricolageGrotesque.className} `}>
+      <body className={`${bricolageGrotesque.className}`}>
         <NavbarV2 />
         {children}
       </body>

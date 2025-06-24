@@ -205,9 +205,6 @@ export default function ProductsSectionClient({
 
               // Skip if slug is not a valid non-empty string
               if (!slugString || typeof slugString !== "string") {
-                console.warn(
-                  `Skipping category due to invalid slug: ${category.nome || category._id}`
-                );
                 return null;
               }
 

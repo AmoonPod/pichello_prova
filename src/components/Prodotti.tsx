@@ -456,24 +456,6 @@ const ProductsClient = ({
                       </div>
                     </div>
                   </motion.div>
-
-                  {/* Mobile Category Description */}
-                  {selectedCategory && getCategoryDescription() && (
-                    <motion.div
-                      variants={itemVariants}
-                      initial="hidden"
-                      animate={isVisible ? "visible" : "hidden"}
-                      className="relative group"
-                    >
-                      <div className="absolute inset-1 bg-gradient-to-br from-primary/3 to-primary/8 rounded-2xl transform rotate-1 group-hover:rotate-0 transition-transform duration-300" />
-
-                      <div className="relative bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-                        <p className="text-gray-700 leading-relaxed text-sm mb-0">
-                          {getCategoryDescription()}
-                        </p>
-                      </div>
-                    </motion.div>
-                  )}
                 </div>
 
                 {/* Results Header - Desktop Only */}
@@ -518,32 +500,6 @@ const ProductsClient = ({
                       >
                         <List className="w-4 h-4" />
                       </button>
-                    </div>
-                  </motion.div>
-                )}
-
-                {/* Category Description - Dynamic Content */}
-                {selectedCategory && getCategoryDescription() && (
-                  <motion.div
-                    variants={itemVariants}
-                    initial="hidden"
-                    animate={isVisible ? "visible" : "hidden"}
-                    className="mb-12"
-                  >
-                    <div className="relative group">
-                      <div className="absolute inset-2 bg-gradient-to-br from-primary/3 via-primary/5 to-primary/8 rounded-3xl transform rotate-1 group-hover:rotate-0 transition-transform duration-500" />
-
-                      <div className="relative bg-white rounded-3xl p-8 lg:p-10 shadow-sm border border-gray-100">
-                        <div className="prose prose-lg max-w-none">
-                          <p className="text-gray-700 leading-relaxed text-base lg:text-lg mb-0">
-                            {getCategoryDescription()}
-                          </p>
-                        </div>
-
-                        {/* Decorative elements */}
-                        <div className="absolute top-6 right-6 w-12 h-12 bg-primary/5 rounded-full blur-sm" />
-                        <div className="absolute bottom-4 left-4 w-8 h-8 bg-secondary/5 rounded-full blur-sm" />
-                      </div>
                     </div>
                   </motion.div>
                 )}

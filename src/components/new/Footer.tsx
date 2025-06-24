@@ -27,18 +27,22 @@ const FooterV2: React.FC<FooterV2Props> = ({
   const [isDownloading, setIsDownloading] = useState(false);
 
   const handleCatalogDownload = async () => {
-    setIsDownloading(true);
+    if (isDownloading) return;
 
     try {
-      // Trigger the download
-      window.open("/api/catalogo-pdf", "_blank");
+      setIsDownloading(true);
+
+      // Lazy load the PDF generation functionality
+      const { useCatalogPDF } = await import("@/hooks/useCatalogPDF");
+      const { generatePDF } = useCatalogPDF();
+
+      generatePDF(prodotti, categorie);
 
       // Reset loading state after a delay (since we can't detect when download completes)
       setTimeout(() => {
         setIsDownloading(false);
       }, 5000);
     } catch (error) {
-      console.error("Error downloading catalog:", error);
       setIsDownloading(false);
     }
   };
@@ -89,7 +93,7 @@ const FooterV2: React.FC<FooterV2Props> = ({
               natura.
             </p>
 
-            {/* Download Catalog Button */}
+            {/* Download Catalog Button - Optimized with lazy loading */}
             <div className="mb-6 lg:mb-8">
               <button
                 onClick={handleCatalogDownload}

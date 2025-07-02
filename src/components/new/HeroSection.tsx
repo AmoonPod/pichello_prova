@@ -14,6 +14,8 @@ import {
   TreePine,
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
+import Cereali from "../../../public/images/cereali.jpg";
 
 // Counter animation component
 const AnimatedCounter = ({
@@ -247,8 +249,8 @@ const HeroSection = () => {
             {/* Main Product Image */}
             <div className="relative max-w-lg mx-auto lg:max-w-none mt-8 lg:mt-0">
               <div className="relative w-full h-80 sm:h-96 lg:h-[500px] rounded-3xl overflow-hidden shadow-2xl">
-                <img
-                  src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                <Image
+                  src={Cereali}
                   alt="Cesto di prodotti biorazionali dell'Azienda Agricola Il Pichello: miele, farine macinate a pietra, cereali e legumi dell'Appennino Reggiano"
                   className="w-full h-full object-cover"
                 />

@@ -152,9 +152,19 @@ const LocationSection = () => {
                     <h4 className="font-semibold text-foreground">Orari</h4>
                   </div>
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    Lun-Ven: 9:00 - 18:00
+                    Lun: 10:00-13:00 | 15:30-18:30
                     <br />
-                    Sabato: 9:00 - 13:00
+                    Mar: 10:00-13:00 | Chiuso
+                    <br />
+                    Mer: 10:00-13:00 | 15:30-18:30
+                    <br />
+                    Gio: 10:00-13:00 | Chiuso
+                    <br />
+                    Ven: 10:00-13:00 | 15:30-18:30
+                    <br />
+                    <span className="text-xs italic">
+                      Sab-Dom: Su appuntamento
+                    </span>
                   </p>
                 </div>
               </motion.div>

@@ -2,9 +2,10 @@
 
 import { useRef, useEffect, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import { Leaf, Award, Users, Heart, Mountain, TreePine } from "lucide-react";
+import { Leaf, Award, Heart, Mountain, TreePine } from "lucide-react";
 import Image from "next/image";
-
+import ValTassobbio from "../../../public/images/valtassobbio.jpg";
+import IlPichello from "../../../public/images/pichello.jpg";
 const AboutSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
@@ -170,7 +171,7 @@ const AboutSection = () => {
             {/* Main Image */}
             <div className="relative h-96 lg:h-[300px] rounded-3xl overflow-hidden shadow-2xl mb-6">
               <Image
-                src="https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80"
+                src={IlPichello}
                 alt="La storica casa contadina 'Il Pichello' a Marola, Appennino Reggiano - Azienda Agricola biorazionale"
                 fill
                 className="object-cover"
@@ -186,7 +187,7 @@ const AboutSection = () => {
             <div className="grid grid-cols-2 gap-4">
               <div className="relative h-32 lg:h-40 rounded-xl overflow-hidden shadow-lg">
                 <Image
-                  src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                  src={ValTassobbio}
                   alt="Suggestivo paesaggio dell'Appennino Reggiano vicino a Marola, territorio dell'Agricola Il Pichello"
                   fill
                   className="object-cover"

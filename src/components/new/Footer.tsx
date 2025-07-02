@@ -253,11 +253,19 @@ const FooterV2: React.FC<FooterV2Props> = ({
                 <div>
                   <p className="text-gray-900 font-medium text-sm">Orari</p>
                   <p className="text-gray-600 text-sm leading-relaxed">
-                    Lun-Ven: 9:00 - 18:00
+                    Lun: 10:00-13:00 | 15:30-18:30
                     <br />
-                    Sabato: 9:00 - 13:00
+                    Mar: 10:00-13:00 | Chiuso
                     <br />
-                    <span className="text-xs italic">Domenica: Chiuso</span>
+                    Mer: 10:00-13:00 | 15:30-18:30
+                    <br />
+                    Gio: 10:00-13:00 | Chiuso
+                    <br />
+                    Ven: 10:00-13:00 | 15:30-18:30
+                    <br />
+                    <span className="text-xs italic">
+                      Sab-Dom: Su appuntamento
+                    </span>
                   </p>
                 </div>
               </div>

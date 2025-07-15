@@ -173,7 +173,7 @@ const HeroSection = () => {
               ricca varietà di prodotti della terra: dal miele biologico ai
               cereali antichi macinati a pietra, dai legumi tradizionali alle
               erbe per tisane, dalle castagne di montagna ai prodotti freschi
-              stagionali. Ogni prodotto nasce dalla terra di Marola e arriva
+              stagionali. Ogni prodotto nasce dal terreno Reggiano e arriva
               sulle tavole con la sincerità di chi rispetta la natura e preserva
               le tradizioni dell'Appennino.
             </p>
@@ -308,7 +308,7 @@ const HeroSection = () => {
         >
           <div className="text-center bg-card/50 border border-border/50 rounded-xl p-4 lg:p-6 hover:bg-card transition-colors">
             <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary mb-2">
-              <AnimatedCounter end={10} suffix="+" />
+              <AnimatedCounter end={20} suffix="+" />
             </div>
             <div className="text-xs md:text-sm lg:text-base text-muted-foreground font-medium">
               Anni di Esperienza

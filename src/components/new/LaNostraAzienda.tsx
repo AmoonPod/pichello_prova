@@ -97,17 +97,11 @@ const AboutSection = () => {
                   , la nostra famiglia coltiva da generazioni seguendo i ritmi
                   naturali delle stagioni, studiando con sapienza le
                   composizioni dei terreni e selezionando le piante migliori con
-                  metodi tramandati nel tempo, proprio qui a{" "}
-                  <span className="font-semibold text-primary">Marola</span>,
-                  nel cuore dell'Appennino di{" "}
-                  <span className="font-semibold text-secondary">
-                    Carpineti
-                  </span>
-                  .
+                  metodi tramandati nel tempo.
                 </p>
 
                 <h4 className="text-xl font-semibold text-primary mt-8 mb-4">
-                  Il Nostro Impegno: Metodo Biorazionale a Marola
+                  Il Nostro Impegno: Metodo Biorazionale nell'Appennino Reggiano
                 </h4>
                 <p>
                   Il nostro{" "}
@@ -116,9 +110,9 @@ const AboutSection = () => {
                   </span>{" "}
                   rappresenta la nostra filosofia di vita: un'agricoltura
                   sostenibile di montagna, praticata con orgoglio sui nostri
-                  terreni a{" "}
+                  terreni nell'{" "}
                   <span className="font-semibold text-secondary">
-                    Marola (Carpineti, RE)
+                    Appennino Reggiano
                   </span>
                   , che rifiuta pesticidi e stratagemmi moderni. Attraverso la
                   rotazione delle colture, l'uso di concimi naturali
@@ -153,7 +147,7 @@ const AboutSection = () => {
                 </p>
 
                 <blockquote className="border-l-4 border-primary pl-6 italic text-lg text-secondary font-medium mt-8">
-                  "Ogni prodotto nasce dalla terra di Marola e arriva sulle
+                  "Ogni prodotto nasce dal terreno Reggiano e arriva sulle
                   tavole con la sincerità di chi rispetta la natura e le
                   tradizioni montane dell'Appennino."
                 </blockquote>
@@ -292,9 +286,8 @@ const AboutSection = () => {
               </div>
               <p className="text-muted-foreground leading-relaxed text-sm lg:text-base flex-1">
                 Metodi tramandati di generazione in generazione nell'Appennino
-                Reggiano, in particolare nella zona di Marola e Carpineti, dove
-                la sapienza contadina dell'alta Val Tassobbio incontra
-                l'innovazione sostenibile.
+                Reggiano, dove la sapienza contadina dell'alta Val Tassobbio
+                incontra l'innovazione sostenibile.
               </p>
             </div>
           </div>

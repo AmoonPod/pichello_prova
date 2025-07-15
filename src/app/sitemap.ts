@@ -34,6 +34,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'yearly',
       priority: 0.7,
     },
+    {
+      url: `${baseUrl}/privacy`,
+      lastModified: lastModified,
+      changeFrequency: 'yearly',
+      priority: 0.5,
+    },
     // Sezioni della homepage con anchor links
     {
       url: `${baseUrl}/#la-nostra-azienda`,
@@ -46,13 +52,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: lastModified,
       changeFrequency: 'yearly',
       priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/#contact`,
-      lastModified: lastModified,
-      changeFrequency: 'yearly',
-      priority: 0.6,
-    },
+    }
   ];
 
   // Individual product pages

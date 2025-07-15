@@ -2,11 +2,151 @@
 
 import React, { useState, useCallback } from "react";
 import { ProdottoType, CategoriaType } from "../../types";
+import JsBarcode from "jsbarcode";
 
 export const useCatalogPDF = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [progress, setProgress] = useState(0);
   const [status, setStatus] = useState<string>("");
+
+  // Helper function to validate and fix EAN codes
+  const validateAndFixEAN = (ean: string): string | null => {
+    const cleaned = ean.replace(/\D/g, "").trim();
+    if (cleaned.length === 0) return null;
+    if (cleaned.length < 12) return null;
+    if (cleaned.length === 14) return cleaned.substring(0, 13);
+    if (cleaned.length === 13) return cleaned;
+    if (cleaned.length === 12) {
+      const checkDigit = calculateEAN13CheckDigit(cleaned);
+      return cleaned + checkDigit;
+    }
+    if (cleaned.length > 14) return cleaned.substring(0, 13);
+    return null;
+  };
+
+  const calculateEAN13CheckDigit = (ean12: string): string => {
+    let sum = 0;
+    for (let i = 0; i < 12; i++) {
+      const digit = parseInt(ean12[i]);
+      sum += i % 2 === 0 ? digit : digit * 3;
+    }
+    const checkDigit = (10 - (sum % 10)) % 10;
+    return checkDigit.toString();
+  };
+
+  // Helper function to compress and resize images for PDF
+  const compressImageForPDF = (
+    imageUrl: string,
+    maxWidth: number,
+    maxHeight: number,
+    quality: number = 0.7
+  ): Promise<{ dataUrl: string; width: number; height: number } | null> => {
+    return new Promise((resolve) => {
+      try {
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+
+        // Set timeout to avoid hanging on slow images
+        const timeout = setTimeout(() => {
+          resolve(null);
+        }, 5000); // 5 second timeout
+
+        img.onload = () => {
+          clearTimeout(timeout);
+          try {
+            // Create canvas for resizing
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+
+            if (!ctx) {
+              resolve(null);
+              return;
+            }
+
+            // Calculate new dimensions while preserving aspect ratio
+            let { width, height } = img;
+            const aspectRatio = width / height;
+
+            // More aggressive size reduction for PDF
+            if (width > maxWidth) {
+              width = maxWidth;
+              height = width / aspectRatio;
+            }
+
+            if (height > maxHeight) {
+              height = maxHeight;
+              width = height * aspectRatio;
+            }
+
+            // Ensure minimum size for readability
+            if (width < 100) {
+              width = 100;
+              height = width / aspectRatio;
+            }
+
+            // Set canvas size
+            canvas.width = width;
+            canvas.height = height;
+
+            // Fill with white background
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(0, 0, width, height);
+
+            // Draw resized image with highest quality settings
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = "high";
+            // Enable additional quality improvements
+            ctx.globalCompositeOperation = "source-over";
+            ctx.drawImage(img, 0, 0, width, height);
+
+            // Convert to compressed JPEG with high quality for better appearance
+            const compressedDataUrl = canvas.toDataURL("image/jpeg", quality);
+            resolve({
+              dataUrl: compressedDataUrl,
+              width: width,
+              height: height,
+            });
+          } catch (error) {
+            console.warn("Error compressing image:", error);
+            resolve(null);
+          }
+        };
+
+        img.onerror = () => {
+          clearTimeout(timeout);
+          resolve(null);
+        };
+
+        img.src = imageUrl;
+      } catch (error) {
+        console.warn("Error loading image:", error);
+        resolve(null);
+      }
+    });
+  };
+
+  // Helper function to generate barcode as data URL
+  const generateBarcodeDataURL = (ean: string): string | null => {
+    try {
+      const canvas = document.createElement("canvas");
+      const validEAN = validateAndFixEAN(ean);
+      if (!validEAN) return null;
+
+      JsBarcode(canvas, validEAN, {
+        format: "EAN13",
+        width: 1.5,
+        height: 40,
+        displayValue: true,
+        margin: 5,
+        fontSize: 8,
+        textMargin: 2,
+      });
+
+      return canvas.toDataURL();
+    } catch (error) {
+      return null;
+    }
+  };
 
   const generatePDF = useCallback(
     (prodotti: ProdottoType[], categorie: CategoriaType[]) => {
@@ -50,6 +190,7 @@ export const useCatalogPDF = () => {
                   nome: "Tutti i Prodotti",
                   descrizione: "Catalogo completo dei nostri prodotti",
                   slug: { current: "tutti-prodotti", _type: "slug" },
+                  ordine: 0,
                 },
                 prodotti: prodotti,
               });
@@ -203,8 +344,6 @@ export const useCatalogPDF = () => {
           pdf.setTextColor(0, 0, 0);
           pdf.setFontSize(10);
           pdf.setFont("helvetica", "normal");
-          pdf.text("Test: Generazione PDF funzionante", margin, yPosition);
-          yPosition += 10;
 
           // Step 5: Add products (60-90%)
           setStatus("Aggiunta prodotti...");
@@ -220,406 +359,424 @@ export const useCatalogPDF = () => {
             // Check space for category header
             checkPageSpace(25);
 
-            // Category header with background
-            pdf.setFillColor(254, 243, 234); // Light orange background (matching primary)
-            pdf.setDrawColor(112, 42, 0); // Primary color
-            pdf.setLineWidth(0.5);
-            pdf.rect(margin, yPosition, contentWidth, 15, "FD");
+            // Category header - design pulito e centrato
+            pdf.setFillColor(112, 42, 0); // Primary color background
+            pdf.rect(margin, yPosition, contentWidth, 16, "F");
 
-            pdf.setTextColor(112, 42, 0); // Primary color text
-            pdf.setFontSize(14);
+            // Category name - centrato e con wrapping gestito
+            pdf.setTextColor(255, 255, 255);
+            pdf.setFontSize(12);
             pdf.setFont("helvetica", "bold");
-            pdf.text(group.categoria.nome, margin + 5, yPosition + 6);
 
-            pdf.setFontSize(8);
-            pdf.setFont("helvetica", "normal");
-            pdf.text(
-              `${group.prodotti.length} prodotti disponibili`,
-              margin + 5,
-              yPosition + 11
+            const categoryText = `${group.categoria.nome} (${group.prodotti.length} prodotti)`;
+            const textLines = pdf.splitTextToSize(
+              categoryText,
+              contentWidth - 10
             );
+            const lineHeight = 4; // Altezza riga fissa per il calcolo
+            const textHeight = textLines.length * lineHeight;
+            const startY = yPosition + (16 - textHeight) / 2 + 4;
 
-            yPosition += 20;
+            pdf.text(textLines, margin + contentWidth / 2, startY, {
+              align: "center",
+              baseline: "middle",
+            });
 
-            // Category description
-            if (group.categoria.descrizione) {
-              checkPageSpace(15);
-              pdf.setTextColor(107, 114, 128);
-              pdf.setFontSize(8);
-              pdf.setFont("helvetica", "italic");
-              const descHeight = addWrappedText(
-                group.categoria.descrizione,
-                margin + 5,
-                yPosition,
-                contentWidth - 10,
-                8,
-                "italic"
-              );
-              yPosition += descHeight + 5;
-            }
+            yPosition += 22;
 
             // Products in this category
             for (const prodotto of group.prodotti) {
               productCount++;
               const progressValue = 60 + (productCount / totalProducts) * 30;
               setProgress(Math.round(progressValue));
+              setStatus(
+                `Processando prodotto ${productCount}/${totalProducts}...`
+              );
 
               // Reset colors and styles
               pdf.setTextColor(0, 0, 0);
               pdf.setFontSize(10);
               pdf.setFont("helvetica", "normal");
 
-              // Estimate product card height
-              let estimatedHeight = 60; // Base height
+              // Design completamente nuovo - calcolo altezza dinamica
+              let leftColHeight = 0;
+              let rightColHeight = 0;
 
-              // Add height for description
-              if (prodotto.descrizione) {
-                const descLines = Math.ceil(prodotto.descrizione.length / 80);
-                estimatedHeight += descLines * 3;
+              // Calculate left column height
+              // Add height for product image if available
+              if (prodotto.immagini && prodotto.immagini.length > 0) {
+                leftColHeight += 8 + 60 + 5; // Section title + generous estimated image height + spacing
               }
-
-              // Add height for formats
               if (prodotto.formati && prodotto.formati.length > 0) {
-                estimatedHeight +=
-                  15 + Math.ceil(prodotto.formati.length / 3) * 8;
+                leftColHeight += 8; // Section title
+                const groupedFormats = prodotto.formati.reduce(
+                  (groups, item) => {
+                    const ean = item?.codice_ean || "no-ean";
+                    if (!groups[ean]) groups[ean] = [];
+                    if (item?.formato) groups[ean].push(item.formato);
+                    return groups;
+                  },
+                  {} as Record<string, string[]>
+                );
+                for (const [ean, formats] of Object.entries(groupedFormats)) {
+                  const formatLines = pdf.splitTextToSize(
+                    formats.join(" • "),
+                    contentWidth / 2 - 15
+                  );
+                  leftColHeight += formatLines.length * 4 + 2; // Format text
+
+                  // Add height for barcode or EAN text
+                  if (ean !== "no-ean") {
+                    leftColHeight += 12 + 5; // Barcode height + spacing
+                  } else {
+                    leftColHeight += 5; // Text fallback
+                  }
+                }
+              }
+              if (
+                prodotto.marchi &&
+                Object.values(prodotto.marchi).some(Boolean)
+              ) {
+                leftColHeight += 12; // Section title + spacing
+                const certificazioni = Object.keys(prodotto.marchi).filter(
+                  (key) =>
+                    prodotto.marchi?.[key as keyof typeof prodotto.marchi]
+                );
+                const certLines = pdf.splitTextToSize(
+                  certificazioni.join(", "),
+                  contentWidth / 2 - 15
+                );
+                leftColHeight += certLines.length * 4;
               }
 
-              // Add height for nutritional values
+              // Calculate right column height
+              // Nutritional values
               if (prodotto.valori_nutrizionali) {
+                rightColHeight += 8; // Section title
                 const nutritionalLines = prodotto.valori_nutrizionali
                   .split("\n")
-                  .filter((line) => line.trim()).length;
-                estimatedHeight += 15 + nutritionalLines * 3;
+                  .filter((line) => line.trim())
+                  .slice(0, 8); // Limit to 8 values
+                rightColHeight += nutritionalLines.length * 4.5; // More accurate line height
               }
 
-              // Check if we need a new page
+              let estimatedHeight =
+                45 + Math.max(leftColHeight, rightColHeight); // Adequate spacing for info bar and content
               checkPageSpace(estimatedHeight);
 
               const cardStartY = yPosition;
 
-              // Draw the product card background FIRST
-              pdf.setFillColor(255, 255, 255);
-              pdf.setDrawColor(229, 231, 235);
-              pdf.setLineWidth(0.3);
-              pdf.rect(margin, cardStartY, contentWidth, estimatedHeight, "FD");
-
-              let cardY = yPosition + 5;
+              let cardY = yPosition + 8;
 
               // Product name
               const productName =
                 prodotto.nome || "Nome prodotto non disponibile";
-              const nameHeight = addWrappedText(
-                productName,
-                margin + 5,
-                cardY,
-                contentWidth * 0.6,
-                12,
-                "bold",
-                [0, 0, 0]
-              );
-              cardY += nameHeight + 2;
+              pdf.setTextColor(0, 0, 0);
+              pdf.setFontSize(14);
+              pdf.setFont("helvetica", "bold");
+              pdf.text(productName, margin + 5, cardY);
+              cardY += 6;
 
-              // Product description
-              if (prodotto.descrizione) {
-                const descHeight = addWrappedText(
-                  prodotto.descrizione,
-                  margin + 5,
-                  cardY,
-                  contentWidth * 0.9,
-                  9,
-                  "normal",
-                  [60, 60, 60]
-                );
-                cardY += descHeight + 3;
-              }
+              // Separator line
+              pdf.setDrawColor(230, 230, 230);
+              pdf.line(margin + 5, cardY, margin + contentWidth - 5, cardY);
+              cardY += 5;
 
-              // Quick info section
-              const quickInfoY = cardY;
-              const infoBoxWidth = (contentWidth - 20) / 4;
+              // Info essenziali bar
+              const infoBarY = cardY;
+              pdf.setFillColor(248, 250, 252);
+              pdf.rect(margin + 5, infoBarY, contentWidth - 10, 12, "F");
 
-              // Quick info boxes
-              const quickInfoItems = [
-                { label: "Scadenza", value: prodotto.scadenza || "N/D" },
+              // Info in formato tabellare pulito
+              const infoItems = [
                 {
-                  label: "Pezzi per scatola",
-                  value:
-                    prodotto.pezzi !== null && prodotto.pezzi !== undefined
-                      ? prodotto.pezzi.toString()
-                      : "N/D",
+                  label: "Scadenza",
+                  value: prodotto.scadenza || "N/D",
+                },
+                {
+                  label: "Pezzi/scatola",
+                  value: prodotto.pezzi?.toString() || "N/D",
                 },
                 {
                   label: "Umidità",
-                  value:
-                    prodotto.umidita !== null && prodotto.umidita !== undefined
-                      ? `${prodotto.umidita}%`
-                      : "N/D",
+                  value: prodotto.umidita ? `${prodotto.umidita}%` : "N/D",
                 },
-                { label: "Allergeni", value: "Può contenere Glutine" },
+                {
+                  label: "Allergeni",
+                  value: "Glutine",
+                },
               ];
 
-              for (let i = 0; i < quickInfoItems.length; i++) {
-                const x = margin + 5 + i * (infoBoxWidth + 2);
-
-                // Info box background - stile più simile al sito
-                pdf.setFillColor(248, 250, 252);
-                pdf.setDrawColor(203, 213, 225);
-                pdf.setLineWidth(0.2);
-                pdf.rect(x, quickInfoY, infoBoxWidth, 14, "FD");
+              const infoColWidth = (contentWidth - 20) / 4;
+              for (let i = 0; i < infoItems.length; i++) {
+                const x = margin + 8 + i * infoColWidth;
 
                 // Label
-                pdf.setTextColor(107, 114, 128);
+                pdf.setTextColor(100, 100, 100);
                 pdf.setFontSize(6);
                 pdf.setFont("helvetica", "normal");
-                pdf.text(quickInfoItems[i].label, x + 2, quickInfoY + 4);
+                pdf.text(infoItems[i].label, x, infoBarY + 4);
 
                 // Value
-                pdf.setTextColor(17, 24, 39);
-                pdf.setFontSize(8);
+                pdf.setTextColor(0, 0, 0);
+                pdf.setFontSize(7);
                 pdf.setFont("helvetica", "bold");
-                const valueLines = pdf.splitTextToSize(
-                  quickInfoItems[i].value,
-                  infoBoxWidth - 4
-                );
-                pdf.text(valueLines, x + 2, quickInfoY + 9);
+                pdf.text(infoItems[i].value, x, infoBarY + 8);
               }
 
-              cardY += 20;
+              cardY += 18;
 
-              // Formats section
-              if (prodotto.formati && prodotto.formati.length > 0) {
-                pdf.setTextColor(17, 24, 39);
-                pdf.setFontSize(10);
+              const contentStartY = cardY;
+              const leftColX = margin + 5;
+              const rightColX = margin + contentWidth / 2 + 5;
+              const colWidth = contentWidth / 2 - 10;
+              let leftY = contentStartY;
+              let rightY = contentStartY;
+
+              // --- LEFT COLUMN ---
+
+              // Product Image
+              if (prodotto.immagini && prodotto.immagini.length > 0) {
+                pdf.setTextColor(0, 0, 0);
+                pdf.setFontSize(9);
                 pdf.setFont("helvetica", "bold");
-                pdf.text("Formati Disponibili", margin + 5, cardY);
-                cardY += 6;
+                pdf.text("Immagine Prodotto", leftColX, leftY);
+                leftY += 5;
 
-                // Group formats by EAN (come nel sito web)
+                try {
+                  const imageUrl = prodotto.immagini[0].image;
+                  if (imageUrl) {
+                    const imageWidth = colWidth - 10; // Max width for image
+
+                    try {
+                      const compressedResult = await compressImageForPDF(
+                        imageUrl,
+                        400, // max width for compression
+                        600, // max height for compression
+                        0.9
+                      );
+
+                      if (compressedResult) {
+                        const sourceAspectRatio =
+                          compressedResult.width / compressedResult.height;
+
+                        const scaledWidth = imageWidth;
+                        const scaledHeight = scaledWidth / sourceAspectRatio;
+
+                        pdf.setDrawColor(220, 220, 220);
+                        pdf.setLineWidth(0.2);
+                        pdf.rect(
+                          leftColX,
+                          leftY,
+                          scaledWidth,
+                          scaledHeight,
+                          "D"
+                        );
+
+                        pdf.addImage(
+                          compressedResult.dataUrl,
+                          "JPEG",
+                          leftColX,
+                          leftY,
+                          scaledWidth,
+                          scaledHeight
+                        );
+
+                        leftY += scaledHeight + 8;
+                      } else {
+                        const placeholderHeight = 35;
+                        pdf.setTextColor(100, 100, 100);
+                        pdf.setFontSize(8);
+                        pdf.text(
+                          "Immagine non disponibile",
+                          leftColX + 5,
+                          leftY + placeholderHeight / 2
+                        );
+                        pdf.setTextColor(0, 0, 0); // Reset color
+                        leftY += placeholderHeight + 8;
+                      }
+                    } catch (error) {
+                      const placeholderHeight = 35;
+                      pdf.setTextColor(100, 100, 100);
+                      pdf.setFontSize(8);
+                      pdf.text(
+                        "Immagine non disponibile",
+                        leftColX + 5,
+                        leftY + placeholderHeight / 2
+                      );
+                      pdf.setTextColor(0, 0, 0); // Reset color
+                      leftY += placeholderHeight + 8;
+                    }
+                  }
+                } catch (error) {
+                  // If there's any error, just skip the image
+                  console.warn("Error adding product image to PDF:", error);
+                }
+              }
+
+              // Formats section with integrated barcodes
+              if (prodotto.formati && prodotto.formati.length > 0) {
+                pdf.setTextColor(0, 0, 0);
+                pdf.setFontSize(9);
+                pdf.setFont("helvetica", "bold");
+                pdf.text("Formati", leftColX, leftY);
+                leftY += 5;
+
                 const groupedFormats = prodotto.formati.reduce(
                   (groups, item) => {
-                    // Handle null/undefined item or codice_ean
-                    const ean =
-                      item && item.codice_ean ? item.codice_ean : "no-ean";
-                    if (!groups[ean]) {
-                      groups[ean] = [];
-                    }
-                    // Also handle null/undefined formato
-                    if (item && item.formato) {
-                      groups[ean].push(item.formato);
-                    }
+                    const ean = item?.codice_ean || "no-ean";
+                    if (!groups[ean]) groups[ean] = [];
+                    if (item?.formato) groups[ean].push(item.formato);
                     return groups;
                   },
                   {} as Record<string, string[]>
                 );
 
                 for (const [ean, formats] of Object.entries(groupedFormats)) {
-                  // Format group background - stile del sito
-                  pdf.setFillColor(249, 250, 251);
-                  pdf.setDrawColor(229, 231, 235);
-                  pdf.setLineWidth(0.2);
-                  pdf.rect(margin + 5, cardY, contentWidth - 10, 18, "FD");
+                  // Show formats
+                  pdf.setTextColor(112, 42, 0);
+                  pdf.setFontSize(8);
+                  pdf.setFont("helvetica", "bold");
+                  const formatLines = pdf.splitTextToSize(
+                    formats.join(" • "),
+                    colWidth - 5 // Leave margin for safety
+                  );
+                  pdf.text(formatLines, leftColX, leftY);
+                  leftY += formatLines.length * 4 + 2;
 
-                  // Formati con stile del sito (badge verdi)
-                  let formatX = margin + 8;
-                  let formatY = cardY + 5;
-
-                  for (const formato of formats) {
-                    const formatWidth = Math.max(20, formato.length * 2 + 6);
-
-                    // Badge background
-                    pdf.setFillColor(112, 42, 0); // Primary color from site
-                    pdf.rect(formatX, formatY, formatWidth, 6, "F");
-
-                    // Badge text
-                    pdf.setTextColor(255, 255, 255);
-                    pdf.setFontSize(6);
-                    pdf.setFont("helvetica", "bold");
-                    pdf.text(formato, formatX + 2, formatY + 4);
-
-                    formatX += formatWidth + 3;
-
-                    // Se non c'è spazio, vai a capo
-                    if (formatX > margin + contentWidth - 30) {
-                      formatX = margin + 8;
-                      formatY += 8;
-                    }
-                  }
-
-                  // EAN code section
+                  // Show barcode instead of text EAN
                   if (ean !== "no-ean") {
-                    pdf.setTextColor(75, 85, 99);
-                    pdf.setFontSize(7);
-                    pdf.setFont("helvetica", "bold");
-                    pdf.text("Codice EAN:", margin + 8, cardY + 13);
+                    try {
+                      const barcodeDataURL = generateBarcodeDataURL(ean);
+                      if (barcodeDataURL) {
+                        const maxBarcodeWidth = Math.min(40, colWidth); // Ensure it fits in column
+                        const barcodeHeight = 12;
 
-                    pdf.setTextColor(17, 24, 39);
-                    pdf.setFontSize(7);
-                    pdf.setFont("helvetica", "normal");
-                    pdf.text(ean, margin + 30, cardY + 13);
+                        pdf.addImage(
+                          barcodeDataURL,
+                          "PNG",
+                          leftColX,
+                          leftY,
+                          maxBarcodeWidth,
+                          barcodeHeight
+                        );
+                        leftY += barcodeHeight + 5;
+                      } else {
+                        // Fallback: show EAN as text
+                        pdf.setTextColor(100, 100, 100);
+                        pdf.setFontSize(7);
+                        pdf.text(`EAN: ${ean}`, leftColX, leftY);
+                        leftY += 5;
+                      }
+                    } catch (error) {
+                      // Fallback: show EAN as text
+                      pdf.setTextColor(100, 100, 100);
+                      pdf.setFontSize(7);
+                      pdf.text(`EAN: ${ean}`, leftColX, leftY);
+                      leftY += 5;
+                    }
                   } else {
-                    pdf.setTextColor(156, 163, 175);
+                    pdf.setTextColor(100, 100, 100);
                     pdf.setFontSize(7);
-                    pdf.setFont("helvetica", "normal");
-                    pdf.text("EAN: Non disponibile", margin + 8, cardY + 13);
+                    pdf.text("EAN non disponibile", leftColX, leftY);
+                    leftY += 5;
                   }
-
-                  cardY += 22;
                 }
               }
 
-              // Certifications and Brands
+              // Certifications section
               if (
                 prodotto.marchi &&
                 Object.values(prodotto.marchi).some(Boolean)
               ) {
-                pdf.setTextColor(17, 24, 39);
-                pdf.setFontSize(10);
+                leftY += 4;
+                pdf.setTextColor(0, 0, 0);
+                pdf.setFontSize(9);
                 pdf.setFont("helvetica", "bold");
-                pdf.text("Certificazioni e Marchi", margin + 5, cardY);
-                cardY += 6;
+                pdf.text("Certificazioni", leftColX, leftY);
+                leftY += 5;
 
                 const certificazioni = [];
-                if (prodotto.marchi.prodotto_di_montagna)
+                if (prodotto.marchi?.prodotto_di_montagna)
                   certificazioni.push("Prodotto di Montagna");
-                if (prodotto.marchi.senza_ammollo)
-                  certificazioni.push("Senza Ammollo");
-                if (prodotto.marchi.senza_cereali)
-                  certificazioni.push("Senza Cereali");
-                if (prodotto.marchi.riso_italiano)
-                  certificazioni.push("Riso Italiano");
-                if (prodotto.marchi.varieta_antica)
+                if (prodotto.marchi?.varieta_antica)
                   certificazioni.push("Varietà Antica");
-                if (prodotto.marchi.macinato_a_pietra)
-                  certificazioni.push("Macinato a Pietra");
-                if (prodotto.marchi.decorticato_a_pietra)
-                  certificazioni.push("Decorticato a Pietra");
-                if (prodotto.marchi.pianificabile_superiore)
+                if (prodotto.marchi?.pianificabile_superiore)
                   certificazioni.push("Pianificabile Superiore");
+                // Add other certifications here
 
-                // Container background
-                const certContainerHeight =
-                  Math.ceil(certificazioni.length / 4) * 12 + 8;
-                pdf.setFillColor(249, 250, 251);
-                pdf.setDrawColor(229, 231, 235);
-                pdf.setLineWidth(0.2);
-                pdf.rect(
-                  margin + 5,
-                  cardY,
-                  contentWidth - 10,
-                  certContainerHeight,
-                  "FD"
+                pdf.setTextColor(80, 80, 80);
+                pdf.setFontSize(8);
+                const certLines = pdf.splitTextToSize(
+                  certificazioni.join(", "),
+                  colWidth - 5 // Leave margin for safety
                 );
-
-                // Display certifications in a grid (stile del sito)
-                let certX = margin + 8;
-                let certY = cardY + 4;
-                const certBoxWidth = (contentWidth - 26) / 4; // 4 per riga
-                const certBoxHeight = 8;
-                let certsInRow = 0;
-
-                for (const cert of certificazioni) {
-                  if (certsInRow >= 4) {
-                    certX = margin + 8;
-                    certY += certBoxHeight + 2;
-                    certsInRow = 0;
-                  }
-
-                  // Certification box background - stile del sito
-                  pdf.setFillColor(248, 250, 252);
-                  pdf.setDrawColor(203, 213, 225);
-                  pdf.setLineWidth(0.1);
-                  pdf.rect(certX, certY, certBoxWidth, certBoxHeight, "FD");
-
-                  // Certification text
-                  pdf.setTextColor(55, 65, 81);
-                  pdf.setFontSize(5);
-                  pdf.setFont("helvetica", "bold");
-                  const certLines = pdf.splitTextToSize(cert, certBoxWidth - 2);
-                  pdf.text(certLines, certX + 1, certY + 3);
-
-                  certX += certBoxWidth + 2;
-                  certsInRow++;
-                }
-
-                cardY += certContainerHeight + 5;
+                pdf.text(certLines, leftColX, leftY);
+                leftY += certLines.length * 4;
               }
+
+              // --- RIGHT COLUMN ---
 
               // Nutritional values
               if (prodotto.valori_nutrizionali) {
-                pdf.setTextColor(17, 24, 39);
-                pdf.setFontSize(10);
+                pdf.setTextColor(0, 0, 0);
+                pdf.setFontSize(9);
                 pdf.setFont("helvetica", "bold");
-                pdf.text("Valori Nutrizionali", margin + 5, cardY);
-                cardY += 6;
+                pdf.text("Valori Nutrizionali (per 100g)", rightColX, rightY);
+                rightY += 5;
 
-                // Nutritional values background - stile del sito
                 const nutritionalLines = prodotto.valori_nutrizionali
                   .split("\n")
-                  .filter((line) => line.trim());
-                const nutritionalHeight = nutritionalLines.length * 4 + 8;
-
-                pdf.setFillColor(249, 250, 251);
-                pdf.setDrawColor(229, 231, 235);
-                pdf.setLineWidth(0.2);
-                pdf.rect(
-                  margin + 5,
-                  cardY,
-                  contentWidth - 10,
-                  nutritionalHeight,
-                  "FD"
-                );
-
-                let nutY = cardY + 5;
+                  .filter((l) => l.trim())
+                  .slice(0, 8); // Limit to 8 values
 
                 for (const line of nutritionalLines) {
-                  if (line.trim()) {
-                    const firstSpaceIndex = line.indexOf(" ");
-                    if (firstSpaceIndex > 0) {
-                      const label = line.substring(0, firstSpaceIndex).trim();
-                      const value = line.substring(firstSpaceIndex + 1).trim();
-
-                      // Draw line separator
-                      if (nutY > cardY + 5) {
-                        pdf.setDrawColor(229, 231, 235);
-                        pdf.setLineWidth(0.1);
-                        pdf.line(
-                          margin + 8,
-                          nutY - 2,
-                          margin + contentWidth - 8,
-                          nutY - 2
-                        );
-                      }
-
-                      // Label
-                      pdf.setTextColor(75, 85, 99);
-                      pdf.setFontSize(7);
-                      pdf.setFont("helvetica", "bold");
-                      pdf.text(label, margin + 8, nutY);
-
-                      // Value (aligned to the right)
-                      pdf.setTextColor(17, 24, 39);
-                      pdf.setFontSize(7);
-                      pdf.setFont("helvetica", "normal");
-                      pdf.text(value, margin + contentWidth - 8, nutY, {
-                        align: "right",
-                      });
-                    } else {
-                      // Handle single values
-                      pdf.setTextColor(75, 85, 99);
-                      pdf.setFontSize(7);
-                      pdf.setFont("helvetica", "normal");
-                      pdf.text(line.trim(), margin + 8, nutY);
-                    }
-                    nutY += 4;
+                  let label = line;
+                  let value = "";
+                  const firstSpaceIndex = line.indexOf(" ");
+                  if (firstSpaceIndex > -1) {
+                    label = line.substring(0, firstSpaceIndex).trim();
+                    value = line.substring(firstSpaceIndex + 1).trim();
                   }
-                }
 
-                cardY += nutritionalHeight + 5;
+                  if (rightY > cardStartY + estimatedHeight - 10) continue;
+
+                  pdf.setTextColor(80, 80, 80);
+                  pdf.setFontSize(8);
+                  pdf.setFont("helvetica", "normal");
+                  pdf.text(label, rightColX, rightY);
+
+                  pdf.setTextColor(0, 0, 0);
+                  pdf.setFont("helvetica", "bold");
+                  pdf.text(value, rightColX + colWidth, rightY, {
+                    align: "right",
+                  });
+
+                  rightY += 4.5;
+                }
               }
 
-              yPosition = cardY + 8; // Space between cards
+              // Calculate actual card height based on content
+              const actualHeight = Math.max(leftY, rightY) - cardStartY + 10; // 10px bottom padding
+
+              // Draw card border and separator with the correct dynamic height
+              pdf.setDrawColor(220, 220, 220);
+              pdf.setLineWidth(0.3);
+              pdf.rect(margin, cardStartY, contentWidth, actualHeight, "D");
+
+              // Vertical separator
+              pdf.setDrawColor(230, 230, 230);
+              pdf.line(
+                margin + contentWidth / 2,
+                contentStartY - 5,
+                margin + contentWidth / 2,
+                cardStartY + actualHeight - 5
+              );
+
+              yPosition = cardStartY + actualHeight + 5;
             }
 
-            yPosition += 5; // Extra space between categories
+            yPosition += 3; // Extra space between categories
           }
 
           // Step 6: Add footer (95%)

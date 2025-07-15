@@ -14,6 +14,7 @@ import {
   Loader2,
 } from "lucide-react";
 import { ProdottoType, CategoriaType } from "../../../types";
+import { useCatalogPDF } from "@/hooks/useCatalogPDF";
 
 interface FooterV2Props {
   prodotti?: ProdottoType[];
@@ -24,27 +25,11 @@ const FooterV2: React.FC<FooterV2Props> = ({
   prodotti = [],
   categorie = [],
 }) => {
-  const [isDownloading, setIsDownloading] = useState(false);
+  const { generatePDF, isGenerating } = useCatalogPDF();
 
-  const handleCatalogDownload = async () => {
-    if (isDownloading) return;
-
-    try {
-      setIsDownloading(true);
-
-      // Lazy load the PDF generation functionality
-      const { useCatalogPDF } = await import("@/hooks/useCatalogPDF");
-      const { generatePDF } = useCatalogPDF();
-
-      generatePDF(prodotti, categorie);
-
-      // Reset loading state after a delay (since we can't detect when download completes)
-      setTimeout(() => {
-        setIsDownloading(false);
-      }, 5000);
-    } catch (error) {
-      setIsDownloading(false);
-    }
+  const handleCatalogDownload = () => {
+    if (isGenerating) return;
+    generatePDF(prodotti, categorie);
   };
 
   return (
@@ -88,19 +73,19 @@ const FooterV2: React.FC<FooterV2Props> = ({
 
             <p className="text-gray-600 leading-relaxed mb-6 lg:mb-8 text-base lg:text-lg">
               Nel cuore dell'Appennino Reggiano coltiviamo con passione prodotti
-              biorazionali genuini. Dalla terra di Marola alle vostre tavole,
-              preservando le tradizioni contadine e rispettando i ritmi della
-              natura.
+              biorazionali genuini. Dalla terra dell'Appennino alle vostre
+              tavole, preservando le tradizioni contadine e rispettando i ritmi
+              della natura.
             </p>
 
-            {/* Download Catalog Button - Optimized with lazy loading */}
-            <div className="mb-6 lg:mb-8">
+            {/* Download Catalog Button - Temporarily hidden */}
+            {/* <div className="mb-6 lg:mb-8">
               <button
                 onClick={handleCatalogDownload}
-                disabled={isDownloading}
+                disabled={isGenerating}
                 className="inline-flex items-center gap-3 bg-primary hover:bg-primary/90 disabled:bg-primary/50 text-primary-foreground font-semibold px-5 py-2.5 lg:px-6 lg:py-3 rounded-full shadow-lg hover:shadow-xl disabled:shadow-md transition-all duration-300 transform hover:-translate-y-1 disabled:translate-y-0 disabled:cursor-not-allowed text-sm lg:text-base w-full sm:w-auto justify-center sm:justify-start"
               >
-                {isDownloading ? (
+                {isGenerating ? (
                   <>
                     <Loader2 className="w-4 h-4 lg:w-5 lg:h-5 animate-spin" />
                     Generando PDF...
@@ -112,7 +97,7 @@ const FooterV2: React.FC<FooterV2Props> = ({
                   </>
                 )}
               </button>
-            </div>
+            </div> */}
 
             {/* Contact Info Cards */}
             <div className="grid grid-cols-1 gap-3 lg:gap-4">
@@ -285,6 +270,14 @@ const FooterV2: React.FC<FooterV2Props> = ({
               <p className="text-gray-500 text-xs mt-1">
                 P.IVA: 01234567890 | REA: RE-123456
               </p>
+              <div className="flex items-center justify-center lg:justify-start gap-4 mt-2">
+                <Link
+                  href="/privacy"
+                  className="text-gray-500 hover:text-primary text-xs transition-colors duration-300"
+                >
+                  Privacy Policy
+                </Link>
+              </div>
             </div>
 
             {/* Developer Credit */}

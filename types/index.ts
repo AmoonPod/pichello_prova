@@ -24,6 +24,7 @@ export type ProdottoType = {
     pianificabile_superiore?: boolean;
   };
   valori_nutrizionali?: string;
+  ordine: number;
 };
 
 export type Immagine = {
@@ -40,4 +41,5 @@ export type CategoriaType = {
   descrizione: string;
   immagine?: Immagine;
   slug: Slug;
+  ordine: number;
 };

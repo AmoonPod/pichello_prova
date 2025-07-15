@@ -112,68 +112,72 @@ export default function ProductsSectionClient({
             animate={isVisible ? "visible" : "hidden"}
             className="block lg:hidden space-y-3"
           >
-            {categories.map((category, index) => {
-              // Safely determine the slug string
-              let slugString: string | undefined | null = null;
-              if (
-                category.slug &&
-                typeof category.slug === "object" &&
-                category.slug.current
-              ) {
-                slugString = category.slug.current;
-              } else if (category.slug && typeof category.slug === "string") {
-                slugString = category.slug;
-              } else {
-                slugString = generateLocalSlug(category.nome || "");
-              }
+            {categories
+              .sort((a, b) => a.ordine - b.ordine)
+              .map((category, index) => {
+                // Safely determine the slug string
+                let slugString: string | undefined | null = null;
+                if (
+                  category.slug &&
+                  typeof category.slug === "object" &&
+                  category.slug.current
+                ) {
+                  slugString = category.slug.current;
+                } else if (category.slug && typeof category.slug === "string") {
+                  slugString = category.slug;
+                } else {
+                  slugString = generateLocalSlug(category.nome || "");
+                }
 
-              if (!slugString || typeof slugString !== "string") {
-                return null;
-              }
+                if (!slugString || typeof slugString !== "string") {
+                  return null;
+                }
 
-              const hasImage = category.immagine?.image;
+                const hasImage = category.immagine?.image;
 
-              return (
-                <motion.div
-                  key={category._id}
-                  variants={itemVariants}
-                  className="group"
-                >
-                  <Link href={`/prodotti?categoria=${slugString}`}>
-                    <div className="flex items-center gap-4 bg-card/80 border border-border rounded-xl p-4 hover:bg-card hover:shadow-md transition-all duration-300">
-                      {/* Image */}
-                      <div className="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden bg-backgroundvariant">
-                        {hasImage ? (
-                          <img
-                            src={category.immagine?.image || "/placeholder.jpg"}
-                            alt={category.nome || "Categoria"}
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center">
-                            <ImageIcon className="w-6 h-6 text-muted-foreground/60" />
-                          </div>
-                        )}
+                return (
+                  <motion.div
+                    key={category._id}
+                    variants={itemVariants}
+                    className="group"
+                  >
+                    <Link href={`/prodotti?categoria=${slugString}`}>
+                      <div className="flex items-center gap-4 bg-card/80 border border-border rounded-xl p-4 hover:bg-card hover:shadow-md transition-all duration-300">
+                        {/* Image */}
+                        <div className="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden bg-backgroundvariant">
+                          {hasImage ? (
+                            <img
+                              src={
+                                category.immagine?.image || "/placeholder.jpg"
+                              }
+                              alt={category.nome || "Categoria"}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center">
+                              <ImageIcon className="w-6 h-6 text-muted-foreground/60" />
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Content */}
+                        <div className="flex-1 min-w-0">
+                          <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors truncate">
+                            {category.nome}
+                          </h3>
+                          <p className="text-sm text-muted-foreground mt-1">
+                            {category.descrizione ||
+                              "Scopri i prodotti di questa categoria"}
+                          </p>
+                        </div>
+
+                        {/* Arrow */}
+                        <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-secondary transition-colors flex-shrink-0" />
                       </div>
-
-                      {/* Content */}
-                      <div className="flex-1 min-w-0">
-                        <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors truncate">
-                          {category.nome}
-                        </h3>
-                        <p className="text-sm text-muted-foreground mt-1">
-                          {category.descrizione ||
-                            "Scopri i prodotti di questa categoria"}
-                        </p>
-                      </div>
-
-                      {/* Arrow */}
-                      <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-secondary transition-colors flex-shrink-0" />
-                    </div>
-                  </Link>
-                </motion.div>
-              );
-            })}
+                    </Link>
+                  </motion.div>
+                );
+              })}
           </motion.div>
 
           {/* Desktop Grid View */}
@@ -188,106 +192,110 @@ export default function ProductsSectionClient({
               width: "100%",
             }}
           >
-            {categories.map((category, index) => {
-              // Safely determine the slug string
-              let slugString: string | undefined | null = null;
-              if (
-                category.slug &&
-                typeof category.slug === "object" &&
-                category.slug.current
-              ) {
-                slugString = category.slug.current;
-              } else if (category.slug && typeof category.slug === "string") {
-                slugString = category.slug;
-              } else {
-                slugString = generateLocalSlug(category.nome || "");
-              }
+            {categories
+              .sort((a, b) => a.ordine - b.ordine)
+              .map((category, index) => {
+                // Safely determine the slug string
+                let slugString: string | undefined | null = null;
+                if (
+                  category.slug &&
+                  typeof category.slug === "object" &&
+                  category.slug.current
+                ) {
+                  slugString = category.slug.current;
+                } else if (category.slug && typeof category.slug === "string") {
+                  slugString = category.slug;
+                } else {
+                  slugString = generateLocalSlug(category.nome || "");
+                }
 
-              // Skip if slug is not a valid non-empty string
-              if (!slugString || typeof slugString !== "string") {
-                return null;
-              }
+                // Skip if slug is not a valid non-empty string
+                if (!slugString || typeof slugString !== "string") {
+                  return null;
+                }
 
-              // Check if category image exists
-              const hasImage = category.immagine?.image;
+                // Check if category image exists
+                const hasImage = category.immagine?.image;
 
-              return (
-                <motion.div
-                  key={category._id}
-                  variants={itemVariants}
-                  className="group relative overflow-hidden w-full"
-                >
-                  {/* Decorative Background */}
-                  <div
-                    className={`absolute inset-2 bg-gradient-to-br ${
-                      index % 2 === 0
-                        ? "from-primary/3 via-primary/5 to-primary/8"
-                        : "from-secondary/3 via-secondary/5 to-secondary/8"
-                    } rounded-2xl transform ${
-                      index % 3 === 0
-                        ? "rotate-1"
-                        : index % 3 === 1
-                          ? "-rotate-1"
-                          : "rotate-0.5"
-                    } group-hover:rotate-0 transition-transform duration-500`}
-                  />
+                return (
+                  <motion.div
+                    key={category._id}
+                    variants={itemVariants}
+                    className="group relative overflow-hidden w-full"
+                  >
+                    {/* Decorative Background */}
+                    <div
+                      className={`absolute inset-2 bg-gradient-to-br ${
+                        index % 2 === 0
+                          ? "from-primary/3 via-primary/5 to-primary/8"
+                          : "from-secondary/3 via-secondary/5 to-secondary/8"
+                      } rounded-2xl transform ${
+                        index % 3 === 0
+                          ? "rotate-1"
+                          : index % 3 === 1
+                            ? "-rotate-1"
+                            : "rotate-0.5"
+                      } group-hover:rotate-0 transition-transform duration-500`}
+                    />
 
-                  {/* Card Content */}
-                  <div className="relative bg-card/90 backdrop-blur-sm border border-border rounded-2xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_20px_60px_rgb(0,0,0,0.2)] transition-all duration-300 h-full">
-                    <Link
-                      href={`/prodotti?categoria=${slugString}`}
-                      className="block h-full"
-                    >
-                      {/* Image Section */}
-                      <div className="relative aspect-[4/3] overflow-hidden bg-backgroundvariant">
-                        {hasImage ? (
-                          <img
-                            src={category.immagine?.image || "/placeholder.jpg"}
-                            alt={category.nome || "Categoria"}
-                            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                          />
-                        ) : (
-                          <div className="h-full w-full flex items-center justify-center">
-                            <ImageIcon className="w-16 h-16 text-muted-foreground/40" />
+                    {/* Card Content */}
+                    <div className="relative bg-card/90 backdrop-blur-sm border border-border rounded-2xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_20px_60px_rgb(0,0,0,0.2)] transition-all duration-300 h-full">
+                      <Link
+                        href={`/prodotti?categoria=${slugString}`}
+                        className="block h-full"
+                      >
+                        {/* Image Section */}
+                        <div className="relative aspect-[4/3] overflow-hidden bg-backgroundvariant">
+                          {hasImage ? (
+                            <img
+                              src={
+                                category.immagine?.image || "/placeholder.jpg"
+                              }
+                              alt={category.nome || "Categoria"}
+                              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            />
+                          ) : (
+                            <div className="h-full w-full flex items-center justify-center">
+                              <ImageIcon className="w-16 h-16 text-muted-foreground/40" />
+                            </div>
+                          )}
+
+                          {/* Overlay Gradient */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                          {/* Floating Badge */}
+                          <div className="absolute top-3 right-3 bg-card/90 backdrop-blur-sm border border-border rounded-full p-2 transform translate-x-2 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300">
+                            <Leaf className="w-4 h-4 text-secondary" />
                           </div>
-                        )}
-
-                        {/* Overlay Gradient */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                        {/* Floating Badge */}
-                        <div className="absolute top-3 right-3 bg-card/90 backdrop-blur-sm border border-border rounded-full p-2 transform translate-x-2 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300">
-                          <Leaf className="w-4 h-4 text-secondary" />
-                        </div>
-                      </div>
-
-                      {/* Content Section */}
-                      <div className="p-5 lg:p-6">
-                        <div className="flex items-start justify-between mb-3">
-                          <h3 className="text-lg lg:text-xl font-bold text-foreground group-hover:text-primary transition-colors">
-                            {category.nome}
-                          </h3>
-                          <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-secondary transform translate-x-0 group-hover:translate-x-1 transition-all duration-300 flex-shrink-0 ml-2" />
                         </div>
 
-                        <div className="w-12 h-0.5 bg-secondary rounded-full mb-3 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                        {/* Content Section */}
+                        <div className="p-5 lg:p-6">
+                          <div className="flex items-start justify-between mb-3">
+                            <h3 className="text-lg lg:text-xl font-bold text-foreground group-hover:text-primary transition-colors">
+                              {category.nome}
+                            </h3>
+                            <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-secondary transform translate-x-0 group-hover:translate-x-1 transition-all duration-300 flex-shrink-0 ml-2" />
+                          </div>
 
-                        <p className="text-sm lg:text-base text-muted-foreground leading-relaxed">
-                          {category.descrizione ||
-                            "Scopri i prodotti genuini di questa categoria, coltivati con metodi tradizionali."}
-                        </p>
+                          <div className="w-12 h-0.5 bg-secondary rounded-full mb-3 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
 
-                        {/* Action Indicator */}
-                        <div className="mt-4 inline-flex items-center text-sm font-medium text-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <span>Esplora categoria</span>
-                          <ChevronRight className="w-4 h-4 ml-1" />
+                          <p className="text-sm lg:text-base text-muted-foreground leading-relaxed">
+                            {category.descrizione ||
+                              "Scopri i prodotti genuini di questa categoria, coltivati con metodi tradizionali."}
+                          </p>
+
+                          {/* Action Indicator */}
+                          <div className="mt-4 inline-flex items-center text-sm font-medium text-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span>Esplora categoria</span>
+                            <ChevronRight className="w-4 h-4 ml-1" />
+                          </div>
                         </div>
-                      </div>
-                    </Link>
-                  </div>
-                </motion.div>
-              );
-            })}
+                      </Link>
+                    </div>
+                  </motion.div>
+                );
+              })}
           </motion.div>
         </div>
 

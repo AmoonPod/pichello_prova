@@ -3,7 +3,7 @@ import client from './sanity.client';
 
 export async function getProdotti() {
   return client.fetch(
-    groq`*[_type == "prodotto"]{
+    groq`*[_type == "prodotto"] | order(ordine asc){
       _id,
       nome,
       descrizione,
@@ -23,7 +23,8 @@ export async function getProdotti() {
       marchi,
       valori_nutrizionali,
       "categoria": categoria->nome,
-      "categoria_slug": categoria->slug
+      "categoria_slug": categoria->slug,
+      ordine
     }`
   );
 }
@@ -48,7 +49,8 @@ export async function getProdottoBySlug(slug: string) {
       "categoria": categoria->nome,
       umidita,
       marchi,
-      valori_nutrizionali
+      valori_nutrizionali,
+      ordine
     }`,
     { slug }
   );
@@ -57,14 +59,15 @@ export async function getProdottoBySlug(slug: string) {
 //get all categories
 export async function getCategorie() {
   return await client.fetch(
-    groq`*[_type == "categoria"]{
+    groq`*[_type == "categoria"] | order(ordine asc){
       _id,
       nome,
       descrizione,
       immagine {
         "image": asset->url
       },
-      slug
+      slug,
+      ordine
     }`
   );
 }

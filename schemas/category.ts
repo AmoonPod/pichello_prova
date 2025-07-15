@@ -32,5 +32,11 @@ export const categoria = {
           input.toLowerCase().replace(/\s+/g, "-").slice(0, 96),
       },
     },
+    {
+      name: "ordine",
+      title: "Ordine",
+      type: "number",
+      initialValue: 1,
+    },
   ],
 };

@@ -2,6 +2,7 @@
 import "../globals.css";
 import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -15,7 +16,9 @@ import {
   MessageCircle,
   ShoppingCart,
   Info,
+  Loader2,
 } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
 
 const ContactsPage = () => {
   const ref = useRef(null);
@@ -25,6 +28,9 @@ const ContactsPage = () => {
   const [prefilledProduct, setPrefilledProduct] = useState("");
   const [selectedSubject, setSelectedSubject] = useState("");
   const [messageContent, setMessageContent] = useState("");
+  const [privacyConsent, setPrivacyConsent] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
 
   useEffect(() => {
     if (isInView) setIsVisible(true);
@@ -33,11 +39,13 @@ const ContactsPage = () => {
   // Handle URL parameters for pre-filling the form
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const productParam = urlParams.get('prodotto');
+    const productParam = urlParams.get("prodotto");
     if (productParam) {
       setPrefilledProduct(productParam);
       setSelectedSubject("ordine");
-      setMessageContent(`Sono interessato al prodotto "${productParam}". Vorrei sapere disponibilità, quantità minime e prezzo. Grazie.`);
+      setMessageContent(
+        `Sono interessato al prodotto "${productParam}". Vorrei sapere disponibilità, quantità minime e prezzo. Grazie.`
+      );
     }
   }, []);
 
@@ -46,14 +54,90 @@ const ContactsPage = () => {
     setPrefilledProduct("");
     setSelectedSubject("");
     setMessageContent("");
+    setPrivacyConsent(false);
+    setFormSubmitted(false);
     // Redirect to clean /contatti URL without parameters
-    window.history.pushState({}, '', '/contatti');
+    window.history.pushState({}, "", "/contatti");
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Handle form submission here
-    setFormSubmitted(true);
+
+    // Check if privacy consent is given
+    if (!privacyConsent) {
+      toast({
+        title: "Consenso Privacy Richiesto",
+        description:
+          "È necessario accettare l'informativa privacy per inviare il messaggio.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+
+    // Save form reference before async operation
+    const form = e.currentTarget;
+
+    try {
+      // Get form data
+      const formData = new FormData(form);
+
+      // Convert FormData to object
+      const formObject: { [key: string]: string } = {};
+      formData.forEach((value, key) => {
+        formObject[key] = value.toString();
+      });
+
+      // Add additional fields
+      formObject.motivo = selectedSubject;
+      formObject.messaggio = messageContent;
+      if (prefilledProduct) {
+        formObject.prodotto_interesse = prefilledProduct;
+      }
+
+      // Send to Formcarry
+      const response = await fetch("https://formcarry.com/s/hduC4qBISQr", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(formObject),
+      });
+
+      if (response.ok) {
+        // Success
+        setFormSubmitted(true);
+        toast({
+          title: "Messaggio Inviato!",
+          description:
+            "Grazie per averci contattato. Ti risponderemo presto via email o telefono.",
+        });
+
+        // Reset form fields safely
+        if (form && typeof form.reset === "function") {
+          form.reset();
+        }
+        setSelectedSubject("");
+        setMessageContent("");
+        setPrivacyConsent(false);
+      } else {
+        throw new Error("Errore nell'invio del messaggio");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast({
+        title: "Errore nell'invio",
+        description:
+          "Si è verificato un errore. Prova a contattarci direttamente via telefono o email.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const containerVariants = {
@@ -104,7 +188,9 @@ const ContactsPage = () => {
               </h1>
 
               <p className="text-base md:text-lg text-white/90 font-medium max-w-2xl mx-auto leading-relaxed">
-                Siamo qui per rispondere alle tue domande sui nostri prodotti biorazionali dell'Appennino Reggiano e per ricevere i tuoi ordini
+                Siamo qui per rispondere alle tue domande sui nostri prodotti
+                biorazionali dell'Appennino Reggiano e per ricevere i tuoi
+                ordini
               </p>
             </motion.div>
           </div>
@@ -125,12 +211,20 @@ const ContactsPage = () => {
                   <Phone className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground text-sm">Chiama Ora</h3>
+                  <h3 className="font-semibold text-foreground text-sm">
+                    Chiama Ora
+                  </h3>
                   <div className="space-y-1">
-                    <a href="tel:3408200080" className="block text-primary font-bold hover:underline text-sm">
+                    <a
+                      href="tel:3408200080"
+                      className="block text-primary font-bold hover:underline text-sm"
+                    >
                       Mirco: 340/8200080
                     </a>
-                    <a href="tel:3397981644" className="block text-primary font-bold hover:underline text-sm">
+                    <a
+                      href="tel:3397981644"
+                      className="block text-primary font-bold hover:underline text-sm"
+                    >
                       Viviana: 339/7981644
                     </a>
                   </div>
@@ -143,8 +237,13 @@ const ContactsPage = () => {
                   <Mail className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground text-sm">Scrivi Email</h3>
-                  <a href="mailto:info@agricolailpichello.it" className="text-secondary font-bold hover:underline text-sm">
+                  <h3 className="font-semibold text-foreground text-sm">
+                    Scrivi Email
+                  </h3>
+                  <a
+                    href="mailto:info@agricolailpichello.it"
+                    className="text-secondary font-bold hover:underline text-sm"
+                  >
                     info@agricolailpichello.it
                   </a>
                 </div>
@@ -156,11 +255,19 @@ const ContactsPage = () => {
                   <MapPin className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground text-sm">Vieni a Trovarci</h3>
+                  <h3 className="font-semibold text-foreground text-sm">
+                    Vieni a Trovarci
+                  </h3>
                   <div className="space-y-1">
-                    <p className="text-primary font-bold text-sm">Via Dante Alighieri 141</p>
-                    <p className="text-primary font-bold text-sm">42033 Marola, Carpineti (RE)</p>
-                    <p className="text-primary font-semibold text-xs">Lun-Ven: 9:00-18:00 | Sab: 9:00-13:00</p>
+                    <p className="text-primary font-bold text-sm">
+                      Via Dante Alighieri 141
+                    </p>
+                    <p className="text-primary font-bold text-sm">
+                      42033 Marola, Carpineti (RE)
+                    </p>
+                    <p className="text-primary font-semibold text-xs">
+                      Lun-Ven: 9:00-18:00 | Sab: 9:00-13:00
+                    </p>
                   </div>
                 </div>
               </div>
@@ -183,10 +290,7 @@ const ContactsPage = () => {
               className="max-w-4xl mx-auto"
             >
               {/* Contact Form - Full width */}
-              <motion.div
-                variants={itemVariants}
-                className="relative group"
-              >
+              <motion.div variants={itemVariants} className="relative group">
                 <div className="absolute inset-2 bg-gradient-to-br from-primary/5 via-primary/10 to-primary/15 rounded-3xl transform rotate-1 group-hover:rotate-0 transition-transform duration-500" />
 
                 <div className="relative bg-white border border-border rounded-3xl p-6 lg:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_20px_60px_rgb(0,0,0,0.2)] transition-all duration-300">
@@ -201,8 +305,7 @@ const ContactsPage = () => {
                       <p className="text-muted-foreground text-sm mt-1">
                         {prefilledProduct
                           ? `Richiesta per: ${prefilledProduct}`
-                          : "Per ordini, informazioni sui prodotti o richieste personalizzate"
-                        }
+                          : "Per ordini, informazioni sui prodotti o richieste personalizzate"}
                       </p>
                     </div>
                   </div>
@@ -213,7 +316,8 @@ const ContactsPage = () => {
                         <div className="flex items-center gap-2 text-sm text-primary">
                           <ShoppingCart className="w-4 h-4" />
                           <span className="font-medium">
-                            Form pre-compilato per il prodotto: <strong>{prefilledProduct}</strong>
+                            Form pre-compilato per il prodotto:{" "}
+                            <strong>{prefilledProduct}</strong>
                           </span>
                         </div>
                         <button
@@ -222,8 +326,18 @@ const ContactsPage = () => {
                           title="Rimuovi pre-compilazione"
                           type="button"
                         >
-                          <svg className="w-3 h-3 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          <svg
+                            className="w-3 h-3 group-hover:scale-110 transition-transform"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M6 18L18 6M6 6l12 12"
+                            />
                           </svg>
                         </button>
                       </div>
@@ -254,6 +368,7 @@ const ContactsPage = () => {
                           </Label>
                           <Input
                             id="firstName"
+                            name="nome"
                             placeholder="Il tuo nome"
                             required
                             className="border-border focus:border-primary"
@@ -268,6 +383,7 @@ const ContactsPage = () => {
                           </Label>
                           <Input
                             id="lastName"
+                            name="cognome"
                             placeholder="Il tuo cognome"
                             required
                             className="border-border focus:border-primary"
@@ -284,6 +400,7 @@ const ContactsPage = () => {
                         </Label>
                         <Input
                           id="email"
+                          name="email"
                           type="email"
                           placeholder="La tua email"
                           required
@@ -300,6 +417,7 @@ const ContactsPage = () => {
                         </Label>
                         <Input
                           id="phone"
+                          name="telefono"
                           placeholder="Il tuo numero di telefono"
                           className="border-border focus:border-primary"
                         />
@@ -321,8 +439,12 @@ const ContactsPage = () => {
                         >
                           <option value="">Seleziona...</option>
                           <option value="ordine">Effettuare un ordine</option>
-                          <option value="info-prodotti">Informazioni sui prodotti</option>
-                          <option value="disponibilita">Disponibilità prodotti</option>
+                          <option value="info-prodotti">
+                            Informazioni sui prodotti
+                          </option>
+                          <option value="disponibilita">
+                            Disponibilità prodotti
+                          </option>
                           <option value="prezzi">Richiesta prezzi</option>
                           <option value="altro">Altro</option>
                         </select>
@@ -346,17 +468,73 @@ const ContactsPage = () => {
                         />
                       </div>
 
+                      {/* Privacy Consent */}
+                      <div className="space-y-3 p-4 bg-gray-50 rounded-xl border border-gray-200">
+                        <div className="flex items-start gap-3">
+                          <input
+                            type="checkbox"
+                            id="privacyConsent"
+                            checked={privacyConsent}
+                            onChange={(e) =>
+                              setPrivacyConsent(e.target.checked)
+                            }
+                            className="mt-1 w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded focus:ring-primary focus:ring-2"
+                            required
+                          />
+                          <label
+                            htmlFor="privacyConsent"
+                            className="text-sm text-gray-700 leading-relaxed"
+                          >
+                            <span className="font-medium">
+                              Consenso Privacy:
+                            </span>{" "}
+                            Acconsento al trattamento dei miei dati personali
+                            per rispondere alla mia richiesta come descritto
+                            nella{" "}
+                            <Link
+                              href="/privacy"
+                              className="text-primary hover:underline font-medium"
+                              target="_blank"
+                            >
+                              Privacy Policy
+                            </Link>
+                            . I dati verranno trasmessi tramite Formcarry e
+                            utilizzati esclusivamente per ricontattarmi e
+                            saranno conservati per 24 mesi.
+                          </label>
+                        </div>
+                        {!privacyConsent && !isSubmitting && (
+                          <p className="text-xs text-gray-500 flex items-center gap-1">
+                            <Info className="w-3 h-3" />È necessario accettare
+                            l'informativa privacy per inviare il messaggio
+                          </p>
+                        )}
+                        {isSubmitting && (
+                          <p className="text-xs text-primary flex items-center gap-1">
+                            <Loader2 className="w-3 h-3 animate-spin" />
+                            Invio del messaggio in corso...
+                          </p>
+                        )}
+                      </div>
+
                       <Button
                         type="submit"
-                        className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-3 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+                        disabled={!privacyConsent || isSubmitting}
+                        className="w-full bg-primary hover:bg-primary/90 disabled:bg-gray-400 disabled:cursor-not-allowed text-primary-foreground font-semibold py-3 text-lg rounded-full shadow-lg hover:shadow-xl disabled:shadow-none transition-all duration-300"
                       >
-                        Invia Messaggio
+                        {isSubmitting ? (
+                          <>
+                            <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                            Invio in corso...
+                          </>
+                        ) : (
+                          "Invia Messaggio"
+                        )}
                       </Button>
                     </form>
                   )}
                 </div>
               </motion.div>
-
             </motion.div>
           </div>
         </section>

@@ -1,17 +1,54 @@
 import NavbarV2 from "@/components/new/Navbar";
+import { Toaster } from "@/components/ui/toaster";
 import { Metadata } from "next";
 import { Bricolage_Grotesque } from "next/font/google";
 import { headers } from "next/headers";
 
+// Dynamic metadataBase based on environment
+const baseUrl = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : process.env.NODE_ENV === "production"
+    ? "https://www.agricolailpichello.it"
+    : "http://localhost:3000";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.agricolailpichello.it"),
+  metadataBase: new URL(baseUrl),
   title: {
     template: `%s | Azienda Agricola Il Pichello`,
     default: "Azienda Agricola Il Pichello", // Fallback generico
   },
+  description:
+    "Azienda agricola specializzata in prodotti biorazionali nell'Appennino Reggiano. Miele, cereali, legumi e trasformati di qualità.",
   authors: [{ name: "Azienda Agricola Il Pichello" }],
   creator: "Azienda Agricola Il Pichello",
   publisher: "Azienda Agricola Il Pichello",
+
+  // Default Open Graph tags
+  openGraph: {
+    type: "website",
+    locale: "it_IT",
+    siteName: "Azienda Agricola Il Pichello",
+    title: "Azienda Agricola Il Pichello",
+    description:
+      "Azienda agricola specializzata in prodotti biorazionali nell'Appennino Reggiano. Miele, cereali, legumi e trasformati di qualità.",
+    images: [
+      {
+        url: "/images/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Azienda Agricola Il Pichello - Prodotti Biorazionali Appennino Reggiano",
+      },
+    ],
+  },
+
+  // Twitter Card tags
+  twitter: {
+    card: "summary_large_image",
+    title: "Azienda Agricola Il Pichello",
+    description:
+      "Azienda agricola specializzata in prodotti biorazionali nell'Appennino Reggiano. Miele, cereali, legumi e trasformati di qualità.",
+    images: ["/images/og-image.png"],
+  },
   robots: {
     index: true,
     follow: true,
@@ -64,21 +101,20 @@ const jsonLd = {
   "@graph": [
     {
       "@type": "WebSite",
-      "@id": "https://www.agricolailpichello.it/#website",
-      url: "https://www.agricolailpichello.it/",
+      "@id": `${baseUrl}/#website`,
+      url: `${baseUrl}/`,
       name: "Azienda Agricola Il Pichello",
       description:
         "Azienda agricola specializzata in prodotti biorazionali nell'Appennino Reggiano",
       publisher: {
-        "@id": "https://www.agricolailpichello.it/#organization",
+        "@id": `${baseUrl}/#organization`,
       },
       potentialAction: [
         {
           "@type": "SearchAction",
           target: {
             "@type": "EntryPoint",
-            urlTemplate:
-              "https://www.agricolailpichello.it/prodotti?q={search_term_string}",
+            urlTemplate: `${baseUrl}/prodotti?q={search_term_string}`,
           },
           "query-input": "required name=search_term_string",
         },
@@ -87,17 +123,17 @@ const jsonLd = {
     },
     {
       "@type": ["LocalBusiness", "Farm"],
-      "@id": "https://www.agricolailpichello.it/#organization",
+      "@id": `${baseUrl}/#organization`,
       name: "Azienda Agricola Il Pichello",
       alternateName: "Il Pichello",
-      url: "https://www.agricolailpichello.it/",
+      url: `${baseUrl}/`,
       logo: {
         "@type": "ImageObject",
-        url: "https://www.agricolailpichello.it/images/logo.png",
+        url: `${baseUrl}/images/logo.png`,
         width: 400,
         height: 400,
       },
-      image: ["https://www.agricolailpichello.it/images/og-image.png"],
+      image: [`${baseUrl}/images/og-image.png`],
       description:
         "Azienda agricola specializzata nella produzione di miele, cereali, legumi e trasformati con metodi biorazionali nell'Appennino Reggiano. Vendita diretta ai mercati e su appuntamento in azienda.",
       address: {
@@ -221,6 +257,7 @@ export default async function RootLayout({
       <body className={`${bricolageGrotesque.className}`}>
         <NavbarV2 />
         {children}
+        <Toaster />
       </body>
     </html>
   );

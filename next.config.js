@@ -82,9 +82,7 @@ const nextConfig = {
   },
 
   // Production optimizations
-  ...(process.env.NODE_ENV === "production" && {
-    swcMinify: true,
-  }),
+  // swcMinify is enabled by default in Next.js 15+
 };
 
 module.exports = nextConfig;

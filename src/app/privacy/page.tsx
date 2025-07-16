@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import FooterV2 from "@/components/new/Footer";
 import { Shield, User, Phone, Mail, Clock, FileText } from "lucide-react";
-
+import "../../app/globals.css";
 const PrivacyPolicyPage = () => {
   return (
     <>

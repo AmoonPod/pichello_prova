@@ -265,9 +265,21 @@ const ContactsPage = () => {
                     <p className="text-primary font-bold text-sm">
                       42033 Marola, Carpineti (RE)
                     </p>
-                    <p className="text-primary font-semibold text-xs">
-                      Lun-Ven: 9:00-18:00 | Sab: 9:00-13:00
-                    </p>
+                    <div className="text-primary font-semibold text-xs">
+                      Lun: 10:00-13:00 | 15:30-18:30
+                      <br />
+                      Mar: 10:00-13:00 | Chiuso
+                      <br />
+                      Mer: 10:00-13:00 | 15:30-18:30
+                      <br />
+                      Gio: 10:00-13:00 | Chiuso
+                      <br />
+                      Ven: 10:00-13:00 | 15:30-18:30
+                      <br />
+                      <span className="text-xs italic">
+                        Sab-Dom: Su appuntamento
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>

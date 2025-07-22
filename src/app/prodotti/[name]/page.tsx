@@ -51,7 +51,6 @@ export async function generateMetadata(props: {
   const title = `${prodotto.nome} | ${prodotto.categoria} Bio Appennino Reggiano`;
   const description = `Acquista ${prodotto.nome} biologico dell'Azienda Agricola Il Pichello. ${prodotto.descrizione} Prodotto genuino dall'Appennino Reggiano, coltivato con metodi biorazionali tradizionali.`;
   const canonicalUrl = `https://www.agricolailpichello.it/prodotti/${params.name}`;
-
   return {
     title,
     description,
@@ -361,13 +360,18 @@ export default async function Product(props: {
                         : "N/D"}
                     </div>
                   </div>
-                  <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-                    <div className="text-sm text-gray-500 mb-1">Allergeni</div>
-                    <div className="font-semibold text-gray-900 text-xs">
-                      Può contenere Glutine in quanto i macchinari utilizzati
-                      lavorano anche cereali
+                  {/* Allergeni section: only show if categoria is not 'Prodotti dell'alveare' */}
+                  {!prodotto.categoria.includes("alveare") && (
+                    <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+                      <div className="text-sm text-gray-500 mb-1">
+                        Allergeni
+                      </div>
+                      <div className="font-semibold text-gray-900 text-xs">
+                        Può contenere Glutine in quanto i macchinari utilizzati
+                        lavorano anche cereali
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
 
                 {/* Available Formats and EAN Codes */}

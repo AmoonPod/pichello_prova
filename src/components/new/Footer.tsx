@@ -14,6 +14,8 @@ import {
   Loader2,
   Package,
   Barcode,
+  Instagram,
+  Youtube,
 } from "lucide-react";
 import { ProdottoType, CategoriaType } from "../../../types";
 import { useCatalogPDF } from "@/hooks/useCatalogPDF";
@@ -294,6 +296,36 @@ const FooterV2: React.FC<FooterV2Props> = ({
                   </p>
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* Column 4 - Social */}
+          <div className="mt-8 lg:mt-0">
+            <h4 className="text-lg lg:text-xl font-bold mb-4 lg:mb-6 text-gray-900 flex items-center gap-2">
+              <div className="w-2 h-2 bg-primary rounded-full" />
+              Social
+            </h4>
+            <div className="flex flex-col items-start gap-4">
+              <a
+                href="https://www.instagram.com/agricola.il.pichello/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-gray-600 hover:text-primary transition-colors duration-300"
+                aria-label="Instagram de Il Pichello"
+              >
+                <Instagram className="h-5 w-5" />
+                <span>Instagram</span>
+              </a>
+              <a
+                href="https://www.youtube.com/channel/UC8zSCj6GEXdVHE7fNTFnBBQ"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-gray-600 hover:text-primary transition-colors duration-300"
+                aria-label="Canale YouTube de Il Pichello"
+              >
+                <Youtube className="h-5 w-5" />
+                <span>YouTube</span>
+              </a>
             </div>
           </div>
         </div>

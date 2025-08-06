@@ -230,6 +230,120 @@ body {
     break-inside: avoid;
     page-break-inside: avoid;
   }
+
+  /* Catalog-specific print styles */
+  .catalog-grid {
+    display: block !important;
+  }
+
+  .catalog-grid .catalog-card {
+    width: 100% !important;
+    margin-bottom: 1cm !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Compact view in print - 2 columns */
+  @media print {
+    .print-compact-grid {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 0.5cm !important;
+      column-gap: 1cm !important;
+    }
+
+    .print-compact-grid .catalog-card {
+      margin-bottom: 0.5cm !important;
+    }
+  }
+
+  /* Detailed view in print - full width */
+  .print-detailed-list {
+    display: block !important;
+  }
+
+  .print-detailed-list .catalog-card {
+    width: 100% !important;
+    margin-bottom: 0.8cm !important;
+  }
+
+  /* Print header */
+  .print-header {
+    display: none;
+  }
+
+  @media print {
+    .print-header {
+      display: block !important;
+      text-align: center;
+      margin-bottom: 1cm;
+      border-bottom: 2px solid #000;
+      padding-bottom: 0.5cm;
+    }
+
+    .print-header h1 {
+      font-size: 24pt !important;
+      font-weight: bold !important;
+      margin: 0 !important;
+      color: #000 !important;
+    }
+
+    .print-header .print-date {
+      font-size: 12pt !important;
+      color: #666 !important;
+      margin-top: 0.3cm;
+    }
+  }
+
+  /* Optimize barcode display for print */
+  @media print {
+    .barcode-print {
+      max-width: 120px !important;
+      height: auto !important;
+    }
+
+    canvas {
+      max-width: 100% !important;
+      height: auto !important;
+    }
+  }
+
+  /* Text optimization for print */
+  @media print {
+    .print-text-sm {
+      font-size: 10pt !important;
+    }
+
+    .print-text-base {
+      font-size: 12pt !important;
+    }
+
+    .print-text-lg {
+      font-size: 14pt !important;
+    }
+
+    .print-font-bold {
+      font-weight: bold !important;
+    }
+  }
+
+  /* Hide interactive elements when printing */
+  body.printing .print\\:hidden,
+  body.printing [class*='hover:'],
+  body.printing [class*='transition'] {
+    display: none !important;
+  }
+
+  /* Ensure proper spacing between sections */
+  @media print {
+    .print-section {
+      margin-bottom: 0.5cm !important;
+    }
+
+    .print-section-lg {
+      margin-bottom: 0.8cm !important;
+    }
+  }
 }
 
 /* .hero-section {

@@ -52,7 +52,7 @@ const CatalogDownloadButton: React.FC<CatalogDownloadButtonProps> = ({
                     </div>
                 ) : status === 'Completato!' ? (
                     <>
-                        <CheckCircle className="w-5 h-5 mr-3 text-green-300" />
+                        <CheckCircle className="w-5 h-5 mr-3 text-gray-400" />
                         <span>PDF Scaricato!</span>
                     </>
                 ) : (

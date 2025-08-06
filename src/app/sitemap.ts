@@ -11,7 +11,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Fetch all products and categories
   const [prodotti, categorie] = await Promise.all([
     getProdotti(),
-    getCategorie()
+    getCategorie(),
   ]);
 
   // Base pages
@@ -40,6 +40,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'yearly',
       priority: 0.5,
     },
+    {
+      url: `${baseUrl}/farina-dellappennino-reggio-emilia-e-carpenti`,
+      lastModified: lastModified,
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/legumi-fagioli-e-lenticchie-dellappennino-reggiano`,
+      lastModified: lastModified,
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
     // Sezioni della homepage con anchor links
     {
       url: `${baseUrl}/#la-nostra-azienda`,
@@ -52,30 +64,34 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: lastModified,
       changeFrequency: 'yearly',
       priority: 0.7,
-    }
+    },
   ];
 
   // Individual product pages
-  const productPages: MetadataRoute.Sitemap = prodotti.map((prodotto: ProdottoType) => {
-    const slug = JSON.parse(JSON.stringify(prodotto.slug)).current;
-    return {
-      url: `${baseUrl}/prodotti/${slug}`,
-      lastModified: lastModified,
-      changeFrequency: 'monthly' as const,
-      priority: 0.8,
-    };
-  });
+  const productPages: MetadataRoute.Sitemap = prodotti.map(
+    (prodotto: ProdottoType) => {
+      const slug = JSON.parse(JSON.stringify(prodotto.slug)).current;
+      return {
+        url: `${baseUrl}/prodotti/${slug}`,
+        lastModified: lastModified,
+        changeFrequency: 'monthly' as const,
+        priority: 0.8,
+      };
+    }
+  );
 
   // Category filter pages
-  const categoryPages: MetadataRoute.Sitemap = categorie.map((categoria: CategoriaType) => {
-    const slug = JSON.parse(JSON.stringify(categoria.slug)).current;
-    return {
-      url: `${baseUrl}/prodotti?categoria=${slug}`,
-      lastModified: lastModified,
-      changeFrequency: 'weekly' as const,
-      priority: 0.7,
-    };
-  });
+  const categoryPages: MetadataRoute.Sitemap = categorie.map(
+    (categoria: CategoriaType) => {
+      const slug = JSON.parse(JSON.stringify(categoria.slug)).current;
+      return {
+        url: `${baseUrl}/prodotti?categoria=${slug}`,
+        lastModified: lastModified,
+        changeFrequency: 'weekly' as const,
+        priority: 0.7,
+      };
+    }
+  );
 
   return [...basePages, ...productPages, ...categoryPages];
 }

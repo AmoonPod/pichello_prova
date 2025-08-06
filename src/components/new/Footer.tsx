@@ -12,6 +12,8 @@ import {
   ExternalLink,
   Download,
   Loader2,
+  Package,
+  Barcode,
 } from "lucide-react";
 import { ProdottoType, CategoriaType } from "../../../types";
 import { useCatalogPDF } from "@/hooks/useCatalogPDF";
@@ -53,6 +55,35 @@ const FooterV2: React.FC<FooterV2Props> = ({
       </div>
 
       <div className="container mx-auto px-4 py-12 lg:py-16 relative z-10">
+        {/* B2B Section - Highlighted for businesses */}
+        <div className="mb-12 lg:mb-16">
+          <div className="bg-gradient-to-r from-secondary/10 to-primary/10 rounded-2xl p-6 lg:p-8 border border-secondary/20">
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-8 h-8 bg-secondary rounded-full flex items-center justify-center">
+                    <Package className="h-4 w-4 text-white" />
+                  </div>
+                  <h3 className="text-lg lg:text-xl font-bold text-gray-900">
+                    Sei un'attività o un rivenditore?
+                  </h3>
+                </div>
+                <p className="text-gray-600 text-sm lg:text-base mb-4 md:mb-0">
+                  Accedi al nostro <strong>catalogo commerciale completo</strong> con codici EAN
+                  e informazioni tecniche per la rivendita.
+                </p>
+              </div>
+              <Link
+                href="/catalogo"
+                className="inline-flex items-center gap-2 bg-secondary hover:bg-secondary/90 text-secondary-foreground font-semibold px-5 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-sm lg:text-base whitespace-nowrap"
+              >
+                <Barcode className="w-4 h-4" />
+                Visualizza Catalogo B2B
+              </Link>
+            </div>
+          </div>
+        </div>
+
         {/* Top Section */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-12 mb-12 lg:mb-16">
           {/* Column 1 - Brand & Description */}
@@ -206,6 +237,15 @@ const FooterV2: React.FC<FooterV2Props> = ({
                 >
                   <span className="w-1 h-1 bg-gray-400 rounded-full group-hover:bg-primary transition-colors" />
                   Contatti
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/catalogo"
+                  className="text-gray-600 hover:text-primary transition-colors duration-300 flex items-center gap-2 group text-sm lg:text-base py-1"
+                >
+                  <span className="w-1 h-1 bg-gray-400 rounded-full group-hover:bg-primary transition-colors" />
+                  Catalogo B2B
                 </Link>
               </li>
             </ul>

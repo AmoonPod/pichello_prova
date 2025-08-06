@@ -169,7 +169,7 @@ const CatalogPDF: React.FC<CatalogPDFProps> = ({ prodotti, categorie }) => {
                                                 <h4 className="font-bold text-sm mb-2 text-gray-900">Certificazioni:</h4>
                                                 <div className="flex flex-wrap gap-2 text-xs">
                                                     {prodotto.marchi.prodotto_di_montagna && (
-                                                        <span className="bg-green-100 text-green-800 px-2 py-1 rounded">
+                                                        <span className="bg-amber-100 text-amber-800 px-2 py-1 rounded">
                                                             Prodotto di Montagna
                                                         </span>
                                                     )}

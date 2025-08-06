@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Menu as MenuIcon } from "lucide-react"; // using MenuIcon for clarity
+import { Menu as MenuIcon, Package } from "lucide-react"; // using MenuIcon for clarity
 import { cn } from "@/lib/utils";
 import LOGO from "../../../public/LOGO.png";
 import Image from "next/image";
@@ -48,6 +48,14 @@ const NavbarV2 = () => {
             className="text-foreground hover:text-primary transition-all duration-200 text-sm font-medium hover:-translate-y-0.5 transform"
           >
             Prodotti
+          </Link>
+          <Link
+            href="/catalogo"
+            className="text-foreground hover:text-primary transition-all duration-200 text-sm font-medium hover:-translate-y-0.5 transform flex items-center gap-1"
+            title="Catalogo commerciale per presentazioni clienti"
+          >
+            <Package className="h-4 w-4" />
+            Catalogo
           </Link>
           <Link
             href="/#dove-siamo"
@@ -110,6 +118,16 @@ const NavbarV2 = () => {
                     prefetch={false}
                   >
                     Prodotti
+                  </Link>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Link
+                    href="/catalogo"
+                    className="font-medium text-lg hover:text-primary transition-colors flex items-center gap-2"
+                    prefetch={false}
+                  >
+                    <Package className="h-5 w-5" />
+                    Catalogo
                   </Link>
                 </SheetClose>
                 <SheetClose asChild>

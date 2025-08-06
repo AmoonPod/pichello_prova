@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Phone, Mail, MessageCircle } from "lucide-react";
+import { ArrowRight, Phone, Mail, MessageCircle, Package } from "lucide-react";
 import Link from "next/link";
 
 const FinalCTASection = () => {
@@ -86,6 +86,39 @@ const FinalCTASection = () => {
                 Esplora i Prodotti
               </Button>
             </Link>
+          </div>
+
+          {/* B2B Section - Prominent placement for business customers */}
+          <div className="max-w-4xl mx-auto mb-12 lg:mb-16">
+            <div className="bg-white/15 backdrop-blur-sm border border-white/30 rounded-3xl p-6 lg:p-8 hover:bg-white/20 transition-all duration-300">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Package className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-xl lg:text-2xl font-bold text-white mb-3">
+                  Attività e Rivenditori
+                </h3>
+                <p className="text-white/80 text-base lg:text-lg mb-6 leading-relaxed">
+                  Accedi al <strong>catalogo commerciale completo</strong> con codici EAN
+                  e informazioni tecniche per la rivendita.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                  <Link href="/catalogo">
+                    <Button
+                      size="lg"
+                      className="w-full sm:w-auto bg-secondary hover:bg-secondary/90 text-secondary-foreground font-bold px-8 py-3 text-base rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 group"
+                    >
+                      <Package className="mr-2 w-5 h-5" />
+                      Visualizza Catalogo B2B
+                      <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                  </Link>
+                  <span className="text-white/60 text-sm px-4 py-2 bg-white/10 rounded-full">
+                    Codici EAN • Info tecniche • Schede prodotto
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Contact Info Highlights */}

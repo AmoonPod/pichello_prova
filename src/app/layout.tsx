@@ -3,7 +3,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { Metadata } from "next";
 import { Bricolage_Grotesque } from "next/font/google";
 import { headers } from "next/headers";
-
+import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 // Dynamic metadataBase based on environment
 const baseUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -88,7 +89,7 @@ export const metadata: Metadata = {
   },
 };
 
-const bricolageGrotesque = Bricolage_Grotesque({
+export const bricolageGrotesque = Bricolage_Grotesque({
   display: "swap",
   weight: ["200", "300", "400", "500", "600", "700", "800"],
   subsets: ["latin"],
@@ -247,6 +248,14 @@ export default async function RootLayout({
 
         <link rel="preload" href="/globals.css" as="style" />
 
+        {/* Preload critical brand assets */}
+        <link rel="preload" href="/LOGO.png" as="image" type="image/png" />
+        <link rel="preload" href="/logo-Prodotto-di-Montagna.jpg" as="image" type="image/jpeg" />
+
+        {/* Optimizations for Sanity CDN */}
+        <link rel="dns-prefetch" href="https://cdn.sanity.io" />
+        <link rel="preconnect" href="https://cdn.sanity.io" crossOrigin="anonymous" />
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -258,6 +267,8 @@ export default async function RootLayout({
         <NavbarV2 />
         {children}
         <Toaster />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

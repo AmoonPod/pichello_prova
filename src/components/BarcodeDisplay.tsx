@@ -4,12 +4,16 @@ import React, { useEffect, useRef } from "react";
 import JsBarcode from "jsbarcode";
 
 interface BarcodeProps {
-  value: string;
-  format?: string; // e.g., EAN13, CODE128
+  code?: string; // For backward compatibility
+  value?: string; // Legacy prop name
+  productName?: string; // For accessibility
+  format?: string; // Product format description
+  barcodeFormat?: string; // e.g., EAN13, CODE128
   width?: number;
   height?: number;
   displayValue?: boolean;
   margin?: number;
+  compact?: boolean; // For catalog compact view
 }
 
 // Function to validate and fix EAN codes
@@ -63,54 +67,66 @@ function calculateEAN13CheckDigit(ean12: string): string {
 }
 
 const BarcodeDisplay: React.FC<BarcodeProps> = ({
+  code,
   value,
-  format = "EAN13", // Default to EAN13 for EAN codes
-  width = 1.5, // Reduced for mobile friendliness
-  height = 50,
+  productName,
+  format,
+  barcodeFormat = "EAN13", // Default to EAN13 for EAN codes
+  width,
+  height,
   displayValue = true, // Show EAN below barcode by default
-  margin = 5, // Reduced margin for mobile
+  margin,
+  compact = false,
 }) => {
   const svgRef = useRef<SVGSVGElement>(null);
 
+  // Use code or value (backward compatibility)
+  const barcodeValue = code || value;
+
+  // Set defaults based on compact mode
+  const finalWidth = width || (compact ? 1 : 1.5);
+  const finalHeight = height || (compact ? 30 : 50);
+  const finalMargin = margin || (compact ? 2 : 5);
+
   useEffect(() => {
-    if (svgRef.current && value) {
+    if (svgRef.current && barcodeValue) {
       try {
-        let processedValue = value;
-        let processedFormat = format;
+        let processedValue = barcodeValue;
+        let processedFormat = barcodeFormat;
 
         // If format is EAN13, validate and fix the EAN code
-        if (format === "EAN13") {
-          const fixedEAN = validateAndFixEAN(value);
+        if (barcodeFormat === "EAN13") {
+          const fixedEAN = validateAndFixEAN(barcodeValue);
           if (fixedEAN) {
             processedValue = fixedEAN;
           } else {
             // If EAN cannot be fixed, fallback to CODE128
-            processedValue = value;
+            processedValue = barcodeValue;
             processedFormat = "CODE128";
           }
         }
 
         JsBarcode(svgRef.current, processedValue, {
           format: processedFormat,
-          width: width,
-          height: height,
+          width: finalWidth,
+          height: finalHeight,
           displayValue: displayValue,
-          margin: margin,
+          margin: finalMargin,
           fontOptions: "bold",
-          fontSize: 14,
+          fontSize: compact ? 10 : 14,
         });
       } catch (e) {
         // Try fallback to CODE128 if EAN13 fails
         try {
-          if (format === "EAN13" && svgRef.current) {
-            JsBarcode(svgRef.current, value, {
+          if (barcodeFormat === "EAN13" && svgRef.current) {
+            JsBarcode(svgRef.current, barcodeValue, {
               format: "CODE128",
-              width: width,
-              height: height,
+              width: finalWidth,
+              height: finalHeight,
               displayValue: displayValue,
-              margin: margin,
+              margin: finalMargin,
               fontOptions: "bold",
-              fontSize: 14,
+              fontSize: compact ? 10 : 14,
             });
           }
         } catch (fallbackError) {
@@ -121,16 +137,16 @@ const BarcodeDisplay: React.FC<BarcodeProps> = ({
         }
       }
     }
-  }, [value, format, width, height, displayValue, margin]); // Re-run if props change
+  }, [barcodeValue, barcodeFormat, finalWidth, finalHeight, displayValue, finalMargin, compact]); // Re-run if props change
 
   // Render nothing if value is empty
-  if (!value) {
+  if (!barcodeValue) {
     return null;
   }
 
   return (
-    <div className="barcode-container w-full overflow-hidden">
-      <svg ref={svgRef} className="max-w-full h-auto" />
+    <div className="barcode-container w-full overflow-hidden print:barcode-print">
+      <svg ref={svgRef} className="max-w-full h-auto print:max-w-full" />
     </div>
   );
 };

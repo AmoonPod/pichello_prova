@@ -232,7 +232,30 @@ const PrintCatalogPage = async () => {
                         }
                         
                         .product-grid > div {
-                            flex: 1;
+                            min-height: 8cm;
+                            max-height: 10cm;
+                            page-break-inside: avoid;
+                            overflow: hidden;
+                        }
+
+                        /* CSS specifici per generazione PDF con Puppeteer */
+                        @media print {
+                            img {
+                                -webkit-print-color-adjust: exact !important;
+                                color-adjust: exact !important;
+                                object-fit: cover !important;
+                                object-position: center !important;
+                                max-width: 100% !important;
+                                height: 100% !important;
+                            }
+
+                            .product-grid > div {
+                                page-break-inside: avoid !important;
+                                min-height: 8cm !important;
+                                max-height: 10cm !important;
+                                display: flex !important;
+                                flex-direction: column !important;
+                            }
                         }
 
                         .footer {

@@ -75,15 +75,16 @@ const CatalogCard = memo(function CatalogCard({
     if (!slug) return null;
 
     const CardContent = (
-        <div className={`bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden break-inside-avoid flex flex-col md:flex-row
-            ${isPrint ? "h-full print:rounded-none print:shadow-none print:border print:border-gray-300" : "min-h-[280px] hover:shadow-lg hover:border-orange-200 hover:ring-1 hover:ring-orange-100 transition-all duration-300"}
-            ${isPrint ? 'p-2 gap-2' : 'p-4 gap-4'}`}>
+        <div className={` items-stretch bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden break-inside-avoid flex flex-col md:flex-row
+            ${isPrint ? "print:rounded-none print:shadow-none print:border print:border-gray-300" : "min-h-[280px] hover:shadow-lg hover:border-orange-200 hover:ring-1 hover:ring-orange-100 transition-all duration-300"}
+            ${isPrint ? 'p-2 gap-2 h-full' : 'p-4 gap-4'}`}>
 
             {/* Product Image */}
-            <div className="w-full md:w-1/3 flex-shrink-0">
-                <div className="w-full h-64 md:h-full overflow-hidden rounded-lg bg-gray-100 ring-1 ring-orange-100 relative">
+            <div className="w-full md:w-1/3 md:flex-1 self-stretch">
+                <div className="w-full h-full md:h-full overflow-hidden rounded-lg bg-gradient-to-br from-gray-50 to-gray-100 ring-1 ring-orange-100 relative flex items-center justify-center">
                     {imageUrl ? (
-                        <img
+                        <Image
+                            fill
                             src={imageUrl}
                             alt={imageAlt}
                             sizes="(max-width: 768px) 50vw, 33vw"

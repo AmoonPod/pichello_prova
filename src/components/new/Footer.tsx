@@ -308,7 +308,7 @@ const FooterV2: React.FC<FooterV2Props> = ({
                 Tutti i diritti riservati.
               </p>
               <p className="text-gray-500 text-xs mt-1">
-                P.IVA: 01234567890 | REA: RE-123456
+                P.IVA: 02817300359
               </p>
               <div className="flex items-center justify-center lg:justify-start gap-4 mt-2">
                 <Link

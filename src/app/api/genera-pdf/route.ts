@@ -18,8 +18,19 @@ export async function GET(request: NextRequest) {
 
     const page = await browser.newPage();
 
+    // Set viewport per assicurarsi che il layout sia corretto
+    await page.setViewport({
+      width: 1200,
+      height: 1600,
+      deviceScaleFactor: 2,
+    });
+
+    // Imposta timeout per la pagina
+    page.setDefaultTimeout(120000); // 2 minuti
+
     await page.goto(printUrl, {
       waitUntil: 'networkidle0',
+      timeout: 120000, // 2 minuti di timeout per il caricamento della pagina
     });
 
     const pdfBuffer = await page.pdf({
@@ -31,6 +42,7 @@ export async function GET(request: NextRequest) {
         bottom: '0cm',
         left: '0cm',
       },
+      timeout: 120000, // 2 minuti di timeout
     });
 
     await browser.close();

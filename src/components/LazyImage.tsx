@@ -53,7 +53,7 @@ const LazyImage = memo(function LazyImage({
     const shouldLoad = priority || isIntersecting;
 
     return (
-        <div ref={ref} className={`relative ${className}`}>
+        <div className={`relative ${className}`}>
             {shouldLoad && !isError && (
                 <Image
                     src={src}

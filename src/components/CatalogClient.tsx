@@ -19,6 +19,7 @@ import {
 import { motion, useInView } from "framer-motion";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CatalogCard, { CatalogCardSkeleton } from "@/components/CatalogCard";
+import { useToast } from "@/components/ui/use-toast";
 
 // Debounce hook for search performance
 const useDebounce = (value: string, delay: number) => {
@@ -47,13 +48,7 @@ const CatalogClient = ({
     searchParams?: { categoria?: string };
 }) => {
     const ref = useRef(null);
-    const isInView = useInView(ref, {
-        once: true,
-        amount: 0.1,
-        margin: "0px 0px -100px 0px",
-    });
 
-    const [isVisible, setIsVisible] = useState(false);
     const clientSearchParams = useSearchParams();
     const initialCategory =
         serverSearchParams?.categoria || clientSearchParams.get("categoria");
@@ -67,17 +62,15 @@ const CatalogClient = ({
     const [isFiltersOpen, setIsFiltersOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const { toast } = useToast();
+    const [isDownloading, setIsDownloading] = useState(false);
+    const [isButtonVisible, setisButtonVisible] = useState(false);
 
     // Debounced search for better performance
     const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
     useEffect(() => {
-        if (isInView) setIsVisible(true);
-    }, [isInView]);
-
-    useEffect(() => {
         const timer = setTimeout(() => {
-            setIsVisible(true);
             setIsLoading(false);
         }, 100);
         return () => clearTimeout(timer);
@@ -124,20 +117,47 @@ const CatalogClient = ({
     }, []);
 
     // Print functionality
-    const handlePrint = useCallback(() => {
-        // Add print-specific body class
-        document.body.classList.add('printing');
+    const handleDownload = useCallback(async () => {
+        setIsDownloading(true);
+        toast({
+            title: "Creazione del catalogo in corso...",
+            description: "Il download si avvierà tra pochi istanti. L'operazione potrebbe richiedere fino a due minuti.",
+        });
 
-        // Brief delay to allow style application
-        setTimeout(() => {
-            window.print();
+        try {
+            const response = await fetch('/api/genera-pdf');
 
-            // Remove class after printing
-            setTimeout(() => {
-                document.body.classList.remove('printing');
-            }, 100);
-        }, 100);
-    }, []);
+            if (!response.ok) {
+                throw new Error(`Error: ${response.statusText}`);
+            }
+
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'catalogo-il-pichello.pdf';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            window.URL.revokeObjectURL(url);
+
+            toast({
+                title: "Download completato",
+                description: "Il catalogo è stato scaricato con successo.",
+                variant: "default",
+            });
+
+        } catch (error) {
+            console.error("Failed to download PDF:", error);
+            toast({
+                title: "Errore nel download",
+                description: "Impossibile scaricare il catalogo. Riprova più tardi.",
+                variant: "destructive",
+            });
+        } finally {
+            setIsDownloading(false);
+        }
+    }, [toast]);
 
     const breadcrumbItems = [
         { label: "Home", href: "/" },
@@ -188,14 +208,21 @@ const CatalogClient = ({
 
 
                             {/* Print Button */}
-                            <button
-                                onClick={handlePrint}
-                                className="flex items-center gap-2 px-4 py-2 bg-secondary text-white rounded-lg hover:bg-secondary/90 transition-colors print:hidden"
-                                title="Stampa catalogo"
-                            >
-                                <Printer className="h-4 w-4" />
-                                <span className="hidden sm:inline">Stampa</span>
-                            </button>
+                            {isButtonVisible && (
+                                <button
+                                    onClick={handleDownload}
+                                    disabled={isDownloading}
+                                    className="flex items-center gap-2 px-4 py-2 bg-secondary text-white rounded-lg hover:bg-secondary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed print:hidden"
+                                    title="Scarica catalogo"
+                                >
+                                    {isDownloading ? (
+                                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                                    ) : (
+                                        <Printer className="h-4 w-4" />
+                                    )}
+                                    <span className="hidden sm:inline">{isDownloading ? "Creazione..." : "Scarica Catalogo"}</span>
+                                </button>
+                            )}
 
                             {/* Filters Toggle */}
                             <button
@@ -310,35 +337,21 @@ const CatalogClient = ({
                         </div>
                     </div>
                 ) : (
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                        transition={{ duration: 0.6, ease: "easeOut" }}
+                    <div
                         className="flex flex-col gap-4 print-detailed-list"
                     >
                         {filteredProdotti.map((prodotto, index) => (
-                            <motion.div
+                            <div
                                 key={prodotto._id}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={
-                                    isVisible
-                                        ? { opacity: 1, y: 0 }
-                                        : { opacity: 0, y: 20 }
-                                }
-                                transition={{
-                                    duration: 0.6,
-                                    delay: index * 0.05,
-                                    ease: "easeOut",
-                                }}
                                 className="catalog-card"
                             >
                                 <CatalogCard
                                     product={prodotto}
                                     viewMode={viewMode}
                                 />
-                            </motion.div>
+                            </div>
                         ))}
-                    </motion.div>
+                    </div>
                 )}
             </div>
         </div>

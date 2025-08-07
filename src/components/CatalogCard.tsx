@@ -3,6 +3,7 @@ import Image from "next/image";
 import LazyImage from "./LazyImage";
 import { memo } from "react";
 import { ProdottoType } from "../../types";
+import BarcodeDisplay from "./BarcodeDisplay";
 import CategoryTag from "./category_tag";
 import {
     Image as ImageIcon,
@@ -80,7 +81,7 @@ const CatalogCard = memo(function CatalogCard({
             ${isPrint ? 'p-2 gap-2 h-full' : 'p-4 gap-4'}`}>
 
             {/* Product Image */}
-            <div className="w-full md:w-1/3 md:flex-1 self-stretch">
+            <div className="w-full md:w-1/3 self-stretch">
                 <div className="w-full h-full md:h-full overflow-hidden rounded-lg bg-gradient-to-br from-gray-50 to-gray-100 ring-1 ring-orange-100 relative flex items-center justify-center">
                     {imageUrl ? (
                         <Image
@@ -100,7 +101,7 @@ const CatalogCard = memo(function CatalogCard({
             </div>
 
             {/* Product Info */}
-            <div className="flex-1 min-w-0 flex flex-col">
+            <div className="flex-1 min-w-0 flex flex-col md:w-1/3">
                 <div className="mb-2">
                     <h3 className={`text-base font-bold text-gray-900 ${!isPrint && "group-hover:text-primary transition-colors"}`}>
                         {product.nome}
@@ -158,7 +159,7 @@ const CatalogCard = memo(function CatalogCard({
             </div>
 
             {/* Commercial Data */}
-            <div className="flex-1 flex flex-col sm:flex-row gap-2">
+            <div className="flex-1 flex flex-col sm:flex-row gap-2 md:w-1/3">
                 <div className={`${product.valori_nutrizionali ? 'w-full sm:w-1/2' : 'w-full'}`}>
                     <div className="bg-gray-100 p-2 rounded-lg border border-gray-200/80 h-full flex flex-col">
                         <h4 className="font-semibold text-gray-800 text-xs mb-2 flex items-center">
@@ -171,9 +172,12 @@ const CatalogCard = memo(function CatalogCard({
                                     <div key={index} className="bg-white border border-gray-300 p-1.5 rounded text-xs">
                                         <div className="font-semibold text-gray-800 mb-1">{formato.formato}</div>
                                         {formato.codice_ean && (
-                                            <div className="text-gray-600 font-mono text-[10px] bg-gray-50 px-1 py-0.5 rounded border">
-                                                {formato.codice_ean}
-                                            </div>
+                                            <BarcodeDisplay
+                                                value={formato.codice_ean}
+                                                productName={product.nome}
+                                                format={formato.formato}
+                                                compact={true}
+                                            />
                                         )}
                                     </div>
                                 ))

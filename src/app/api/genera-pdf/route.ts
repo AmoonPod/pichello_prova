@@ -33,6 +33,30 @@ export async function GET(request: NextRequest) {
       timeout: 120000, // 2 minuti di timeout per il caricamento della pagina
     });
 
+    // Funzione di scorrimento a prova di proiettile
+    await page.evaluate(async () => {
+      await new Promise((resolve) => {
+        let lastHeight = -1;
+        const maxScrolls = 100; // Sicurezza per evitare loop infiniti
+        let scrolls = 0;
+
+        const scrollInterval = setInterval(() => {
+          const newHeight = document.body.scrollHeight;
+          if (newHeight === lastHeight || scrolls >= maxScrolls) {
+            clearInterval(scrollInterval);
+            resolve(undefined);
+          } else {
+            window.scrollTo(0, newHeight);
+            lastHeight = newHeight;
+            scrolls++;
+          }
+        }, 300); // Intervallo più breve per una maggiore reattività
+      });
+    });
+
+    // Aumentato il tempo di attesa finale per gestire il rendering dei barcode
+    await new Promise((resolve) => setTimeout(resolve, 7000));
+
     const pdfBuffer = await page.pdf({
       format: 'A4',
       printBackground: true,

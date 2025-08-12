@@ -85,7 +85,7 @@ const PrintCatalogPage = async () => {
                             page-break-after: always;
                             height: 297mm;
                             width: 210mm;
-                            padding: 1.5cm;
+                            padding: 0.5cm;
                             box-sizing: border-box;
                             display: flex;
                             flex-direction: column;
@@ -261,8 +261,8 @@ const PrintCatalogPage = async () => {
                         .footer {
                             position: absolute;
                             bottom: 0.5cm;
-                            left: 1.5cm;
-                            right: 1.5cm;
+                            left: 0.5cm;
+                            right: 0.5cm;
                             text-align: center;
                             font-size: 10px;
                             color: #6B7280;

@@ -73,6 +73,11 @@ export const prodotto = {
           type: 'boolean',
         },
         {
+          name: 'perlato_a_pietra',
+          title: 'Perlato a pietra',
+          type: 'boolean',
+        },
+        {
           name: 'pianificabile_superiore',
           title: 'Pianificabile superiore',
           type: 'boolean',
@@ -81,9 +86,9 @@ export const prodotto = {
       options: { layout: 'checkbox' },
     },
     {
-      name: "ordine",
-      title: "Ordine",
-      type: "number",
+      name: 'ordine',
+      title: 'Ordine',
+      type: 'number',
       initialValue: 1,
     },
     //now I need valori nutrizionali. here is an example: Energia 2932 KJ-690Kcal - Grassi 5,2 g di cui acidi grassi saturi 0,7 g - Carboidrati 80,1 g di cui zuccheri 3,2 g - Fibre 29 g -Proteine 38 g - Sale 0,01g

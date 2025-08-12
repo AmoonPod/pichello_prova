@@ -155,49 +155,40 @@ export default async function Product(props: {
     additionalProperty: [
       ...(prodotto.umidita !== null && prodotto.umidita !== undefined
         ? [
-            {
-              "@type": "PropertyValue",
-              name: "Umidità",
-              value: `${prodotto.umidita}%`,
-            },
-          ]
+          {
+            "@type": "PropertyValue",
+            name: "Umidità",
+            value: `${prodotto.umidita}%`,
+          },
+        ]
         : []),
       ...(prodotto.scadenza
         ? [
-            {
-              "@type": "PropertyValue",
-              name: "Scadenza",
-              value: prodotto.scadenza,
-            },
-          ]
-        : []),
-      ...(prodotto.pezzi
-        ? [
-            {
-              "@type": "PropertyValue",
-              name: "Pezzi per confezione",
-              value: prodotto.pezzi.toString(),
-            },
-          ]
+          {
+            "@type": "PropertyValue",
+            name: "Scadenza",
+            value: prodotto.scadenza,
+          },
+        ]
         : []),
     ],
     ...(prodotto.formati &&
       prodotto.formati.length > 0 && {
-        offers: prodotto.formati.map((formato: any, index: number) => ({
-          "@type": "Offer",
-          name: formato.formato,
-          ...(formato.codice_ean && {
-            gtin13: formato.codice_ean,
-          }),
-          seller: {
-            "@type": "Organization",
-            "@id": "https://www.agricolailpichello.it/#organization",
-          },
-          availability: "https://schema.org/InStock",
-          priceCurrency: "EUR",
-          url: `https://www.agricolailpichello.it/prodotti/${JSON.parse(JSON.stringify(prodotto.slug)).current}`,
-        })),
-      }),
+      offers: prodotto.formati.map((formato: any, index: number) => ({
+        "@type": "Offer",
+        name: formato.formato,
+        ...(formato.codice_ean && {
+          gtin13: formato.codice_ean,
+        }),
+        seller: {
+          "@type": "Organization",
+          "@id": "https://www.agricolailpichello.it/#organization",
+        },
+        availability: "https://schema.org/InStock",
+        priceCurrency: "EUR",
+        url: `https://www.agricolailpichello.it/prodotti/${JSON.parse(JSON.stringify(prodotto.slug)).current}`,
+      })),
+    }),
     ...(prodotto.valori_nutrizionali && {
       nutrition: {
         "@type": "NutritionInformation",
@@ -338,7 +329,7 @@ export default async function Product(props: {
                 </div>
 
                 {/* Quick Info Cards */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                   <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
                     <div className="text-sm text-gray-500 mb-1">Scadenza</div>
                     <div className="font-semibold text-gray-900">
@@ -346,16 +337,10 @@ export default async function Product(props: {
                     </div>
                   </div>
                   <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-                    <div className="text-sm text-gray-500 mb-1">Pezzi</div>
-                    <div className="font-semibold text-gray-900">
-                      {prodotto.pezzi ?? "N/D"}
-                    </div>
-                  </div>
-                  <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
                     <div className="text-sm text-gray-500 mb-1">Umidità</div>
                     <div className="font-semibold text-gray-900">
                       {prodotto.umidita !== null &&
-                      prodotto.umidita !== undefined
+                        prodotto.umidita !== undefined
                         ? `${prodotto.umidita}%`
                         : "N/D"}
                     </div>
@@ -625,13 +610,12 @@ export default async function Product(props: {
                     <div className="relative">
                       {/* Decorative background */}
                       <div
-                        className={`absolute inset-2 rounded-xl transform rotate-1 group-hover:rotate-0 transition-transform duration-500 ${
-                          index % 3 === 0
+                        className={`absolute inset-2 rounded-xl transform rotate-1 group-hover:rotate-0 transition-transform duration-500 ${index % 3 === 0
                             ? "bg-gradient-to-br from-primary/10 via-primary/15 to-primary/20"
                             : index % 3 === 1
                               ? "bg-gradient-to-br from-secondary/10 via-secondary/15 to-secondary/20"
                               : "bg-gradient-to-br from-primary/5 via-primary/10 to-primary/15"
-                        }`}
+                          }`}
                       />
 
                       {/* Product Card */}

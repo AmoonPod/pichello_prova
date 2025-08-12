@@ -84,8 +84,8 @@ const BarcodeDisplay: React.FC<BarcodeProps> = ({
   const barcodeValue = code || value;
 
   // Set defaults based on compact mode
-  const finalWidth = width || (compact ? 1 : 1.5);
-  const finalHeight = height || (compact ? 30 : 50);
+  const finalWidth = width || (compact ? 1.8 : 1.8);
+  const finalHeight = height || (compact ? 30 : 40);
   const finalMargin = margin || (compact ? 2 : 5);
 
   useEffect(() => {

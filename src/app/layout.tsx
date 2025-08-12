@@ -18,6 +18,9 @@ export const metadata: Metadata = {
     template: `%s | Azienda Agricola Il Pichello`,
     default: "Azienda Agricola Il Pichello", // Fallback generico
   },
+  verification: {
+    google: "q5O2xX99Yb9If04OQGaWgWiCnzu22jHcqu1S7l2BkNc",
+  },
   description:
     "Azienda agricola specializzata in prodotti biorazionali nell'Appennino Reggiano. Miele, cereali, legumi e trasformati di qualità.",
   authors: [{ name: "Azienda Agricola Il Pichello" }],
@@ -221,6 +224,7 @@ export default async function RootLayout({
             href="https://fonts.gstatic.com"
             crossOrigin="anonymous"
           />
+          <meta name="google-site-verification" content="q5O2xX99Yb9If04OQGaWgWiCnzu22jHcqu1S7l2BkNc" />
           <link rel="preconnect" href="https://cdn.sanity.io" />
           <link rel="dns-prefetch" href="https://www.google-analytics.com" />
           <script

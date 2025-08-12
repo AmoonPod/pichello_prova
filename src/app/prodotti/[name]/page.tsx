@@ -433,89 +433,68 @@ export default async function Product(props: {
                 )}
 
                 {/* Brands Section */}
-                <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-                  <h3 className="text-xl font-bold mb-4 text-gray-900">
-                    Certificazioni e Marchi
-                  </h3>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                    {prodotto.marchi?.prodotto_di_montagna && (
-                      <div className="bg-gray-50 rounded-lg p-3 border border-gray-200 hover:shadow-md transition-shadow">
-                        <img
-                          src="/logo-Prodotto-di-Montagna.jpg"
-                          alt="Prodotto di Montagna"
-                          title="Prodotto di Montagna"
-                          className="w-full h-16 object-contain"
-                        />
-                      </div>
-                    )}
-                    {prodotto.marchi?.senza_ammollo && (
-                      <div className="bg-gray-50 rounded-lg p-3 border border-gray-200 hover:shadow-md transition-shadow">
-                        <img
-                          src="/senza ammollo.jpg"
-                          alt="Senza Ammollo"
-                          title="Senza Ammollo"
-                          className="w-full h-16 object-contain"
-                        />
-                      </div>
-                    )}
-                    {prodotto.marchi?.senza_cereali && (
-                      <div className="bg-gray-50 rounded-lg p-3 border border-gray-200 hover:shadow-md transition-shadow">
-                        <img
-                          src="/senza cereali.jpg"
-                          alt="Senza Cereali"
-                          title="Senza Cereali"
-                          className="w-full h-16 object-contain"
-                        />
-                      </div>
-                    )}
-                    {prodotto.marchi?.riso_italiano && (
-                      <div className="bg-gray-50 rounded-lg p-3 border border-gray-200 hover:shadow-md transition-shadow">
-                        <img
-                          src="/riso italiano.jpg"
-                          alt="Riso Italiano"
-                          title="Riso Italiano"
-                          className="w-full h-16 object-contain"
-                        />
-                      </div>
-                    )}
-                    {prodotto.marchi?.varieta_antica && (
-                      <div className="bg-gray-50 rounded-lg p-3 border border-gray-200 hover:shadow-md transition-shadow">
-                        <img
-                          src="/varieta.antica.jpg"
-                          alt="Varietà Antica"
-                          title="Varietà Antica"
-                          className="w-full h-16 object-contain"
-                        />
-                      </div>
-                    )}
-                    {prodotto.marchi?.macinato_a_pietra && (
-                      <div className="bg-gray-50 rounded-lg p-3 border border-gray-200 hover:shadow-md transition-shadow">
-                        <img
-                          src="/macinata a pietra.jpg"
-                          alt="Macinato a Pietra"
-                          title="Macinato a Pietra"
-                          className="w-full h-16 object-contain"
-                        />
-                      </div>
-                    )}
-                    {prodotto.marchi?.decorticato_a_pietra && (
-                      <div className="bg-gray-50 rounded-lg p-3 border border-gray-200 hover:shadow-md transition-shadow">
-                        <img
-                          src="/decorticato a pietra.jpg"
-                          alt="Decorticato a Pietra"
-                          title="Decorticato a Pietra"
-                          className="w-full h-16 object-contain"
-                        />
-                      </div>
-                    )}
-                    {prodotto.marchi?.pianificabile_superiore && (
-                      <div className="bg-gradient-to-r from-primary to-blue-600 text-white rounded-lg p-3 border border-gray-200 flex items-center justify-center hover:shadow-md transition-shadow">
-                        <span className="text-sm font-medium text-center">
-                          Pianificabile superiore
-                        </span>
-                      </div>
-                    )}
-                  </div>
+                <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-8 items-center">
+                  {prodotto.marchi?.prodotto_di_montagna && (
+                    <img
+                      src="/logo-Prodotto-di-Montagna.jpg"
+                      alt="Prodotto di Montagna"
+                      title="Prodotto di Montagna"
+                      className="w-full h-20 object-contain transition-transform hover:scale-105"
+                    />
+                  )}
+                  {prodotto.marchi?.senza_ammollo && (
+                    <img
+                      src="/senza ammollo.jpg"
+                      alt="Senza Ammollo"
+                      title="Senza Ammollo"
+                      className="w-full h-20 object-contain transition-transform hover:scale-105"
+                    />
+                  )}
+                  {prodotto.marchi?.senza_cereali && (
+                    <img
+                      src="/senza cereali.jpg"
+                      alt="Senza Cereali"
+                      title="Senza Cereali"
+                      className="w-full h-20 object-contain transition-transform hover:scale-105"
+                    />
+                  )}
+                  {prodotto.marchi?.riso_italiano && (
+                    <img
+                      src="/riso italiano.jpg"
+                      alt="Riso Italiano"
+                      title="Riso Italiano"
+                      className="w-full h-20 object-contain transition-transform hover:scale-105"
+                    />
+                  )}
+                  {prodotto.marchi?.varieta_antica && (
+                    <img
+                      src="/varieta.antica.jpg"
+                      alt="Varietà Antica"
+                      title="Varietà Antica"
+                      className="w-full h-20 object-contain transition-transform hover:scale-105"
+                    />
+                  )}
+                  {prodotto.marchi?.macinato_a_pietra && (
+                    <img
+                      src="/macinata a pietra.jpg"
+                      alt="Macinato a Pietra"
+                      title="Macinato a Pietra"
+                      className="w-full h-20 object-contain transition-transform hover:scale-105"
+                    />
+                  )}
+                  {prodotto.marchi?.decorticato_a_pietra && (
+                    <img
+                      src="/decorticato a pietra.jpg"
+                      alt="Decorticato a Pietra"
+                      title="Decorticato a Pietra"
+                      className="w-full h-20 object-contain transition-transform hover:scale-105"
+                    />
+                  )}
+                  {prodotto.marchi?.pianificabile_superiore && (
+                    <div className="text-center font-semibold text-gray-700 text-lg transition-transform hover:scale-105">
+                      Pianificabile superiore
+                    </div>
+                  )}
                 </div>
 
                 {/* Nutritional Values */}
@@ -611,10 +590,10 @@ export default async function Product(props: {
                       {/* Decorative background */}
                       <div
                         className={`absolute inset-2 rounded-xl transform rotate-1 group-hover:rotate-0 transition-transform duration-500 ${index % 3 === 0
-                            ? "bg-gradient-to-br from-primary/10 via-primary/15 to-primary/20"
-                            : index % 3 === 1
-                              ? "bg-gradient-to-br from-secondary/10 via-secondary/15 to-secondary/20"
-                              : "bg-gradient-to-br from-primary/5 via-primary/10 to-primary/15"
+                          ? "bg-gradient-to-br from-primary/10 via-primary/15 to-primary/20"
+                          : index % 3 === 1
+                            ? "bg-gradient-to-br from-secondary/10 via-secondary/15 to-secondary/20"
+                            : "bg-gradient-to-br from-primary/5 via-primary/10 to-primary/15"
                           }`}
                       />
 

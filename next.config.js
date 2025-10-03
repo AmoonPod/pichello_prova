@@ -20,7 +20,20 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ['lucide-react', 'framer-motion'],
   },
-
+  async redirects() {
+    return [
+      {
+        source: '/tisane-infusi-e-te-dellappennino-reggiano',
+        destination: '/prodotti?categoria=tisane-e-infusi',
+        permanent: true, // 301 redirect
+      },
+      {
+        source: '/miele-di-carpineti-nellappennino-reggiano',
+        destination: '/prodotti?categoria=prodotti-dellalveare',
+        permanent: true, // 301 redirect
+      },
+    ];
+  },
   // Headers for better performance and security
   async headers() {
     return [

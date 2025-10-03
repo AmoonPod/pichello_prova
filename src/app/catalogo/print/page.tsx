@@ -65,6 +65,7 @@ const PrintCatalogPage = async () => {
             <head>
                 <title>Catalogo Prodotti - Azienda Agricola Il Pichello</title>
                 <meta charSet="UTF-8" />
+                <meta name="robots" content="noindex, nofollow" />
                 <style>
                     {`
                         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');

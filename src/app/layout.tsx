@@ -167,33 +167,66 @@ const jsonLd = {
       },
       hasOfferCatalog: {
         "@type": "OfferCatalog",
-        name: "Prodotti Biorazionali",
-        itemListElement: [
+        "name": "Prodotti principali",
+        "itemListElement": [
           {
             "@type": "Offer",
-            itemOffered: {
+            "itemOffered": {
               "@type": "Product",
-              name: "Miele",
-              description: "Miele prodotto con metodi biorazionali",
+              "name": "Miele",
+              "description": "Disponibile in diversi formati e varietà: Acacia, Tiglio, Millefiori, Melata di bosco, Tarassaco, Castagno."
             },
+            "offers": {
+              "@type": "AggregateOffer",
+              "lowPrice": "5.00",
+              "highPrice": "15.00",
+              "priceCurrency": "EUR",
+              "priceValidUntil": "2026-12-31",
+              "hasMerchantReturnPolicy": {
+                "@type": "MerchantReturnPolicy",
+                "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
+              }
+            }
           },
           {
             "@type": "Offer",
-            itemOffered: {
+            "itemOffered": {
               "@type": "Product",
-              name: "Cereali",
-              description: "Cereali coltivati con tecniche sostenibili",
+              "name": "Farine di grani antichi",
+              "description": "Disponibili in vari formati: integrale, semi-integrale e fiore."
             },
+            "offers": {
+              "@type": "AggregateOffer",
+              "lowPrice": "3.00",
+              "highPrice": "30.00",
+              "priceCurrency": "EUR",
+              "priceValidUntil": "2026-12-31",
+              "hasMerchantReturnPolicy": {
+                "@type": "MerchantReturnPolicy",
+                "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
+              }
+            }
           },
           {
             "@type": "Offer",
-            itemOffered: {
+            "itemOffered": {
               "@type": "Product",
-              name: "Legumi",
-              description: "Legumi di alta qualità dell'Appennino Reggiano",
+              "name": "Legumi e farine di legumi",
+              "description": "Fagioli, piselli, ceci, lenticchie, cicerchie, fave e relative farine."
             },
-          },
-        ],
+            "offers": {
+              "@type": "AggregateOffer",
+              "lowPrice": "3.00",
+              "highPrice": "12.00",
+              "priceCurrency": "EUR",
+              "priceValidUntil": "2026-12-31",
+              "hasMerchantReturnPolicy": {
+                "@type": "MerchantReturnPolicy",
+                "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
+              }
+            }
+          }
+        ]
       },
       openingHoursSpecification: {
         "@type": "OpeningHoursSpecification",

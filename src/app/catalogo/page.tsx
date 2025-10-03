@@ -23,9 +23,9 @@ export async function generateMetadata({
 
   const currentCategory = categoriaSlug
     ? categories.find((cat) => {
-        const slug = JSON.parse(JSON.stringify(cat.slug)).current;
-        return slug === categoriaSlug;
-      })
+      const slug = JSON.parse(JSON.stringify(cat.slug)).current;
+      return slug === categoriaSlug;
+    })
     : null;
 
   if (currentCategory) {
@@ -106,7 +106,7 @@ export async function generateMetadata({
       canonical: "https://www.agricolailpichello.it/catalogo",
     },
     robots: {
-      index: false, // Catalog is for internal commercial use
+      index: true, // Catalog is for internal commercial use
       follow: true,
     },
   };

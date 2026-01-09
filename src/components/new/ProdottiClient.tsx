@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, Variants } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Image as ImageIcon, Package, Leaf } from "lucide-react";
 import { CategoriaType } from "../../../types";
@@ -40,7 +40,7 @@ export default function ProductsSectionClient({
     return () => clearTimeout(timer);
   }, []);
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -50,7 +50,7 @@ export default function ProductsSectionClient({
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 30, scale: 0.95 },
     visible: {
       opacity: 1,
@@ -58,7 +58,7 @@ export default function ProductsSectionClient({
       scale: 1,
       transition: {
         duration: 0.6,
-        ease: [0.22, 1, 0.36, 1],
+        ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
       },
     },
   };

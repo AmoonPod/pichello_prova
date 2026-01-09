@@ -36,7 +36,7 @@ export default function ProductCard({
 
   if (viewMode === "list") {
     return (
-      <Link href={`/prodotti/${slug}`} className="group">
+      <Link href={`/prodotti/${slug}`} className="group" prefetch={false}>
         <div className="flex gap-4 p-4 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300">
           <div className="flex-shrink-0">
             {imageUrl ? (
@@ -73,7 +73,7 @@ export default function ProductCard({
 
   // Grid view (default)
   return (
-    <Link href={`/prodotti/${slug}`} className="group">
+    <Link href={`/prodotti/${slug}`} className="group" prefetch={false}>
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 h-full">
         <div className="aspect-square overflow-hidden">
           {imageUrl ? (

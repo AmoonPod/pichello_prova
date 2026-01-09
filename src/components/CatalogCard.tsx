@@ -263,7 +263,7 @@ const CatalogCard = memo(function CatalogCard({
     if (viewMode === "detailed") {
         const linkProps = forceEagerLoad ? { target: "_blank", rel: "noopener noreferrer" } : {};
         return (
-            <Link href={`/prodotti/${slug}`} className="group block" {...linkProps}>
+            <Link href={`/prodotti/${slug}`} className="group block" prefetch={false} {...linkProps}>
                 {CardContent}
             </Link>
         );

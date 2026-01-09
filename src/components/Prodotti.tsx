@@ -7,7 +7,7 @@ import { CategoriaType, ProdottoType } from "../../types";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Search, Filter, Grid, List, Leaf, ShoppingBag } from "lucide-react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, Variants } from "framer-motion";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CategorySchema from "@/components/CategorySchema";
 import Head from "next/head";
@@ -169,8 +169,8 @@ const ProductsClient = ({
     return breadcrumbs;
   };
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
+  const containerVariants: Variants = {
+    hidden: { opacity: 1 },
     visible: {
       opacity: 1,
       transition: {
@@ -179,14 +179,14 @@ const ProductsClient = ({
     },
   };
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+  const itemVariants: Variants = {
+    hidden: { opacity: 1, y: 0 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
         duration: 0.6,
-        ease: [0.22, 1, 0.36, 1],
+        ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
       },
     },
   };
@@ -508,7 +508,7 @@ const ProductsClient = ({
                 {filteredProdotti.length > 0 ? (
                   <motion.div
                     variants={containerVariants}
-                    initial="hidden"
+                    initial="visible"
                     animate="visible"
                     className={`${
                       viewMode === "grid"
@@ -520,6 +520,8 @@ const ProductsClient = ({
                       <motion.div
                         key={product._id}
                         variants={itemVariants}
+                        initial="visible"
+                        animate="visible"
                         transition={{ delay: index * 0.05 }}
                         className="transform hover:scale-105 transition-all duration-200"
                       >

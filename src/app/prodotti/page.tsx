@@ -27,9 +27,9 @@ export async function generateMetadata({
   // Find the category if a filter is applied
   const currentCategory = categoriaSlug
     ? categories.find((cat) => {
-        const slug = JSON.parse(JSON.stringify(cat.slug)).current;
-        return slug === categoriaSlug;
-      })
+      const slug = JSON.parse(JSON.stringify(cat.slug)).current;
+      return slug === categoriaSlug;
+    })
     : null;
 
   if (currentCategory) {

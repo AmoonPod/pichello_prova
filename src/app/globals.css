@@ -123,12 +123,12 @@ body {
   }
 
   /* Hide elements not needed in print */
-  .print\\:hidden {
+  .print\:hidden {
     display: none !important;
   }
 
   /* Show print-only elements */
-  .print\\:block {
+  .print\:block {
     display: block !important;
   }
 
@@ -156,16 +156,16 @@ body {
   }
 
   /* Fix margins and padding for print */
-  .print\\:p-8 {
+  .print\:p-8 {
     padding: 2rem !important;
   }
 
-  .print\\:rounded-none {
+  .print\:rounded-none {
     border-radius: 0 !important;
   }
 
   /* Ensure text is black for better readability */
-  .print\\:text-black {
+  .print\:text-black {
     color: black !important;
   }
 
@@ -328,7 +328,7 @@ body {
   }
 
   /* Hide interactive elements when printing */
-  body.printing .print\\:hidden,
+  body.printing .print\:hidden,
   body.printing [class*='hover:'],
   body.printing [class*='transition'] {
     display: none !important;

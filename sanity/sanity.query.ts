@@ -1,8 +1,15 @@
 import { groq } from 'next-sanity';
-import client from './sanity.client';
+import { unstable_cache } from 'next/cache';
+import { readClient } from './sanity.client';
 
-export async function getProdotti() {
-  return client.fetch(
+// Cache configuration - revalidate every hour (3600 seconds)
+const CACHE_REVALIDATE = 3600;
+const CACHE_TAG_PRODUCTS = 'products';
+const CACHE_TAG_CATEGORIES = 'categories';
+
+// Base fetch function for prodotti
+async function fetchProdotti() {
+  return readClient.fetch(
     groq`*[_type == "prodotto"] | order(ordine asc){
       _id,
       nome,
@@ -29,8 +36,9 @@ export async function getProdotti() {
   );
 }
 
-export async function getProdottoBySlug(slug: string) {
-  return client.fetch(
+// Base fetch function for single prodotto
+async function fetchProdottoBySlug(slug: string) {
+  return readClient.fetch(
     groq`*[_type == "prodotto" && slug.current == $slug][0]{
       _id,
       nome,
@@ -56,9 +64,9 @@ export async function getProdottoBySlug(slug: string) {
   );
 }
 
-//get all categories
-export async function getCategorie() {
-  return await client.fetch(
+// Base fetch function for categories
+async function fetchCategorie() {
+  return readClient.fetch(
     groq`*[_type == "categoria"] | order(ordine asc){
       _id,
       nome,
@@ -70,4 +78,38 @@ export async function getCategorie() {
       ordine
     }`
   );
+}
+
+// Cached versions using Next.js unstable_cache
+export async function getProdotti() {
+  return unstable_cache(
+    fetchProdotti,
+    ['all-products'],
+    {
+      revalidate: CACHE_REVALIDATE,
+      tags: [CACHE_TAG_PRODUCTS],
+    }
+  )();
+}
+
+export async function getProdottoBySlug(slug: string) {
+  return unstable_cache(
+    async () => fetchProdottoBySlug(slug),
+    [`product-${slug}`],
+    {
+      revalidate: CACHE_REVALIDATE,
+      tags: [CACHE_TAG_PRODUCTS, `product-${slug}`],
+    }
+  )();
+}
+
+export async function getCategorie() {
+  return unstable_cache(
+    fetchCategorie,
+    ['all-categories'],
+    {
+      revalidate: CACHE_REVALIDATE,
+      tags: [CACHE_TAG_CATEGORIES],
+    }
+  )();
 }

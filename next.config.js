@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Image optimization
+  turbopack: {}, // Image optimization
   images: {
     domains: ['images.unsplash.com', 'cdn.sanity.io'],
     formats: ['image/webp', 'image/avif'],

@@ -16,7 +16,7 @@ async function fetchProdotti() {
       descrizione,
       ingredienti,
       immagini[] {
-        "image": asset->url,
+        "image": asset->url + "?auto=format&fit=max&w=1400&q=75",
         alt
       },
       slug,
@@ -45,7 +45,7 @@ async function fetchProdottoBySlug(slug: string) {
       nome,
       descrizione,
       immagini[] {
-        "image": asset->url
+        "image": asset->url + "?auto=format&fit=max&w=1400&q=75",
       },
       slug,
       umidita,
@@ -73,7 +73,7 @@ async function fetchCategorie() {
       nome,
       descrizione,
       immagine {
-        "image": asset->url
+        "image": asset->url + "?auto=format&fit=max&w=1400&q=75",
       },
       slug,
       ordine

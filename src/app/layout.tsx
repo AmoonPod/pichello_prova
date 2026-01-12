@@ -247,6 +247,17 @@ export default async function RootLayout({
   const heads = await headers();
   const pathname = heads.get("x-current-path");
   const isStudio = pathname?.includes("/studio");
+  const isPrintPage = pathname?.includes("/catalogo/print");
+
+  // Skip layout for print page (standalone HTML for PDF generation)
+  if (isPrintPage) {
+    return (
+      <html lang="it">
+        <body>{children}</body>
+      </html>
+    );
+  }
+
   if (isStudio) {
     return (
       <html>

@@ -37,6 +37,20 @@ const marchiLabels: Record<string, string> = {
     pianificabile_superiore: "Panificabile Superiore",
 };
 
+// Helper per ottimizzare le immagini Sanity per la stampa PDF
+const getOptimizedImageUrl = (url: string, forPrint: boolean): string => {
+    if (!forPrint || !url) return url;
+
+    // Sanity CDN URLs supportano query parameters per l'ottimizzazione
+    if (url.includes('cdn.sanity.io')) {
+        const separator = url.includes('?') ? '&' : '?';
+        // Ridimensiona a 400px, qualità 70%, formato auto
+        return `${url}${separator}w=400&q=70&auto=format`;
+    }
+
+    return url;
+};
+
 const CatalogCard = memo(function CatalogCard({
     product,
     viewMode = "compact",
@@ -56,7 +70,9 @@ const CatalogCard = memo(function CatalogCard({
         product.immagini &&
         product.immagini.length > 0 &&
         product.immagini[0]?.image;
-    const imageUrl = hasImage ? product.immagini[0].image : null;
+    const rawImageUrl = hasImage ? product.immagini[0].image : null;
+    // Usa URL ottimizzato per la stampa PDF
+    const imageUrl = rawImageUrl ? getOptimizedImageUrl(rawImageUrl, forceEagerLoad) : null;
 
     const generateAltText = () => {
         if (hasImage && product.immagini[0].alt) {
@@ -101,21 +117,40 @@ const CatalogCard = memo(function CatalogCard({
 
     const CardContent = (
         <div className={` items-stretch bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden break-inside-avoid flex flex-col md:flex-row
-            ${isPrint ? "print:rounded-none print:shadow-none print:border print:border-gray-300" : "min-h-[280px] hover:shadow-lg hover:border-orange-200 hover:ring-1 hover:ring-orange-100 transition-all duration-300"}
-            ${isPrint ? 'p-1 gap-2 h-full' : 'p-2 gap-2'}`}>
+            ${isPrint ? "print:rounded-none print:shadow-none print:border print:border-gray-300 min-h-[180px]" : "min-h-[180px] hover:shadow-lg hover:border-orange-200 hover:ring-1 hover:ring-orange-100 transition-all duration-300"}
+            ${forceEagerLoad ? 'p-1 gap-1 h-full' : isPrint ? 'p-1 gap-2 h-full' : 'p-2 gap-2'}`}>
 
             {/* Product Image */}
-            <div className="w-full md:w-1/3 self-stretch">
-                <div className="w-full h-full md:h-full overflow-hidden rounded-lg bg-gradient-to-br from-gray-50 to-gray-100 ring-1 ring-orange-100 relative flex items-center justify-center">
+            <div className={`self-stretch ${forceEagerLoad ? 'w-full md:w-1/4' : 'w-full md:w-1/3'}`}>
+                <div className={`w-full h-full md:h-full overflow-hidden rounded-lg bg-gradient-to-br from-gray-50 to-gray-100 ring-1 ring-orange-100 relative flex items-center justify-center ${forceEagerLoad ? 'min-h-[140px]' : ''}`}>
                     {imageUrl ? (
-                        <Image
-                            fill
-                            src={imageUrl}
-                            alt={imageAlt}
-                            sizes="(max-width: 768px) 50vw, 33vw"
-                            className="object-cover h-full w-full"
-                            style={{ objectFit: 'cover' }}
-                        />
+                        forceEagerLoad ? (
+                            // Per PDF: usa tag img nativo con URL Sanity ottimizzato
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                                src={imageUrl}
+                                alt={imageAlt}
+                                className="object-cover h-full w-full absolute inset-0"
+                                style={{
+                                    objectFit: 'cover',
+                                    objectPosition: 'center',
+                                    width: '100%',
+                                    height: '100%',
+                                    minWidth: '100%',
+                                    minHeight: '100%'
+                                }}
+                                loading="eager"
+                            />
+                        ) : (
+                            <Image
+                                fill
+                                src={imageUrl}
+                                alt={imageAlt}
+                                sizes="(max-width: 768px) 50vw, 33vw"
+                                className="object-cover h-full w-full"
+                                style={{ objectFit: 'cover' }}
+                            />
+                        )
                     ) : (
                         <div className="w-full h-full bg-gradient-to-br from-orange-100 via-red-50 to-orange-50 flex items-center justify-center">
                             <ImageIcon className="w-10 h-10 text-orange-300" />
@@ -125,38 +160,38 @@ const CatalogCard = memo(function CatalogCard({
             </div>
 
             {/* Product Info */}
-            <div className="flex-1 min-w-0 flex flex-col md:w-1/3">
-                <div className="mb-2">
-                    <h3 className={`text-base font-bold text-gray-900 ${!isPrint && "group-hover:text-primary transition-colors"}`}>
+            <div className={`flex-1 min-w-0 flex flex-col ${forceEagerLoad ? 'md:w-[30%]' : 'md:w-1/3'}`}>
+                <div className={forceEagerLoad ? 'mb-1' : 'mb-2'}>
+                    <h3 className={`font-bold text-gray-900 ${forceEagerLoad ? 'text-sm leading-tight' : 'text-base'} ${!isPrint && "group-hover:text-primary transition-colors"}`}>
                         {product.nome}
                     </h3>
                     <CategoryTag category={product.categoria} />
                 </div>
 
                 {hasSpecifications && (
-                    <div className="bg-gray-50 p-2 rounded-lg mb-2 border border-gray-200/80">
-                        <h4 className="font-semibold text-gray-800 text-xs mb-2 flex items-center">
-                            <Info className="h-3 w-3 mr-1 text-gray-500" />
+                    <div className={`bg-gray-50 rounded-lg border border-gray-200/80 ${forceEagerLoad ? 'p-1 mb-1' : 'p-2 mb-2'}`}>
+                        <h4 className={`font-semibold text-gray-800 flex items-center ${forceEagerLoad ? 'text-[10px] mb-1' : 'text-xs mb-2'}`}>
+                            <Info className={forceEagerLoad ? 'h-2.5 w-2.5 mr-0.5 text-gray-500' : 'h-3 w-3 mr-1 text-gray-500'} />
                             Specifiche Tecniche
                         </h4>
-                        <div className="space-y-1 text-xs">
+                        <div className={forceEagerLoad ? 'space-y-0.5 text-[10px]' : 'space-y-1 text-xs'}>
                             {product.umidita !== null && product.umidita !== undefined && (
-                                <div className="flex items-center gap-2">
-                                    <Droplets className="h-3 w-3 text-gray-500" />
+                                <div className={`flex items-center ${forceEagerLoad ? 'gap-1' : 'gap-2'}`}>
+                                    <Droplets className={forceEagerLoad ? 'h-2.5 w-2.5 text-gray-500' : 'h-3 w-3 text-gray-500'} />
                                     <span className="text-gray-600">Umidità:</span>
                                     <span className="font-semibold text-gray-800">{product.umidita}%</span>
                                 </div>
                             )}
                             {product.scadenza && (
-                                <div className="flex items-center gap-2">
-                                    <Calendar className="h-3 w-3 text-gray-500" />
+                                <div className={`flex items-center ${forceEagerLoad ? 'gap-1' : 'gap-2'}`}>
+                                    <Calendar className={forceEagerLoad ? 'h-2.5 w-2.5 text-gray-500' : 'h-3 w-3 text-gray-500'} />
                                     <span className="text-gray-600">Scadenza:</span>
                                     <span className="font-semibold text-gray-800">{product.scadenza}</span>
                                 </div>
                             )}
                             {product.pezzi && (
-                                <div className="flex items-center gap-2">
-                                    <Package className="h-3 w-3 text-gray-500" />
+                                <div className={`flex items-center ${forceEagerLoad ? 'gap-1' : 'gap-2'}`}>
+                                    <Package className={forceEagerLoad ? 'h-2.5 w-2.5 text-gray-500' : 'h-3 w-3 text-gray-500'} />
                                     <span className="text-gray-600">Pezzi/conf.:</span>
                                     <span className="font-semibold text-gray-800">{product.pezzi}</span>
                                 </div>
@@ -167,16 +202,44 @@ const CatalogCard = memo(function CatalogCard({
 
                 {activeMarchi.length > 0 && (
                     mostraLoghi ? (
-                        <div className="mt-auto flex flex-wrap gap-2 justify-start items-center m-0">
+                        <div className={`mt-auto flex flex-wrap justify-start items-center m-0 ${forceEagerLoad ? 'gap-1' : 'gap-2'}`}>
                             {activeMarchi.map((marchio) => (
                                 marchiIcons[marchio] && (
-                                    <Image
-                                        src={marchiIcons[marchio]}
-                                        alt={marchiLabels[marchio]}
-                                        width={60}
-                                        height={60}
-                                        className="object-contain"
-                                    />
+                                    forceEagerLoad ? (
+                                        // Per PDF: usa tag img nativo per i loghi con contenitore più grande e padding
+                                        <div
+                                            key={marchio}
+                                            className="flex-shrink-0 flex items-center justify-center"
+                                            style={{
+                                                width: '45px',
+                                                height: '45px',
+                                                padding: '2px'
+                                            }}
+                                        >
+                                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                                            <img
+                                                src={marchiIcons[marchio]}
+                                                alt={marchiLabels[marchio]}
+                                                style={{
+                                                    maxWidth: '100%',
+                                                    maxHeight: '100%',
+                                                    width: 'auto',
+                                                    height: 'auto',
+                                                    objectFit: 'contain'
+                                                }}
+                                                loading="eager"
+                                            />
+                                        </div>
+                                    ) : (
+                                        <Image
+                                            key={marchio}
+                                            src={marchiIcons[marchio]}
+                                            alt={marchiLabels[marchio]}
+                                            width={60}
+                                            height={60}
+                                            className="object-contain"
+                                        />
+                                    )
                                 )
                             ))}
                         </div>
@@ -199,19 +262,19 @@ const CatalogCard = memo(function CatalogCard({
             </div>
 
             {/* Commercial Data */}
-            <div className="flex-1 flex flex-col gap-2 md:w-1/3">
+            <div className={`flex-1 flex flex-col md:w-1/3 ${forceEagerLoad ? 'gap-1' : 'gap-2'}`}>
                 <div className="w-full">
-                    <div className="bg-gray-100 p-2 rounded-lg border border-gray-200/80 h-min flex flex-col">
-                        <h4 className="font-semibold text-gray-800 text-xs mb-2 flex items-center">
-                            <Package className="h-3 w-3 mr-1 text-gray-500" />
+                    <div className={`bg-gray-100 rounded-lg border border-gray-200/80 h-min flex flex-col ${forceEagerLoad ? 'p-1' : 'p-2'}`}>
+                        <h4 className={`font-semibold text-gray-800 flex items-center ${forceEagerLoad ? 'text-[10px] mb-1' : 'text-xs mb-2'}`}>
+                            <Package className={forceEagerLoad ? 'h-2.5 w-2.5 mr-0.5 text-gray-500' : 'h-3 w-3 mr-1 text-gray-500'} />
                             Formati & EAN
                         </h4>
-                        <div className="flex-1 space-y-1 overflow-y-auto">
+                        <div className={`flex-1 overflow-y-auto ${forceEagerLoad ? 'space-y-0.5' : 'space-y-1'}`}>
                             {product.formati && product.formati.length > 0 ? (
                                 <>
                                     {formatsWithEan.map((formato, index) => (
-                                        <div key={`ean-${index}`} className="bg-white border border-gray-300 p-1.5 rounded text-xs">
-                                            <div className="font-semibold text-gray-800 mb-1">{formato.formato}</div>
+                                        <div key={`ean-${index}`} className={`bg-white border border-gray-300 rounded ${forceEagerLoad ? 'p-1 text-[10px]' : 'p-1.5 text-xs'}`}>
+                                            <div className={`font-semibold text-gray-800 ${forceEagerLoad ? 'mb-0.5' : 'mb-1'}`}>{formato.formato}</div>
                                             <BarcodeDisplay
                                                 value={formato.codice_ean!}
                                                 productName={product.nome}
@@ -223,7 +286,7 @@ const CatalogCard = memo(function CatalogCard({
                                     {formatsWithoutEan.length > 0 && (
                                         <div className="flex flex-wrap gap-1">
                                             {formatsWithoutEan.map((formato, index) => (
-                                                <div key={`no-ean-${index}`} className="bg-white border border-gray-300 p-1.5 rounded text-xs flex-1 text-center">
+                                                <div key={`no-ean-${index}`} className={`bg-white border border-gray-300 rounded flex-1 text-center ${forceEagerLoad ? 'p-1 text-[10px]' : 'p-1.5 text-xs'}`}>
                                                     <div className="font-semibold text-gray-800">{formato.formato}</div>
                                                 </div>
                                             ))}
@@ -231,7 +294,7 @@ const CatalogCard = memo(function CatalogCard({
                                     )}
                                 </>
                             ) : (
-                                <div className="text-xs text-gray-600">Formato standard</div>
+                                <div className={forceEagerLoad ? 'text-[10px] text-gray-600' : 'text-xs text-gray-600'}>Formato standard</div>
                             )}
                         </div>
                     </div>
@@ -239,12 +302,12 @@ const CatalogCard = memo(function CatalogCard({
 
                 {product.valori_nutrizionali && (
                     <div className="w-full">
-                        <div className="bg-gray-100 p-2 rounded-lg border border-gray-200/80 h-full flex flex-col">
-                            <h4 className="font-semibold text-gray-800 text-xs mb-2 flex items-center">
-                                <Info className="h-3 w-3 mr-1 text-gray-500" />
+                        <div className={`bg-gray-100 rounded-lg border border-gray-200/80 h-full flex flex-col ${forceEagerLoad ? 'p-1' : 'p-2'}`}>
+                            <h4 className={`font-semibold text-gray-800 flex items-center ${forceEagerLoad ? 'text-[10px] mb-0.5' : 'text-xs mb-2'}`}>
+                                <Info className={forceEagerLoad ? 'h-2.5 w-2.5 mr-0.5 text-gray-500' : 'h-3 w-3 mr-1 text-gray-500'} />
                                 Valori Nutrizionali (100g)
                             </h4>
-                            <div className="text-[10px] text-gray-700 bg-white p-1.5 rounded border border-gray-300 leading-tight flex-1 overflow-y-auto">
+                            <div className={`text-gray-700 bg-white rounded border border-gray-300 leading-tight flex-1 overflow-y-auto ${forceEagerLoad ? 'text-[9px] p-1' : 'text-[10px] p-1.5'}`}>
                                 {product.valori_nutrizionali.split(' - ').map((value, index) => (
                                     <div key={index}>{value.trim()}</div>
                                 ))}

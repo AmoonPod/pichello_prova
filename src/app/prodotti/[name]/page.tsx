@@ -492,7 +492,7 @@ export default async function Product(props: {
                   )}
                   {prodotto.marchi?.pianificabile_superiore && (
                     <div className="text-center font-semibold text-gray-700 text-lg transition-transform hover:scale-105">
-                      Pianificabile superiore
+                      Panificabile superiore
                     </div>
                   )}
                 </div>

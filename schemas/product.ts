@@ -6,6 +6,7 @@ export const prodotto = {
   fields: [
     { name: 'nome', title: 'Nome', type: 'string' },
     { name: 'descrizione', title: 'Descrizione', type: 'text' },
+    { name: 'ingredienti', title: 'Ingredienti', type: 'string' },
     {
       name: 'immagini',
       title: 'Immagini',
@@ -79,7 +80,7 @@ export const prodotto = {
         },
         {
           name: 'pianificabile_superiore',
-          title: 'Pianificabile superiore',
+          title: 'Panificabile superiore',
           type: 'boolean',
         },
       ],

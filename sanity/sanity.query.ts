@@ -14,6 +14,7 @@ async function fetchProdotti() {
       _id,
       nome,
       descrizione,
+      ingredienti,
       immagini[] {
         "image": asset->url,
         alt
@@ -82,14 +83,10 @@ async function fetchCategorie() {
 
 // Cached versions using Next.js unstable_cache
 export async function getProdotti() {
-  return unstable_cache(
-    fetchProdotti,
-    ['all-products'],
-    {
-      revalidate: CACHE_REVALIDATE,
-      tags: [CACHE_TAG_PRODUCTS],
-    }
-  )();
+  return unstable_cache(fetchProdotti, ['all-products'], {
+    revalidate: CACHE_REVALIDATE,
+    tags: [CACHE_TAG_PRODUCTS],
+  })();
 }
 
 export async function getProdottoBySlug(slug: string) {
@@ -104,12 +101,8 @@ export async function getProdottoBySlug(slug: string) {
 }
 
 export async function getCategorie() {
-  return unstable_cache(
-    fetchCategorie,
-    ['all-categories'],
-    {
-      revalidate: CACHE_REVALIDATE,
-      tags: [CACHE_TAG_CATEGORIES],
-    }
-  )();
+  return unstable_cache(fetchCategorie, ['all-categories'], {
+    revalidate: CACHE_REVALIDATE,
+    tags: [CACHE_TAG_CATEGORIES],
+  })();
 }

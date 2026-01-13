@@ -19,6 +19,11 @@ const PrintCatalogPage = async () => {
 
     const certifications = [
         {
+            name: "Prodotto di Montagna",
+            description: "Certificazione della regione Emilia-Romagna che assicura una produzione e trasformazione esclusivamente in montagna.",
+            icon: "/logo-Prodotto-di-Montagna.jpg"
+        },
+        {
             name: "Varietà Antica",
             description: "Cereali e legumi da varietà antiche, selezionati per preservare la biodiversità e garantire sapori autentici tramandati da generazioni.",
             icon: "/varieta.antica.jpg"
@@ -29,18 +34,13 @@ const PrintCatalogPage = async () => {
             icon: null
         },
         {
-            name: "Prodotto di Montagna",
-            description: "Coltivati nell'Appennino Reggiano, dove l'altitudine e il clima montano conferiscono caratteristiche organolettiche uniche.",
-            icon: "/logo-Prodotto-di-Montagna.jpg"
-        },
-        {
             name: "Senza Ammollo",
-            description: "Legumi selezionati che non necessitano di ammollo preliminare, per una preparazione più rapida e conveniente.",
+            description: "Prodotti selezionati che non necessitano di ammollo preliminare, per una preparazione più rapida e conveniente.",
             icon: "/senza ammollo.jpg"
         },
         {
             name: "Senza Cereali",
-            description: "Prodotti puri al 100%, senza aggiunta di cereali, ideali per chi cerca purezza e specificità nutrizionale.",
+            description: "100% senza cereali.",
             icon: "/senza cereali.jpg"
         },
         {
@@ -50,12 +50,12 @@ const PrintCatalogPage = async () => {
         },
         {
             name: "Macinato a Pietra",
-            description: "Lavorazione tradizionale con macine di pietra che preserva le proprietà nutritive e il sapore autentico dei cereali.",
+            description: "Lavorazione tradizionale con macine di pietra che preserva le proprietà nutritive e il sapore autentico dei prodotti.",
             icon: "/macinata a pietra.jpg"
         },
         {
             name: "Decorticato a Pietra",
-            description: "Processo di decorticazione delicato con pietre naturali che mantiene integre le qualità nutrizionali del prodotto.",
+            description: "Processo di decorticazione delicato che mantiene integre le proprietà nutrizionali e il sapore del prodotto.",
             icon: "/decorticato a pietra.jpg"
         }
     ];
@@ -116,6 +116,15 @@ const PrintCatalogPage = async () => {
 
                     .logo-container {
                         margin-bottom: 2rem;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                    
+                    .logo-container img {
+                        width: 350px;
+                        height: 350px;
+                        object-fit: contain;
                     }
 
                     .cover-title {
@@ -309,14 +318,14 @@ const PrintCatalogPage = async () => {
                 </div>
                 <div className="cover-content">
                     <div className="logo-container">
-                        <img src="/images/logo.png" alt="Azienda Agricola Il Pichello" width={150} height={150} loading="eager" />
+                        <img src="/images/logo.png" alt="Azienda Agricola Il Pichello" width={350} height={350} loading="eager" />
                     </div>
                     <h1 className="cover-title">Catalogo Prodotti</h1>
                     <p className="cover-subtitle">Azienda Agricola Il Pichello</p>
 
                     <div className="cover-info">
                         <h3>Tradizione e Qualità dall'Appennino Reggiano</h3>
-                        <p>Dal 1985 coltiviamo con passione cereali antichi, legumi e produciamo miele artigianale nel cuore dell'Appennino Reggiano. I nostri prodotti biorazionali nascono dal rispetto per la terra e dalle tecniche tradizionali tramandate di generazione in generazione.</p>
+                        <p>Da generazioni coltiviamo con passione cereali antichi, legumi e produciamo miele artigianale nel cuore dell'Appennino Reggiano. I nostri prodotti biorazionali nascono dal rispetto per la terra e dalle tecniche tradizionali tramandate di generazione in generazione.</p>
                         <p>Ogni prodotto è certificato e controllato, garantendo la massima qualità e autenticità. Scoprite la nostra gamma completa di specialità montane, ideali per una alimentazione sana e genuina.</p>
 
                         <div className="contact-info">

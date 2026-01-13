@@ -169,9 +169,14 @@ body {
     color: black !important;
   }
 
-  /* Optimize image sizes for print */
+  /* Optimize image sizes for print
+     Nota: non forzare height:auto sulle immagini prodotto del catalogo,
+     altrimenti object-fit:cover non può riempire l'altezza. */
   img {
     max-width: 100% !important;
+  }
+
+  img:not(.catalog-product-image) {
     height: auto !important;
   }
 

@@ -398,20 +398,25 @@ const PrintCatalogPage = async () => {
                         flex-direction: column;
                     }
 
+                    /* Fallback anche a schermo: immagini prodotto sempre cover */
+                    .catalog-product-image {
+                        object-fit: cover;
+                        object-position: center;
+                        width: 100%;
+                        height: 100%;
+                        display: block;
+                    }
+
                     /* CSS specifici per generazione PDF con Puppeteer */
                     @media print {
                         img {
                             -webkit-print-color-adjust: exact !important;
                             color-adjust: exact !important;
-                            object-fit: cover !important;
-                            object-position: center !important;
                             max-width: 100% !important;
-                            height: 100% !important;
                         }
 
-                        /* Regole specifiche per le immagini dei prodotti per riempire completamente lo spazio */
-                        .product-grid > .product-card-wrapper img:not([alt*="Montagna"]):not([alt*="Ammollo"]):not([alt*="Cereali"]):not([alt*="Italiano"]):not([alt*="Antica"]):not([alt*="Pietra"]):not([alt*="Perlato"]),
-                        .product-pair-wrapper > .product-card-wrapper img:not([alt*="Montagna"]):not([alt*="Ammollo"]):not([alt*="Cereali"]):not([alt*="Italiano"]):not([alt*="Antica"]):not([alt*="Pietra"]):not([alt*="Perlato"]) {
+                        /* Immagini prodotto: SEMPRE cover (senza euristiche su alt) */
+                        .catalog-product-image {
                             object-fit: cover !important;
                             object-position: center !important;
                             width: 100% !important;
@@ -420,14 +425,8 @@ const PrintCatalogPage = async () => {
                             min-height: 100% !important;
                         }
 
-                        /* Regole specifiche per i loghi dei marchi per evitare tagli */
-                        .product-grid img[alt*="Montagna"],
-                        .product-grid img[alt*="Ammollo"],
-                        .product-grid img[alt*="Cereali"],
-                        .product-grid img[alt*="Italiano"],
-                        .product-grid img[alt*="Antica"],
-                        .product-grid img[alt*="Pietra"],
-                        .product-grid img[alt*="Perlato"] {
+                        /* Loghi marchi: sempre contain */
+                        .catalog-logo-image {
                             object-fit: contain !important;
                             max-width: 100% !important;
                             max-height: 100% !important;

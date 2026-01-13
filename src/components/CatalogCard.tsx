@@ -41,11 +41,30 @@ const marchiLabels: Record<string, string> = {
 const getOptimizedImageUrl = (url: string, forPrint: boolean): string => {
     if (!forPrint || !url) return url;
 
-    // Sanity CDN URLs supportano query parameters per l'ottimizzazione
+    // Sanity CDN URLs supportano query parameters per l'ottimizzazione (imgix)
     if (url.includes('cdn.sanity.io')) {
-        const separator = url.includes('?') ? '&' : '?';
-        // Ridimensiona a 400px, qualità 70%, formato auto
-        return `${url}${separator}w=400&q=70&auto=format`;
+        try {
+            const u = new URL(url);
+
+            // Override (non append) per evitare duplicati tipo ?w=2000&w=300
+            // e per rendere davvero più leggero il PDF.
+            const printWidth = 560;
+            const printQuality = 55;
+
+            // Importante: NON facciamo crop lato CDN (es. entropy) perché può “spostare”
+            // il soggetto. Il crop lo gestiamo in pagina con object-fit/object-position.
+            u.searchParams.set('w', String(printWidth));
+            u.searchParams.delete('h');
+            u.searchParams.delete('fit');
+            u.searchParams.delete('crop');
+            u.searchParams.set('q', String(printQuality));
+            u.searchParams.set('auto', 'format');
+            u.searchParams.set('dpr', '1');
+
+            return u.toString();
+        } catch (err) {
+            return url;
+        }
     }
 
     return url;
@@ -167,7 +186,7 @@ const CatalogCard = memo(function CatalogCard({
 
             {/* Product Image */}
             <div className={`self-stretch ${forceEagerLoad ? (isCompactLayout ? 'w-[40%]' : 'w-[22%] md:w-[22%]') : 'w-full md:w-1/3'}`}>
-                <div className={`w-full h-full md:h-full overflow-hidden rounded-lg bg-gradient-to-br from-gray-50 to-gray-100 ring-1 ring-orange-100 relative flex items-center justify-center ${forceEagerLoad ? 'min-h-[100px]' : 'min-h-[140px]'}`}>
+                <div className={`w-full h-full md:h-full overflow-hidden rounded-lg ring-1 ring-orange-100 relative ${forceEagerLoad ? 'min-h-[100px]' : 'min-h-[140px]'}`}>
                     {imageUrl ? (
                         forceEagerLoad ? (
                             // Per PDF: usa tag img nativo con URL Sanity ottimizzato
@@ -175,14 +194,12 @@ const CatalogCard = memo(function CatalogCard({
                             <img
                                 src={imageUrl}
                                 alt={imageAlt}
-                                className="object-cover h-full w-full absolute inset-0"
+                                className="catalog-product-image absolute inset-0 w-full h-full"
                                 style={{
                                     objectFit: 'cover',
                                     objectPosition: 'center',
                                     width: '100%',
-                                    height: '100%',
-                                    minWidth: '100%',
-                                    minHeight: '100%'
+                                    height: '100%'
                                 }}
                                 loading="eager"
                             />
@@ -192,12 +209,12 @@ const CatalogCard = memo(function CatalogCard({
                                 src={imageUrl}
                                 alt={imageAlt}
                                 sizes="(max-width: 768px) 50vw, 33vw"
-                                className="object-cover h-full w-full"
+                                className="catalog-product-image object-cover"
                                 style={{ objectFit: 'cover' }}
                             />
                         )
                     ) : (
-                        <div className="w-full h-full bg-gradient-to-br from-orange-100 via-red-50 to-orange-50 flex items-center justify-center">
+                        <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-orange-100 via-red-50 to-orange-50 flex items-center justify-center">
                             <ImageIcon className="w-10 h-10 text-orange-300" />
                         </div>
                     )}
@@ -286,6 +303,7 @@ const CatalogCard = memo(function CatalogCard({
                                             <img
                                                 src={marchiIcons[marchio]}
                                                 alt={marchiLabels[marchio]}
+                                                className="catalog-logo-image"
                                                 style={{
                                                     maxWidth: '100%',
                                                     maxHeight: '100%',
@@ -303,7 +321,7 @@ const CatalogCard = memo(function CatalogCard({
                                             alt={marchiLabels[marchio]}
                                             width={60}
                                             height={60}
-                                            className="object-contain"
+                                            className="catalog-logo-image object-contain"
                                         />
                                     )
                                 )

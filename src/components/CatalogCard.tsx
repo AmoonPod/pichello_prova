@@ -56,11 +56,13 @@ const CatalogCard = memo(function CatalogCard({
     viewMode = "compact",
     isPrint = false,
     forceEagerLoad = false,
+    isCompactLayout = false,
 }: {
     product: ProdottoType;
     viewMode?: "compact" | "detailed";
     isPrint?: boolean;
     forceEagerLoad?: boolean;
+    isCompactLayout?: boolean;
 }) {
     let slug = JSON.parse(JSON.stringify(product.slug)).current;
 
@@ -115,14 +117,57 @@ const CatalogCard = memo(function CatalogCard({
         });
     }
 
+    const FormatsAndEan = (
+        <div className="w-full">
+            <div className={`bg-gray-100 rounded-lg border border-gray-200/80 h-min flex flex-col ${forceEagerLoad ? 'p-1' : 'p-2'}`}>
+                <h4 className={`font-semibold text-gray-800 flex items-center ${forceEagerLoad ? 'text-[8px] mb-0.5' : 'text-xs mb-2'}`}>
+                    <Package className={forceEagerLoad ? 'h-2 w-2 mr-0.5 text-gray-500' : 'h-3 w-3 mr-1 text-gray-500'} />
+                    Formati & EAN
+                </h4>
+                <div className={`flex-1 overflow-y-auto ${forceEagerLoad ? 'space-y-0.5' : 'space-y-1'}`}>
+                    {product.formati && product.formati.length > 0 ? (
+                        <>
+                            <div className={`grid gap-1 ${formatsWithEan.length === 1 ? 'grid-cols-1' : 'grid-cols-2'}`}>
+                                {formatsWithEan.map((formato, index) => (
+                                    <div key={`ean-${index}`} className={`bg-white border border-gray-300 rounded ${forceEagerLoad ? 'p-0.5 text-[8px]' : 'p-1.5 text-xs'}`}>
+                                        <div className={`font-semibold text-gray-800 ${forceEagerLoad ? 'mb-0' : 'mb-1'}`}>{formato.formato}</div>
+                                        <div className="scale-90 origin-left w-full overflow-hidden">
+                                            <BarcodeDisplay
+                                                value={formato.codice_ean!}
+                                                productName={product.nome}
+                                                format={formato.formato}
+                                                compact={true}
+                                            />
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            {formatsWithoutEan.length > 0 && (
+                                <div className="flex flex-wrap gap-1 mt-1">
+                                    {formatsWithoutEan.map((formato, index) => (
+                                        <div key={`no-ean-${index}`} className={`bg-white border border-gray-300 rounded flex-1 text-center ${forceEagerLoad ? 'p-0.5 text-[8px]' : 'p-1.5 text-xs'}`}>
+                                            <div className="font-semibold text-gray-800">{formato.formato}</div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </>
+                    ) : (
+                        <div className={forceEagerLoad ? 'text-[8px] text-gray-600' : 'text-xs text-gray-600'}>Formato standard</div>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+
     const CardContent = (
-        <div className={` items-stretch bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden break-inside-avoid flex flex-col md:flex-row
-            ${isPrint ? "print:rounded-none print:shadow-none print:border print:border-gray-300 min-h-[180px]" : "min-h-[180px] hover:shadow-lg hover:border-orange-200 hover:ring-1 hover:ring-orange-100 transition-all duration-300"}
+        <div className={`items-stretch bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden break-inside-avoid flex flex-col md:flex-row flex-1
+            ${isPrint ? "print:rounded-none print:shadow-none print:border print:border-gray-300" : "min-h-[180px] hover:shadow-lg hover:border-orange-200 hover:ring-1 hover:ring-orange-100 transition-all duration-300"}
             ${forceEagerLoad ? 'p-1 gap-1 h-full' : isPrint ? 'p-1 gap-2 h-full' : 'p-2 gap-2'}`}>
 
             {/* Product Image */}
-            <div className={`self-stretch ${forceEagerLoad ? 'w-full md:w-1/4' : 'w-full md:w-1/3'}`}>
-                <div className={`w-full h-full md:h-full overflow-hidden rounded-lg bg-gradient-to-br from-gray-50 to-gray-100 ring-1 ring-orange-100 relative flex items-center justify-center ${forceEagerLoad ? 'min-h-[140px]' : ''}`}>
+            <div className={`self-stretch ${forceEagerLoad ? (isCompactLayout ? 'w-[40%]' : 'w-[22%] md:w-[22%]') : 'w-full md:w-1/3'}`}>
+                <div className={`w-full h-full md:h-full overflow-hidden rounded-lg bg-gradient-to-br from-gray-50 to-gray-100 ring-1 ring-orange-100 relative flex items-center justify-center ${forceEagerLoad ? 'min-h-[100px]' : 'min-h-[140px]'}`}>
                     {imageUrl ? (
                         forceEagerLoad ? (
                             // Per PDF: usa tag img nativo con URL Sanity ottimizzato
@@ -160,42 +205,63 @@ const CatalogCard = memo(function CatalogCard({
             </div>
 
             {/* Product Info */}
-            <div className={`flex-1 min-w-0 flex flex-col ${forceEagerLoad ? 'md:w-[30%]' : 'md:w-1/3'}`}>
-                <div className={forceEagerLoad ? 'mb-1' : 'mb-2'}>
-                    <h3 className={`font-bold text-gray-900 ${forceEagerLoad ? 'text-sm leading-tight' : 'text-base'} ${!isPrint && "group-hover:text-primary transition-colors"}`}>
+            <div className={`flex-1 min-w-0 flex flex-col ${forceEagerLoad ? (isCompactLayout ? 'w-[60%]' : 'md:w-[35%]') : 'md:w-1/3'}`}>
+                <div className={forceEagerLoad ? 'mb-0.5' : 'mb-2'}>
+                    <h3 className={`font-bold text-gray-900 ${forceEagerLoad ? 'text-[11px] leading-tight' : 'text-base'} ${!isPrint && "group-hover:text-primary transition-colors"}`}>
                         {product.nome}
                     </h3>
-                    <CategoryTag category={product.categoria} />
+                    <div className={forceEagerLoad ? 'scale-90 origin-left' : ''}>
+                        <CategoryTag category={product.categoria} />
+                    </div>
                 </div>
 
                 {hasSpecifications && (
-                    <div className={`bg-gray-50 rounded-lg border border-gray-200/80 ${forceEagerLoad ? 'p-1 mb-1' : 'p-2 mb-2'}`}>
-                        <h4 className={`font-semibold text-gray-800 flex items-center ${forceEagerLoad ? 'text-[10px] mb-1' : 'text-xs mb-2'}`}>
-                            <Info className={forceEagerLoad ? 'h-2.5 w-2.5 mr-0.5 text-gray-500' : 'h-3 w-3 mr-1 text-gray-500'} />
-                            Specifiche Tecniche
+                    <div className={`bg-gray-50 rounded-lg border border-gray-200/80 ${forceEagerLoad ? 'p-1 mb-0.5' : 'p-2 mb-2'}`}>
+                        <h4 className={`font-semibold text-gray-800 flex items-center ${forceEagerLoad ? 'text-[8px] mb-0.5' : 'text-xs mb-2'}`}>
+                            <Info className={forceEagerLoad ? 'h-2 w-2 mr-0.5 text-gray-500' : 'h-3 w-3 mr-1 text-gray-500'} />
+                            Specifiche
                         </h4>
-                        <div className={forceEagerLoad ? 'space-y-0.5 text-[10px]' : 'space-y-1 text-xs'}>
+                        <div className={forceEagerLoad ? 'space-y-0.5 text-[8px]' : 'space-y-1 text-xs'}>
                             {product.umidita !== null && product.umidita !== undefined && (
                                 <div className={`flex items-center ${forceEagerLoad ? 'gap-1' : 'gap-2'}`}>
-                                    <Droplets className={forceEagerLoad ? 'h-2.5 w-2.5 text-gray-500' : 'h-3 w-3 text-gray-500'} />
+                                    <Droplets className={forceEagerLoad ? 'h-2 w-2 text-gray-500' : 'h-3 w-3 text-gray-500'} />
                                     <span className="text-gray-600">Umidità:</span>
                                     <span className="font-semibold text-gray-800">{product.umidita}%</span>
                                 </div>
                             )}
                             {product.scadenza && (
                                 <div className={`flex items-center ${forceEagerLoad ? 'gap-1' : 'gap-2'}`}>
-                                    <Calendar className={forceEagerLoad ? 'h-2.5 w-2.5 text-gray-500' : 'h-3 w-3 text-gray-500'} />
+                                    <Calendar className={forceEagerLoad ? 'h-2 w-2 text-gray-500' : 'h-3 w-3 text-gray-500'} />
                                     <span className="text-gray-600">Scadenza:</span>
                                     <span className="font-semibold text-gray-800">{product.scadenza}</span>
                                 </div>
                             )}
                             {product.pezzi && (
                                 <div className={`flex items-center ${forceEagerLoad ? 'gap-1' : 'gap-2'}`}>
-                                    <Package className={forceEagerLoad ? 'h-2.5 w-2.5 text-gray-500' : 'h-3 w-3 text-gray-500'} />
+                                    <Package className={forceEagerLoad ? 'h-2 w-2 text-gray-500' : 'h-3 w-3 text-gray-500'} />
                                     <span className="text-gray-600">Pezzi/conf.:</span>
                                     <span className="font-semibold text-gray-800">{product.pezzi}</span>
                                 </div>
                             )}
+                        </div>
+                    </div>
+                )}
+
+                {/* Formati spostati qui se layout compatto */}
+                {isCompactLayout && (
+                    <div className="mb-0.5">
+                        {FormatsAndEan}
+                    </div>
+                )}
+
+                {/* Ingredienti per categoria Zuppe */}
+                {product.categoria === 'Zuppe' && product.ingredienti && (
+                    <div className={forceEagerLoad ? 'mt-1 mb-0.5' : 'mb-2'}>
+                        <div
+                            className={`text-gray-700 ${forceEagerLoad ? 'text-[7px]' : 'text-[10px]'}`}
+                            style={{ lineHeight: '1.1' }}
+                        >
+                            <span className="font-semibold">Ingredienti:</span> {product.ingredienti}
                         </div>
                     </div>
                 )}
@@ -211,8 +277,8 @@ const CatalogCard = memo(function CatalogCard({
                                             key={marchio}
                                             className="flex-shrink-0 flex items-center justify-center"
                                             style={{
-                                                width: '45px',
-                                                height: '45px',
+                                                width: '42px',
+                                                height: '42px',
                                                 padding: '2px'
                                             }}
                                         >
@@ -261,61 +327,28 @@ const CatalogCard = memo(function CatalogCard({
                 )}
             </div>
 
-            {/* Commercial Data */}
-            <div className={`flex-1 flex flex-col md:w-1/3 ${forceEagerLoad ? 'gap-1' : 'gap-2'}`}>
-                <div className="w-full">
-                    <div className={`bg-gray-100 rounded-lg border border-gray-200/80 h-min flex flex-col ${forceEagerLoad ? 'p-1' : 'p-2'}`}>
-                        <h4 className={`font-semibold text-gray-800 flex items-center ${forceEagerLoad ? 'text-[10px] mb-1' : 'text-xs mb-2'}`}>
-                            <Package className={forceEagerLoad ? 'h-2.5 w-2.5 mr-0.5 text-gray-500' : 'h-3 w-3 mr-1 text-gray-500'} />
-                            Formati & EAN
-                        </h4>
-                        <div className={`flex-1 overflow-y-auto ${forceEagerLoad ? 'space-y-0.5' : 'space-y-1'}`}>
-                            {product.formati && product.formati.length > 0 ? (
-                                <>
-                                    {formatsWithEan.map((formato, index) => (
-                                        <div key={`ean-${index}`} className={`bg-white border border-gray-300 rounded ${forceEagerLoad ? 'p-1 text-[10px]' : 'p-1.5 text-xs'}`}>
-                                            <div className={`font-semibold text-gray-800 ${forceEagerLoad ? 'mb-0.5' : 'mb-1'}`}>{formato.formato}</div>
-                                            <BarcodeDisplay
-                                                value={formato.codice_ean!}
-                                                productName={product.nome}
-                                                format={formato.formato}
-                                                compact={true}
-                                            />
-                                        </div>
-                                    ))}
-                                    {formatsWithoutEan.length > 0 && (
-                                        <div className="flex flex-wrap gap-1">
-                                            {formatsWithoutEan.map((formato, index) => (
-                                                <div key={`no-ean-${index}`} className={`bg-white border border-gray-300 rounded flex-1 text-center ${forceEagerLoad ? 'p-1 text-[10px]' : 'p-1.5 text-xs'}`}>
-                                                    <div className="font-semibold text-gray-800">{formato.formato}</div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    )}
-                                </>
-                            ) : (
-                                <div className={forceEagerLoad ? 'text-[10px] text-gray-600' : 'text-xs text-gray-600'}>Formato standard</div>
-                            )}
-                        </div>
-                    </div>
-                </div>
+            {/* Commercial Data - Mostrato qui solo se NON è layout compatto */}
+            {!isCompactLayout && (
+                <div className={`flex-1 flex flex-col md:w-[43%] ${forceEagerLoad ? 'gap-1' : 'gap-2'}`}>
+                    {FormatsAndEan}
 
-                {product.valori_nutrizionali && (
-                    <div className="w-full">
-                        <div className={`bg-gray-100 rounded-lg border border-gray-200/80 h-full flex flex-col ${forceEagerLoad ? 'p-1' : 'p-2'}`}>
-                            <h4 className={`font-semibold text-gray-800 flex items-center ${forceEagerLoad ? 'text-[10px] mb-0.5' : 'text-xs mb-2'}`}>
-                                <Info className={forceEagerLoad ? 'h-2.5 w-2.5 mr-0.5 text-gray-500' : 'h-3 w-3 mr-1 text-gray-500'} />
-                                Valori Nutrizionali (100g)
-                            </h4>
-                            <div className={`text-gray-700 bg-white rounded border border-gray-300 leading-tight flex-1 overflow-y-auto ${forceEagerLoad ? 'text-[9px] p-1' : 'text-[10px] p-1.5'}`}>
-                                {product.valori_nutrizionali.split(' - ').map((value, index) => (
-                                    <div key={index}>{value.trim()}</div>
-                                ))}
+                    {product.valori_nutrizionali && (
+                        <div className="w-full">
+                            <div className={`bg-gray-100 rounded-lg border border-gray-200/80 h-full flex flex-col ${forceEagerLoad ? 'p-1' : 'p-2'}`}>
+                                <h4 className={`font-semibold text-gray-800 flex items-center ${forceEagerLoad ? 'text-[8px] mb-0.5' : 'text-xs mb-2'}`}>
+                                    <Info className={forceEagerLoad ? 'h-2 w-2 mr-0.5 text-gray-500' : 'h-3 w-3 mr-1 text-gray-500'} />
+                                    Valori Nutrizionali (100g)
+                                </h4>
+                                <div className={`text-gray-700 bg-white rounded border border-gray-300 leading-tight flex-1 overflow-y-auto ${forceEagerLoad ? 'text-[7px] p-0.5' : 'text-[10px] p-1.5'}`}>
+                                    {product.valori_nutrizionali.split(' - ').map((value, index) => (
+                                        <div key={index}>{value.trim()}</div>
+                                    ))}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                )}
-            </div>
+                    )}
+                </div>
+            )}
         </div>
     );
 
@@ -326,7 +359,7 @@ const CatalogCard = memo(function CatalogCard({
     if (viewMode === "detailed") {
         const linkProps = forceEagerLoad ? { target: "_blank", rel: "noopener noreferrer" } : {};
         return (
-            <Link href={`/prodotti/${slug}`} className="group block" prefetch={false} {...linkProps}>
+            <Link href={`/prodotti/${slug}`} className="group h-full flex flex-col" prefetch={false} {...linkProps}>
                 {CardContent}
             </Link>
         );

@@ -4,6 +4,7 @@ export type ProdottoType = {
   _id: string;
   nome: string;
   descrizione: string;
+  ingredienti?: string;
   immagini: Immagine[];
   slug: Slug;
   peso: number;

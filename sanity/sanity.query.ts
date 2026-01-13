@@ -27,7 +27,7 @@ async function fetchProdotti() {
         formato,
         codice_ean
       },
-      midita,
+      umidita,
       marchi,
       valori_nutrizionali,
       "categoria": categoria->nome,
@@ -44,6 +44,7 @@ async function fetchProdottoBySlug(slug: string) {
       _id,
       nome,
       descrizione,
+      ingredienti,
       immagini[] {
         "image": asset->url + "?auto=format&fit=max&w=1400&q=75",
       },

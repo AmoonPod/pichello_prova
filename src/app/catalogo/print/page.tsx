@@ -4,18 +4,111 @@ import CatalogCard from "@/components/CatalogCard";
 import "../../../app/globals.css";
 /* eslint-disable @next/next/no-img-element */
 
+// Configurazione categorie su due colonne (usando gli slug)
+const TWO_COLUMN_SLUGS = [
+    "tisane-e-infusi",
+    "prodotti-freschi-e-stagionali"
+];
+
+type CatalogItem =
+    | { type: 'header'; title: string }
+    | { type: 'product'; data: ProdottoType }
+    | { type: 'product-pair'; data: ProdottoType[] }; // Array di 1 o 2 prodotti
+
 const PrintCatalogPage = async () => {
     const prodotti: ProdottoType[] = await getProdotti();
 
-    const chunkProducts = (products: ProdottoType[], chunkSize: number) => {
-        const chunks = [];
-        for (let i = 0; i < products.length; i += chunkSize) {
-            chunks.push(products.slice(i, i + chunkSize));
+    // Rimosso il sort manuale per rispettare l'ordine della query (ordine asc)
+    const sortedProducts = prodotti;
+
+    // Costruisci la lista piatta con header e coppie
+    const items: CatalogItem[] = [];
+    let lastCategory = '';
+
+    // Buffer per accumulare prodotti delle categorie a due colonne
+    let pairBuffer: ProdottoType[] = [];
+
+    const flushPairBuffer = () => {
+        if (pairBuffer.length > 0) {
+            // Se c'è qualcosa nel buffer, aggiungilo come product-pair
+            // Nota: potrebbe essere una coppia o un singolo elemento rimasto orfano
+            for (let i = 0; i < pairBuffer.length; i += 2) {
+                const pair = pairBuffer.slice(i, i + 2);
+                items.push({ type: 'product-pair', data: pair });
+            }
+            pairBuffer = [];
         }
-        return chunks;
     };
 
-    const productPages = chunkProducts(prodotti, 4);
+    sortedProducts.forEach(product => {
+        const slug = product.categoria_slug?.current;
+        const isTwoColumn = slug && TWO_COLUMN_SLUGS.includes(slug);
+
+        // Se la categoria cambia
+        if (product.categoria && product.categoria !== lastCategory) {
+            // Prima svuota eventuali buffer pendenti della categoria precedente
+            flushPairBuffer();
+
+            items.push({ type: 'header', title: product.categoria });
+            lastCategory = product.categoria;
+        }
+
+        if (isTwoColumn) {
+            pairBuffer.push(product);
+        } else {
+            // Se non è a due colonne, svuota il buffer (non dovrebbe servire se l'ordine è corretto, ma per sicurezza)
+            flushPairBuffer();
+            items.push({ type: 'product', data: product });
+        }
+    });
+    // Svuota buffer finale
+    flushPairBuffer();
+
+    const chunkItems = (items: CatalogItem[]) => {
+        const pages: CatalogItem[][] = [];
+        let currentPage: CatalogItem[] = [];
+        let currentScore = 0;
+        const MAX_SCORE = 5.3;
+        const HEADER_SCORE = 0.25;
+        const PRODUCT_SCORE = 1.0;
+        const PAIR_SCORE = 1.0; // Una coppia occupa verticalmente lo stesso spazio di un prodotto singolo (o poco più per sicurezza)
+
+        for (let i = 0; i < items.length; i++) {
+            const item = items[i];
+            let itemScore = PRODUCT_SCORE;
+
+            if (item.type === 'header') itemScore = HEADER_SCORE;
+            else if (item.type === 'product-pair') itemScore = PAIR_SCORE;
+
+            // Se aggiungere l'item supera il limite
+            if (currentScore + itemScore > MAX_SCORE + 0.05) {
+                const lastItem = currentPage[currentPage.length - 1];
+
+                // Evita header orfani a fine pagina
+                if (lastItem && lastItem.type === 'header') {
+                    currentPage.pop();
+                    pages.push(currentPage);
+                    currentPage = [lastItem, item];
+                    currentScore = HEADER_SCORE + itemScore;
+                } else {
+                    pages.push(currentPage);
+                    currentPage = [item];
+                    currentScore = itemScore;
+                }
+            } else {
+                currentPage.push(item);
+                currentScore += itemScore;
+            }
+        }
+
+        if (currentPage.length > 0) {
+            pages.push(currentPage);
+        }
+
+        return pages;
+    };
+
+    const productPages = chunkItems(items);
 
     const certifications = [
         {
@@ -232,22 +325,77 @@ const PrintCatalogPage = async () => {
                     .product-grid {
                         display: flex;
                         flex-direction: column;
-                        gap: 0.3rem;
+                        flex: 1; 
                         width: 100%;
-                        flex: 1;
+                        padding-bottom: 1.2cm;
+                        gap: 0.5mm;
                     }
                     
-                    .product-grid > div {
-                        min-height: 5cm;
-                        max-height: 6.4cm;
+                    /* Modified selector to target only product cards */
+                    .product-grid > .product-card-wrapper,
+                    .product-grid > .product-pair-wrapper {
                         flex: 1;
-                        page-break-inside: avoid;
-                        overflow: hidden;
+                        display: flex;
+                        flex-direction: column;
+                        min-height: 0;
+                        max-height: 5.5cm; /* Limita espansione eccessiva */
+                    }
+
+                    /* Stili per l'ultima pagina con pochi prodotti */
+                    .product-grid.sparse-page {
+                        justify-content: flex-start;
+                    }
+
+                    .product-grid.sparse-page > .product-card-wrapper,
+                    .product-grid.sparse-page > .product-pair-wrapper {
+                        flex: 0 0 auto;
+                        min-height: 4cm;
+                        max-height: 5.2cm;
+                    }
+                    
+                    .product-grid > .product-card-wrapper:last-child,
+                    .product-grid > .product-pair-wrapper:last-child {
+                        margin-bottom: 0;
+                    }
+
+                    /* Stili per le coppie di prodotti */
+                    .product-pair-wrapper {
+                        flex-direction: row !important;
+                        gap: 0.5cm; /* Spazio orizzontale tra le due colonne */
+                    }
+
+                    .product-pair-wrapper > .product-card-wrapper {
+                        width: 50%;
+                    }
+                    
+                    .category-header {
+                        width: 100%;
+                        padding-top: 2px;
+                        padding-bottom: 2px;
+                        border-bottom: 2px solid #8C1C06;
+                        color: #8C1C06;
+                        font-size: 18px;
+                        font-weight: 700;
+                        flex: 0 0 auto;
+                        page-break-after: avoid;
+                        margin-bottom: 1mm;
+                    }
+
+                    /* IMPORTANTE: usa > * per selezionare sia <a> (Link) che <div> */
+                    .product-grid > .product-card-wrapper > *,
+                    .product-pair-wrapper > .product-card-wrapper > * {
+                        flex: 1;
+                        display: flex;
+                        flex-direction: column;
+                        height: 100%;
                     }
 
                     /* Assicura che i contenitori delle immagini dei prodotti abbiano dimensioni minime */
-                    .product-grid > div > div:first-child {
-                        min-height: 140px;
+                    .product-grid > .product-card-wrapper > div,
+                    .product-pair-wrapper > .product-card-wrapper > div {
+                        height: 100%; /* La card interna riempie il wrapper */
+                        display: flex; /* Importante per far espandere il figlio */
+                        flex-direction: column;
                     }
 
                     /* CSS specifici per generazione PDF con Puppeteer */
@@ -262,7 +410,8 @@ const PrintCatalogPage = async () => {
                         }
 
                         /* Regole specifiche per le immagini dei prodotti per riempire completamente lo spazio */
-                        .product-grid > div img:not([alt*="Montagna"]):not([alt*="Ammollo"]):not([alt*="Cereali"]):not([alt*="Italiano"]):not([alt*="Antica"]):not([alt*="Pietra"]):not([alt*="Perlato"]) {
+                        .product-grid > .product-card-wrapper img:not([alt*="Montagna"]):not([alt*="Ammollo"]):not([alt*="Cereali"]):not([alt*="Italiano"]):not([alt*="Antica"]):not([alt*="Pietra"]):not([alt*="Perlato"]),
+                        .product-pair-wrapper > .product-card-wrapper img:not([alt*="Montagna"]):not([alt*="Ammollo"]):not([alt*="Cereali"]):not([alt*="Italiano"]):not([alt*="Antica"]):not([alt*="Pietra"]):not([alt*="Perlato"]) {
                             object-fit: cover !important;
                             object-position: center !important;
                             width: 100% !important;
@@ -286,13 +435,25 @@ const PrintCatalogPage = async () => {
                             height: auto !important;
                         }
 
-                        .product-grid > div {
+                        .product-grid > .product-card-wrapper,
+                        .product-grid > .product-pair-wrapper {
                             page-break-inside: avoid !important;
-                            min-height: 5cm !important;
-                            max-height: 6.4cm !important;
                             flex: 1 !important;
+                            max-height: 5.5cm !important;
                             display: flex !important;
                             flex-direction: column !important;
+                            min-height: 0 !important;
+                        }
+
+                        .product-grid.sparse-page > .product-card-wrapper,
+                        .product-grid.sparse-page > .product-pair-wrapper {
+                            flex: 0 0 auto !important;
+                            min-height: 4cm !important;
+                            max-height: 5.2cm !important;
+                        }
+
+                        .product-grid > .product-pair-wrapper {
+                            flex-direction: row !important;
                         }
                     }
 
@@ -369,28 +530,68 @@ const PrintCatalogPage = async () => {
             </div>
 
             {/* Product Pages */}
-            {productPages.map((pageProducts, pageIndex) => (
-                <div key={pageIndex} className="page">
-                    <div className="watermark">
-                        <img src="/images/logo.png" alt="Logo" width={150} height={150} loading="eager" />
+            {productPages.map((pageItems, pageIndex) => {
+                // Conta quante "righe" di prodotti ci sono (product = 1, product-pair = 1)
+                const productRowCount = pageItems.filter(item => item.type === 'product' || item.type === 'product-pair').length;
+                const isLastPage = pageIndex === productPages.length - 1;
+                const isSparsePage = isLastPage && productRowCount < 5;
+
+                return (
+                    <div key={pageIndex} className="page">
+                        <div className="watermark">
+                            <img src="/images/logo.png" alt="Logo" width={150} height={150} loading="eager" />
+                        </div>
+                        <div className={`product-grid${isSparsePage ? ' sparse-page' : ''}`}>
+                            {pageItems.map((item, index) => {
+                                if (item.type === 'header') {
+                                    return (
+                                        <div key={`header-${index}`} className="category-header">
+                                            {item.title}
+                                        </div>
+                                    );
+                                }
+
+                                if (item.type === 'product-pair') {
+                                    return (
+                                        <div key={`pair-${index}`} className="product-pair-wrapper">
+                                            {item.data.map((product) => (
+                                                <div key={product._id} className="product-card-wrapper">
+                                                    <CatalogCard
+                                                        product={product}
+                                                        viewMode="detailed"
+                                                        isPrint={false}
+                                                        forceEagerLoad={true}
+                                                        isCompactLayout={true}
+                                                    />
+                                                </div>
+                                            ))}
+                                            {/* Spacer per l'ultimo elemento dispari se necessario */}
+                                            {item.data.length === 1 && (
+                                                <div className="product-card-wrapper" style={{ opacity: 0 }}></div>
+                                            )}
+                                        </div>
+                                    );
+                                }
+
+                                return (
+                                    <div key={item.data._id} className="product-card-wrapper">
+                                        <CatalogCard
+                                            product={item.data}
+                                            viewMode="detailed"
+                                            isPrint={false}
+                                            forceEagerLoad={true}
+                                        />
+                                    </div>
+                                );
+                            })}
+                        </div>
+                        <div className="footer">
+                            <span>Azienda Agricola Il Pichello - info@agricolailpichello.it</span>
+                            <span>{`Pagina ${pageIndex + 3} di ${productPages.length + 2}`}</span>
+                        </div>
                     </div>
-                    <div className="product-grid">
-                        {pageProducts.map((product) => (
-                            <CatalogCard
-                                key={product._id}
-                                product={product}
-                                viewMode="detailed"
-                                isPrint={false}
-                                forceEagerLoad={true}
-                            />
-                        ))}
-                    </div>
-                    <div className="footer">
-                        <span>Azienda Agricola Il Pichello - info@agricolailpichello.it</span>
-                        <span>{`Pagina ${pageIndex + 3} di ${productPages.length + 2}`}</span>
-                    </div>
-                </div>
-            ))}
+                );
+            })}
         </>
     );
 };

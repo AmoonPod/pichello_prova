@@ -5,6 +5,7 @@ import { Bricolage_Grotesque } from "next/font/google";
 import { headers } from "next/headers";
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import AnnouncementBanner from "@/components/AnnouncementBanner"
 // Dynamic metadataBase based on environment
 const baseUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -312,6 +313,7 @@ export default async function RootLayout({
         />
       </head>
       <body className={`${bricolageGrotesque.className}`}>
+        <AnnouncementBanner />
         <NavbarV2 />
         {children}
         <Toaster />

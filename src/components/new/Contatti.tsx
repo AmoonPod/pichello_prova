@@ -62,9 +62,15 @@ const FinalCTASection = () => {
 
           {/* Description */}
           <p className="text-lg md:text-xl text-white/80 font-medium max-w-3xl mx-auto mb-10 lg:mb-12 leading-relaxed">
-            Scopri i sapori genuini dell'Appennino Reggiano. Contattaci per
-            ordinare i nostri prodotti biorazionali o per ricevere informazioni
-            personalizzate sulla nostra offerta.
+            Scopri i sapori genuini dell'Appennino Reggiano: dalla{" "}
+            <Link href="/farina-antichi-cinquanta-grani-appennino-reggiano" className="text-white underline underline-offset-2 hover:text-white/90">
+              farina di grani antichi
+            </Link>{" "}
+            alla{" "}
+            <Link href="/pasta-artigianale-appennino-reggiano" className="text-white underline underline-offset-2 hover:text-white/90">
+              pasta trafilata al bronzo
+            </Link>
+            . Contattaci per ordinare o ricevere informazioni personalizzate.
           </p>
 
           {/* Main CTA Buttons */}

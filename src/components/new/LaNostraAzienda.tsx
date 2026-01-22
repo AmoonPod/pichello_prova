@@ -2,8 +2,9 @@
 
 import { useRef, useEffect, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import { Leaf, Award, Heart, Mountain, TreePine } from "lucide-react";
+import { Leaf, Award, Heart, Mountain, TreePine, Wheat, CircleDot, ArrowRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import ValTassobbio from "../../../public/images/valtassobbio.jpg";
 import IlPichello from "../../../public/images/pichello.jpg";
 const AboutSection = () => {
@@ -151,6 +152,23 @@ const AboutSection = () => {
                   tavole con la sincerità di chi rispetta la natura e le
                   tradizioni montane dell'Appennino."
                 </blockquote>
+
+                {/* Link ai prodotti artigianali */}
+                <div className="mt-8 pt-6 border-t border-border">
+                  <p className="text-sm text-muted-foreground mb-4 font-medium">Alcune delle nostre produzioni artigianali:</p>
+                  <div className="flex flex-wrap gap-3">
+                    <Link href="/farina-antichi-cinquanta-grani-appennino-reggiano" className="group inline-flex items-center gap-2 px-4 py-2 bg-amber-50 border border-amber-200 rounded-full hover:bg-amber-100 hover:border-amber-300 transition-all">
+                      <CircleDot className="w-4 h-4 text-amber-700" />
+                      <span className="text-sm font-medium text-amber-900">Farina 50 Grani</span>
+                      <ArrowRight className="w-3 h-3 text-amber-600 group-hover:translate-x-0.5 transition-transform" />
+                    </Link>
+                    <Link href="/pasta-artigianale-appennino-reggiano" className="group inline-flex items-center gap-2 px-4 py-2 bg-amber-50 border border-amber-200 rounded-full hover:bg-amber-100 hover:border-amber-300 transition-all">
+                      <Wheat className="w-4 h-4 text-amber-700" />
+                      <span className="text-sm font-medium text-amber-900">Pasta Artigianale</span>
+                      <ArrowRight className="w-3 h-3 text-amber-600 group-hover:translate-x-0.5 transition-transform" />
+                    </Link>
+                  </div>
+                </div>
               </div>
             </div>
           </motion.div>

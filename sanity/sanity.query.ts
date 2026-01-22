@@ -82,6 +82,31 @@ async function fetchCategorie() {
   );
 }
 
+async function fetchProdottiByCategoria(categoria: string) {
+  return readClient.fetch(
+    groq`*[_type == "prodotto" && categoria->slug.current == $categoria] | order(ordine asc){
+      _id,
+      nome,
+      descrizione,
+      ingredienti,
+      immagini[] {
+        "image": asset->url + "?auto=format&fit=max&w=1400&q=75",
+        alt
+      },
+      slug,
+      ordine
+    }`,
+    { categoria }
+  );
+}
+
+export async function getProdottiByCategoria(categoria: string) {
+  return unstable_cache(async () => fetchProdottiByCategoria(categoria), [`products-by-category-${categoria}`], {
+    revalidate: CACHE_REVALIDATE,
+    tags: [CACHE_TAG_PRODUCTS, `products-by-category-${categoria}`],
+  })();
+}
+
 // Cached versions using Next.js unstable_cache
 export async function getProdotti() {
   return unstable_cache(fetchProdotti, ['all-products'], {

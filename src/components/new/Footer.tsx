@@ -16,6 +16,7 @@ import {
   Barcode,
   Instagram,
   Youtube,
+  Soup,
 } from "lucide-react";
 import { ProdottoType, CategoriaType } from "../../../types";
 import { useCatalogPDF } from "@/hooks/useCatalogPDF";
@@ -239,6 +240,33 @@ const FooterV2: React.FC<FooterV2Props> = ({
                 >
                   <span className="w-1 h-1 bg-gray-400 rounded-full group-hover:bg-primary transition-colors" />
                   Contatti
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/pasta-artigianale-appennino-reggiano"
+                  className="text-gray-600 hover:text-primary transition-colors duration-300 flex items-center gap-2 group text-sm lg:text-base py-1"
+                >
+                  <span className="w-1 h-1 bg-gray-400 rounded-full group-hover:bg-primary transition-colors" />
+                  Pasta Artigianale
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/farina-antichi-cinquanta-grani-appennino-reggiano"
+                  className="text-gray-600 hover:text-primary transition-colors duration-300 flex items-center gap-2 group text-sm lg:text-base py-1"
+                >
+                  <span className="w-1 h-1 bg-gray-400 rounded-full group-hover:bg-primary transition-colors" />
+                  Farina 50 Grani
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/zuppe-appennino-reggiano"
+                  className="text-gray-600 hover:text-primary transition-colors duration-300 flex items-center gap-2 group text-sm lg:text-base py-1"
+                >
+                  <span className="w-1 h-1 bg-gray-400 rounded-full group-hover:bg-primary transition-colors" />
+                  Zuppe e Risotti
                 </Link>
               </li>
               <li>

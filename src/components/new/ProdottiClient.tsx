@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useInView, Variants } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ChevronRight, Image as ImageIcon, Package, Leaf } from "lucide-react";
+import { ChevronRight, Image as ImageIcon, Package, Leaf, Wheat, CircleDot, ArrowRight } from "lucide-react";
 import { CategoriaType } from "../../../types";
 import Link from "next/link";
 
@@ -298,6 +298,75 @@ export default function ProductsSectionClient({
               })}
           </motion.div>
         </div>
+
+        {/* Fiori all'Occhiello - Pasta e Farina */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="pt-12 lg:pt-16"
+        >
+          <div className="text-center mb-8">
+            <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
+              I Nostri <span className="text-primary">Fiori all'Occhiello</span>
+            </h3>
+            <p className="text-muted-foreground">
+              Produzioni artigianali dal nostro mulino a pietra
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {/* Pasta Card */}
+            <Link href="/pasta-artigianale-appennino-reggiano" className="group">
+              <div className="relative bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-6 hover:shadow-xl transition-all duration-300 overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-amber-200/30 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
+                <div className="relative">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center group-hover:bg-amber-200 transition-colors">
+                      <Wheat className="w-6 h-6 text-amber-700" />
+                    </div>
+                    <div>
+                      <h4 className="text-xl font-bold text-gray-900">Pasta Artigianale</h4>
+                      <p className="text-sm text-amber-700 font-medium">Trafilata al bronzo</p>
+                    </div>
+                  </div>
+                  <p className="text-gray-600 text-sm mb-4">
+                    Semola di grano duro macinata a pietra, trafilata al bronzo ed essiccata naturalmente a temperatura ambiente.
+                  </p>
+                  <div className="flex items-center text-amber-700 font-semibold text-sm group-hover:text-amber-800">
+                    Scopri i formati
+                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </div>
+            </Link>
+
+            {/* Farina Card */}
+            <Link href="/farina-antichi-cinquanta-grani-appennino-reggiano" className="group">
+              <div className="relative bg-gradient-to-br from-stone-50 to-amber-50 border border-stone-200 rounded-2xl p-6 hover:shadow-xl transition-all duration-300 overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-stone-200/30 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
+                <div className="relative">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-12 h-12 bg-stone-100 rounded-xl flex items-center justify-center group-hover:bg-stone-200 transition-colors">
+                      <CircleDot className="w-6 h-6 text-stone-700" />
+                    </div>
+                    <div>
+                      <h4 className="text-xl font-bold text-gray-900">Farina 50 Grani</h4>
+                      <p className="text-sm text-stone-700 font-medium">Macinata a pietra</p>
+                    </div>
+                  </div>
+                  <p className="text-gray-600 text-sm mb-4">
+                    50 varietà di grani antichi coltivati senza chimica, macinati a pietra. Integrale, semintegrale e fiore.
+                  </p>
+                  <div className="flex items-center text-stone-700 font-semibold text-sm group-hover:text-stone-800">
+                    Scopri le varianti
+                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </div>
+            </Link>
+          </div>
+        </motion.div>
 
         {/* Call to Action */}
         <motion.div

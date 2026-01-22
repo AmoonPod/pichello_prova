@@ -2,7 +2,8 @@
 
 import { useRef, useState, useEffect } from "react";
 import { motion, useInView, Variants } from "framer-motion";
-import { MapPin, Clock, Mountain, Trees } from "lucide-react";
+import { MapPin, Clock, Mountain, Trees, Wheat, CircleDot } from "lucide-react";
+import Link from "next/link";
 
 const LocationSection = () => {
   const ref = useRef(null);
@@ -89,7 +90,6 @@ const LocationSection = () => {
             {/* Story Card */}
             <div className="relative group">
               {/* Decorative Background */}
-              <div className="absolute inset-2 bg-gradient-to-br from-primary/5 via-primary/10 to-primary/15 rounded-3xl transform rotate-1 group-hover:rotate-0 transition-transform duration-500" />
 
               <div className="relative bg-card/90 backdrop-blur-sm border border-border rounded-3xl p-6 lg:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_20px_60px_rgb(0,0,0,0.2)] transition-all duration-300">
                 <div className="flex items-center gap-3 mb-4">
@@ -115,13 +115,38 @@ const LocationSection = () => {
 
                 <p className="text-muted-foreground leading-relaxed">
                   Qui, a <strong>Marola</strong>, coltiviamo con passione{" "}
-                  <strong>300.000 metri quadri</strong> di terreno. I nostri
-                  campi poggiano sui caratteristici suoli castagnini della
-                  formazione geologica di Bismantova, un'area di pregio
-                  naturalistico dell'<strong>Appennino di Reggio Emilia</strong>
-                  , circondata dalla storia dei castelli matildici e alle porte
+                  <strong>300.000 metri quadri</strong> di terreno e gestiamo il nostro
+                  <strong> mulino a pietra</strong> dove maciniamo i cereali per produrre
+                  la nostra farina e la pasta artigianale. I nostri campi poggiano sui caratteristici
+                  suoli castagnini della formazione geologica di Bismantova, alle porte
                   del Parco Nazionale dell'Appennino Tosco-Emiliano.
                 </p>
+              </div>
+
+              {/* Cross-link alle produzioni artigianali */}
+              <div className="grid sm:grid-cols-2 gap-3 pt-2">
+                <Link href="/farina-antichi-cinquanta-grani-appennino-reggiano" className="group">
+                  <div className="flex items-center gap-3 p-3 bg-amber-50/50 border border-amber-200/50 rounded-xl hover:bg-amber-50 hover:border-amber-300 transition-all">
+                    <div className="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center group-hover:bg-amber-200 transition-colors">
+                      <CircleDot className="w-4 h-4 text-amber-700" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-sm text-gray-900">Farina 50 Grani</p>
+                      <p className="text-xs text-gray-600">Dal nostro mulino</p>
+                    </div>
+                  </div>
+                </Link>
+                <Link href="/pasta-artigianale-appennino-reggiano" className="group">
+                  <div className="flex items-center gap-3 p-3 bg-amber-50/50 border border-amber-200/50 rounded-xl hover:bg-amber-50 hover:border-amber-300 transition-all">
+                    <div className="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center group-hover:bg-amber-200 transition-colors">
+                      <Wheat className="w-4 h-4 text-amber-700" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-sm text-gray-900">Pasta Artigianale</p>
+                      <p className="text-xs text-gray-600">Trafilata al bronzo</p>
+                    </div>
+                  </div>
+                </Link>
               </div>
             </div>
 

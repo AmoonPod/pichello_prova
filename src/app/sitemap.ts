@@ -52,6 +52,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly',
       priority: 0.9,
     },
+    {
+      url: `${baseUrl}/pasta-artigianale-appennino-reggiano`,
+      lastModified: lastModified,
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/farina-antichi-cinquanta-grani-appennino-reggiano`,
+      lastModified: lastModified,
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/zuppe-appennino-reggiano`,
+      lastModified: lastModified,
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
     // Sezioni della homepage con anchor links
     {
       url: `${baseUrl}/#la-nostra-azienda`,

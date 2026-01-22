@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Menu as MenuIcon, Package } from "lucide-react"; // using MenuIcon for clarity
+import { Menu as MenuIcon, Package, Wheat, CircleDot, Soup } from "lucide-react"; // using MenuIcon for clarity
 import { cn } from "@/lib/utils";
 import LOGO from "../../../public/LOGO.png";
 import Image from "next/image";
@@ -48,6 +48,27 @@ const NavbarV2 = () => {
             className="text-foreground hover:text-primary transition-all duration-200 text-sm font-medium hover:-translate-y-0.5 transform"
           >
             Prodotti
+          </Link>
+          <Link
+            href="/pasta-artigianale-appennino-reggiano"
+            className="text-foreground hover:text-primary transition-all duration-200 text-sm font-medium hover:-translate-y-0.5 transform flex items-center gap-1"
+          >
+            <Wheat className="h-4 w-4" />
+            Pasta
+          </Link>
+          <Link
+            href="/farina-antichi-cinquanta-grani-appennino-reggiano"
+            className="text-foreground hover:text-primary transition-all duration-200 text-sm font-medium hover:-translate-y-0.5 transform flex items-center gap-1"
+          >
+            <CircleDot className="h-4 w-4" />
+            Farina
+          </Link>
+          <Link
+            href="/zuppe-appennino-reggiano"
+            className="text-foreground hover:text-primary transition-all duration-200 text-sm font-medium hover:-translate-y-0.5 transform flex items-center gap-1"
+          >
+            <Soup className="h-4 w-4" />
+            Zuppe
           </Link>
           <Link
             href="/catalogo"
@@ -118,6 +139,36 @@ const NavbarV2 = () => {
                     prefetch={false}
                   >
                     Prodotti
+                  </Link>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Link
+                    href="/pasta-artigianale-appennino-reggiano"
+                    className="font-medium text-lg hover:text-primary transition-colors flex items-center gap-2"
+                    prefetch={false}
+                  >
+                    <Wheat className="h-5 w-5" />
+                    Pasta
+                  </Link>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Link
+                    href="/farina-antichi-cinquanta-grani-appennino-reggiano"
+                    className="font-medium text-lg hover:text-primary transition-colors flex items-center gap-2"
+                    prefetch={false}
+                  >
+                    <CircleDot className="h-5 w-5" />
+                    Farina 50 Grani
+                  </Link>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Link
+                    href="/zuppe-appennino-reggiano"
+                    className="font-medium text-lg hover:text-primary transition-colors flex items-center gap-2"
+                    prefetch={false}
+                  >
+                    <Soup className="h-5 w-5" />
+                    Zuppe e Risotti
                   </Link>
                 </SheetClose>
                 <SheetClose asChild>

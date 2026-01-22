@@ -65,36 +65,43 @@ const productCategories = [
     name: "Prodotti dall'alveare",
     icon: "🐝",
     description: "Dolcezza e benessere naturale",
+    href: "/prodotti?categoria=prodotti-dall-alveare",
   },
   {
-    name: "Cereali e Farine",
+    name: "Farina 50 Grani",
     icon: <Wheat className="w-5 h-5 text-primary-foreground" />,
-    description: "Macinati a pietra dell'Appennino",
+    description: "Macinata a pietra nel nostro mulino",
+    href: "/farina-antichi-cinquanta-grani-appennino-reggiano",
+  },
+  {
+    name: "Pasta Artigianale",
+    icon: <Wheat className="w-5 h-5 text-primary-foreground" />,
+    description: "Trafilata al bronzo",
+    href: "/pasta-artigianale-appennino-reggiano",
   },
   {
     name: "Legumi e farine",
     icon: <Bean className="w-5 h-5 text-primary-foreground" />,
     description: "Varietà tradizionali montane",
+    href: "/prodotti?categoria=legumi-e-farine",
   },
   {
     name: "Tisane e infusi",
     icon: <Coffee className="w-5 h-5 text-primary-foreground" />,
     description: "Aromi dell'Appennino per il relax",
+    href: "/prodotti?categoria=tisane-e-infusi",
   },
   {
     name: "Zuppe e risotti",
     icon: <Droplets className="w-5 h-5 text-primary-foreground" />,
     description: "Ricette della tradizione",
+    href: "/zuppe-appennino-reggiano",
   },
   {
     name: "Grano saraceno e castagne",
     icon: <TreePine className="w-5 h-5 text-primary-foreground" />,
     description: "Tesori di montagna genuini",
-  },
-  {
-    name: "Prodotti freschi",
-    icon: "🌱",
-    description: "Stagionalità dell'Appennino",
+    href: "/prodotti?categoria=grano-saraceno-e-castagne",
   },
 ];
 
@@ -170,48 +177,57 @@ const HeroSection = () => {
             {/* Description - Testo ottimizzato per includere più categorie e keywords SEO */}
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
               Nel cuore dell'Appennino Reggiano coltiviamo con passione una
-              ricca varietà di prodotti della terra: dal miele biologico ai
-              cereali antichi macinati a pietra, dai legumi tradizionali alle
-              erbe per tisane, dalle castagne di montagna ai prodotti freschi
-              stagionali. Ogni prodotto nasce dal terreno Reggiano e arriva
-              sulle tavole con la sincerità di chi rispetta la natura e preserva
-              le tradizioni dell'Appennino.
+              ricca varietà di prodotti della terra: dal miele biologico alla{" "}
+              <Link href="/farina-antichi-cinquanta-grani-appennino-reggiano" className="text-primary hover:underline font-medium">
+                farina di grani antichi macinata a pietra
+              </Link>
+              , dalla{" "}
+              <Link href="/pasta-artigianale-appennino-reggiano" className="text-primary hover:underline font-medium">
+                pasta artigianale trafilata al bronzo
+              </Link>{" "}
+              ai legumi tradizionali e alle erbe per tisane. Ogni prodotto nasce dal terreno Reggiano e arriva
+              sulle tavole con la sincerità di chi rispetta la natura.
             </p>
 
             {/* Features - Griglia rotante con tutte le 7 categorie */}
             <div className="h-24 md:h-28 mb-4">
               <div className="grid grid-cols-3 gap-2 md:gap-3 h-full">
                 {visibleCategories.map((category, index) => (
-                  <motion.div
+                  <Link
                     key={`${currentCategoryIndex}-${index}`}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{
-                      duration: 0.8,
-                      delay: index * 0.2,
-                      ease: "easeInOut",
-                    }}
-                    className="flex flex-col md:flex-row items-center md:gap-3 bg-card border border-border rounded-lg p-2 md:p-3 shadow-sm hover:shadow-md transition-all duration-300 text-center md:text-left"
+                    href={category.href}
+                    className="block"
                   >
-                    <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mb-2 md:mb-0">
-                      {typeof category.icon === "string" ? (
-                        <span className="text-primary-foreground text-lg">
-                          {category.icon}
-                        </span>
-                      ) : (
-                        category.icon
-                      )}
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-foreground text-xs md:text-sm">
-                        {category.name}
-                      </h3>
-                      <p className="text-xs text-muted-foreground hidden md:block">
-                        {category.description}
-                      </p>
-                    </div>
-                  </motion.div>
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.9 }}
+                      transition={{
+                        duration: 0.8,
+                        delay: index * 0.2,
+                        ease: "easeInOut",
+                      }}
+                      className="flex flex-col md:flex-row items-center md:gap-3 bg-card border border-border rounded-lg p-2 md:p-3 shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-300 text-center md:text-left h-full"
+                    >
+                      <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mb-2 md:mb-0">
+                        {typeof category.icon === "string" ? (
+                          <span className="text-primary-foreground text-lg">
+                            {category.icon}
+                          </span>
+                        ) : (
+                          category.icon
+                        )}
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-foreground text-xs md:text-sm">
+                          {category.name}
+                        </h3>
+                        <p className="text-xs text-muted-foreground hidden md:block">
+                          {category.description}
+                        </p>
+                      </div>
+                    </motion.div>
+                  </Link>
                 ))}
               </div>
             </div>

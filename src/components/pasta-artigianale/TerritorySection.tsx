@@ -124,6 +124,28 @@ export default function TerritorySection() {
 
                         {/* Ombra decorativa sfalsata */}
                         <div className="absolute inset-0 bg-stone-900 rounded-2xl transform translate-x-4 translate-y-4 -z-10 opacity-5"></div>
+
+                        <div className="mt-6 space-y-3">
+                            <div className="relative overflow-hidden rounded-2xl border border-stone-100 shadow-md shadow-stone-200/50">
+                                <iframe
+                                    src="https://www.google.com/maps?q=Via+Dante+Alighieri+141+Marola+Carpineti&output=embed"
+                                    loading="lazy"
+                                    allowFullScreen
+                                    title="Mappa interattiva del Mulino Il Pichello"
+                                    className="w-full h-64"
+                                    referrerPolicy="no-referrer-when-downgrade"
+                                />
+                            </div>
+                            <a
+                                href="https://www.google.com/maps/dir/?api=1&destination=Via+Dante+Alighieri+141+Carpineti"
+                                target="_blank"
+                                rel="noreferrer"
+                                className="inline-flex items-center gap-2 text-amber-700 font-semibold hover:underline"
+                            >
+                                <MapPin className="w-4 h-4" />
+                                Ottieni indicazioni per il Mulino
+                            </a>
+                        </div>
                     </div>
 
                 </div>

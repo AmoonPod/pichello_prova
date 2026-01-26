@@ -1,31 +1,29 @@
 import { Metadata } from "next"
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import FooterV2 from "@/components/new/Footer"
 import {
-  ArrowRight,
   Phone,
   Mail,
   Wheat,
-  Mountain,
-  Timer,
   Sparkles,
   Award,
-  Leaf,
-  FlaskConical,
   Cookie,
   Pizza,
   Croissant,
   Check,
-  Star,
-  Quote,
-  Truck
+  Truck,
+  ShieldCheck,
+  Activity,
+  Box
 } from "lucide-react"
 import "../globals.css"
 import HeroFarina from "@/components/farina-cinquanta-grani/HeroFarina"
 import ProcessoMacinazione from "@/components/farina-cinquanta-grani/ProcessoMacinazione"
 import VariantiFarina from "@/components/farina-cinquanta-grani/VariantiFarina"
 import WhyChooseUs from "@/components/farina-cinquanta-grani/WhyChooseUs"
+import FaqAccordion from "@/components/pasta-artigianale/FaqAccordion"
 // Force static generation
 export const dynamic = "force-static"
 export const revalidate = 86400 // 24 hours
@@ -37,6 +35,180 @@ const baseUrl = process.env.VERCEL_URL
     : "http://localhost:3000"
 
 const pageUrl = `${baseUrl}/farina-antichi-cinquanta-grani-appennino-reggiano`
+const flourVariantsSchema = [
+  {
+    id: "integrale",
+    name: "Farina Cinquanta Grani Integrale",
+    description:
+      "Farina integrale di 50 grani antichi macinata a pietra a tutto corpo: contiene crusca, germe ed endosperma per massimo profilo nutrizionale.",
+    image: `${baseUrl}/images/farine/farina_cinquanta_int.webp`
+  },
+  {
+    id: "semintegrale",
+    name: "Farina Cinquanta Grani Semintegrale",
+    description:
+      "Farina semintegrale di grani antichi con setacciatura moderata: equilibrio tra fibre e lavorabilità per pizza e pane quotidiano.",
+    image: `${baseUrl}/images/farine/farina_cinquanta_semiint.webp`
+  },
+  {
+    id: "fiore",
+    name: "Farina Cinquanta Grani Fiore",
+    description:
+      "La parte più interna e fine del chicco: farina fiore di grani antichi per dolci, lievitati morbidi e pasta fresca setosa.",
+    image: `${baseUrl}/images/farine/farina_cinquanta_fiore.webp`
+  }
+]
+const productGroupSchema = {
+  "@type": "ProductGroup",
+  "@id": `${pageUrl}#product-group`,
+  name: "Farina Antichi Cinquanta Grani - 50 varietà macinate a pietra",
+  description:
+    "Farina artigianale di qualità superiore ottenuta da un miscuglio di 50 varietà di antichi frumenti coltivati nell'Appennino Reggiano senza prodotti chimici. Macinata a tutto corpo con macine in pietra nel mulino aziendale di Marola di Carpineti. Disponibile in tre varianti: integrale, semintegrale e fiore. Forza W 280-330, P/L 0,5-0,7. Classificata Panificabile Superiore. Certificata Prodotto di Montagna. Ideale per pane a lievitazione naturale, pizza professionale e pasta fresca.",
+  image: [`${baseUrl}/images/cereali.jpg`],
+  brand: {
+    "@type": "Brand",
+    name: "Azienda Agricola Il Pichello"
+  },
+  category: "Farine di Grani Antichi",
+  material: "Miscela di 50 varietà di grani antichi",
+  variesBy: ["Grado di macinazione"],
+  additionalProperty: [
+    {
+      "@type": "PropertyValue",
+      name: "Forza (W)",
+      value: "280-330"
+    },
+    {
+      "@type": "PropertyValue",
+      name: "Rapporto P/L",
+      value: "0,5-0,7"
+    },
+    {
+      "@type": "PropertyValue",
+      name: "Proteine",
+      value: "13-14%"
+    },
+    {
+      "@type": "PropertyValue",
+      name: "Classificazione",
+      value: "Panificabile Superiore"
+    },
+    {
+      "@type": "PropertyValue",
+      name: "Certificazione",
+      value: "Prodotto di Montagna"
+    }
+  ],
+  hasVariant: flourVariantsSchema.map((variant) => ({
+    "@type": "Product",
+    "@id": `${pageUrl}#${variant.id}`,
+    name: variant.name,
+    description: variant.description,
+    image: [variant.image],
+    url: `${pageUrl}?variante=${variant.id}`,
+    sku: variant.id,
+    isVariantOf: `${pageUrl}#product-group`,
+    additionalProperty: [
+      {
+        "@type": "PropertyValue",
+        name: "Forza (W)",
+        value: "280-330"
+      },
+      {
+        "@type": "PropertyValue",
+        name: "Rapporto P/L",
+        value: "0,5-0,7"
+      },
+      {
+        "@type": "PropertyValue",
+        name: "Proteine",
+        value: "13-14%"
+      }
+    ]
+  }))
+}
+const recipeSchema = {
+  "@type": "Recipe",
+  "@id": `${pageUrl}#pizza-alta-digeribilita`,
+  name: "Pizza ad alta digeribilità con Farina Cinquanta Grani",
+  description:
+    "Impasto per pizza leggera e alveolata con farina di grani antichi macinata a pietra. Lunga maturazione, alto assorbimento e grande digeribilità.",
+  image: [`${baseUrl}/images/farine/farina_cinquanta_semiint.webp`],
+  recipeCuisine: "Italiana",
+  recipeCategory: "Pizza",
+  totalTime: "PT24H",
+  prepTime: "PT20M",
+  cookTime: "PT8M",
+  recipeYield: "4 pizze da 250g",
+  keywords: "pizza ad alta digeribilità, farina grani antichi, pizza w 300",
+  author: {
+    "@type": "Organization",
+    name: "Azienda Agricola Il Pichello"
+  },
+  recipeIngredient: [
+    "1 kg Farina Cinquanta Grani (semintegrale o integrale)",
+    "650-700 ml acqua fredda (in base alla resa desiderata)",
+    "2 g lievito di birra secco o 60 g pasta madre",
+    "25 g sale marino integrale",
+    "20 g olio extravergine"
+  ],
+  recipeInstructions: [
+    {
+      "@type": "HowToStep",
+      text: "Autolisi: mescola farina e 650 ml di acqua fino a formare un impasto grezzo. Riposa 30 minuti."
+    },
+    {
+      "@type": "HowToStep",
+      text: "Inserisci lievito e il resto dell'acqua, poi il sale e infine l'olio. Impasta fino a ottenere una maglia glutinica liscia."
+    },
+    {
+      "@type": "HowToStep",
+      text: "Piega a tre e lascia puntare 60 minuti. Chiudi in contenitore oleato e matura in frigo 18-24 ore a 4°C."
+    },
+    {
+      "@type": "HowToStep",
+      text: "Dividi in panetti da 250 g, appretto 3-4 ore a temperatura ambiente."
+    },
+    {
+      "@type": "HowToStep",
+      text: "Stendi senza sgasare, condisci e cuoci a 450°C in forno a legna o 250°C ventilato con pietra refrattaria per 7-8 minuti."
+    }
+  ],
+  nutrition: {
+    "@type": "NutritionInformation",
+    proteinContent: "13 g",
+    carbohydrateContent: "65 g",
+    fiberContent: "5 g"
+  }
+}
+
+const faqItems = [
+  {
+    question: "Cos'è la farina Antichi Cinquanta Grani?",
+    answer:
+      "Una farina artigianale ottenuta dalla macinazione a pietra di 50 varietà di grani antichi coltivati nell'Appennino Reggiano senza chimica. Disponibile in integrale, semintegrale e fiore."
+  },
+  {
+    question: "Per quali preparazioni è indicata?",
+    answer:
+      "Pane a lievitazione naturale, pizza e focacce, pasta fresca e pasticceria casalinga. La forza W 280-330 e il P/L 0,5-0,7 la rendono versatile."
+  },
+  {
+    question: "Dove posso acquistarla?",
+    answer:
+      "Direttamente in azienda a Marola di Carpineti, al mercato di Piazza Fontanesi (RE), in punti vendita della provincia e con spedizione in tutta Italia."
+  },
+  {
+    question: "Qual è la differenza tra integrale, semintegrale e fiore?",
+    answer:
+      "Integrale: tutto il chicco con crusca e germe. Semintegrale: setacciatura parziale per equilibrio tra nutrienti e lavorabilità. Fiore: parte più interna e fine per preparazioni delicate."
+  },
+  {
+    question: "La macinatura a pietra cosa cambia?",
+    answer:
+      "Lavora lentamente senza surriscaldare il chicco, conserva germe e crusca e dona più aroma, nutrienti e digeribilità rispetto alle macine industriali."
+  }
+]
 
 export const metadata: Metadata = {
   title: "Farina di Grani Antichi Macinata a Pietra | Appennino Reggiano | Il Pichello",
@@ -104,148 +276,7 @@ export const metadata: Metadata = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
-    {
-      "@type": "Product",
-      "@id": `${pageUrl}#product`,
-      name: "Farina di Grani Antichi Macinata a Pietra - Cinquanta Grani",
-      description:
-        "Farina artigianale di qualità superiore ottenuta da un miscuglio di 50 varietà di antichi frumenti coltivati nell'Appennino Reggiano, vicino Castelnovo ne' Monti, senza l'uso di prodotti chimici. Macinata a tutto corpo con macine in pietra nel mulino aziendale di Marola di Carpineti. Disponibile in tre varianti: integrale, semintegrale e fiore. Forza W 280-330, P/L 0,5-0,7. Classificata Panificabile Superiore. Certificata Prodotto di Montagna. Ideale per pane a lievitazione naturale, pizza professionale e pasta fresca.",
-      image: [`${baseUrl}/images/cereali.jpg`],
-      brand: {
-        "@type": "Brand",
-        name: "Azienda Agricola Il Pichello"
-      },
-      manufacturer: {
-        "@type": "Organization",
-        "@id": `${baseUrl}/#organization`
-      },
-      category: "Farine di Grani Antichi",
-      material: "Miscela di 50 varietà di grani antichi",
-      countryOfOrigin: {
-        "@type": "Country",
-        name: "Italia"
-      },
-      countryOfLastProcessing: "Italia",
-      productionDate: "2026",
-      award: "Certificazione Prodotto di Montagna",
-      additionalProperty: [
-        {
-          "@type": "PropertyValue",
-          name: "Numero Varietà di Grano",
-          value: "50 varietà antiche"
-        },
-        {
-          "@type": "PropertyValue",
-          name: "Metodo di Coltivazione",
-          value: "Senza prodotti chimici"
-        },
-        {
-          "@type": "PropertyValue",
-          name: "Metodo di Macinazione",
-          value: "A pietra, a tutto corpo"
-        },
-        {
-          "@type": "PropertyValue",
-          name: "Forza (W)",
-          value: "280-330"
-        },
-        {
-          "@type": "PropertyValue",
-          name: "Rapporto P/L",
-          value: "0,5-0,7"
-        },
-        {
-          "@type": "PropertyValue",
-          name: "Classificazione",
-          value: "Panificabile Superiore"
-        },
-        {
-          "@type": "PropertyValue",
-          name: "Varianti Disponibili",
-          value: "Integrale, Semintegrale, Fiore"
-        },
-        {
-          "@type": "PropertyValue",
-          name: "Certificazione",
-          value: "Prodotto di Montagna"
-        },
-        {
-          "@type": "PropertyValue",
-          name: "Luogo di Macinazione",
-          value: "Mulino a pietra, Marola di Carpineti (RE)"
-        }
-      ],
-      hasCertification: {
-        "@type": "Certification",
-        name: "Prodotto di Montagna",
-        certificationIdentification: "EU Mountain Product"
-      },
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: "4.9",
-        reviewCount: "47",
-        bestRating: "5",
-        worstRating: "1"
-      },
-      review: [
-        {
-          "@type": "Review",
-          reviewRating: {
-            "@type": "Rating",
-            ratingValue: "5",
-            bestRating: "5"
-          },
-          author: {
-            "@type": "Person",
-            name: "Elisa M."
-          },
-          datePublished: "2025-10-18",
-          reviewBody: "Il pane con la loro farina 50 grani è buonissimo e molto profumato! Ho provato anche legumi e cereali, veramente ottimi. Vi consiglio di fare un salto a visitare l'azienda!"
-        },
-        {
-          "@type": "Review",
-          reviewRating: {
-            "@type": "Rating",
-            ratingValue: "5",
-            bestRating: "5"
-          },
-          author: {
-            "@type": "Person",
-            name: "Giovanni B."
-          },
-          datePublished: "2025-11-05",
-          reviewBody: "Farine naturali di ottima qualità. Si sente subito la differenza con quelle industriali. Consigliato!"
-        },
-        {
-          "@type": "Review",
-          reviewRating: {
-            "@type": "Rating",
-            ratingValue: "5",
-            bestRating: "5"
-          },
-          author: {
-            "@type": "Person",
-            name: "Laura C."
-          },
-          datePublished: "2025-09-22",
-          reviewBody: "Da quando uso la Cinquanta Grani per la pizza del sabato sera, mio marito dice che è meglio della pizzeria. Il profumo mentre lievita è incredibile."
-        },
-        {
-          "@type": "Review",
-          reviewRating: {
-            "@type": "Rating",
-            ratingValue: "5",
-            bestRating: "5"
-          },
-          author: {
-            "@type": "Person",
-            name: "Massimo R."
-          },
-          datePublished: "2025-12-01",
-          reviewBody: "Gestisco un piccolo forno a Modena e cercavo farine di qualità vera. Questa è diventata la mia base per il pane a lievitazione naturale. I clienti tornano apposta."
-        }
-      ]
-    },
+    productGroupSchema,
     {
       "@type": "LocalBusiness",
       "@id": `${baseUrl}/#organization`,
@@ -279,84 +310,27 @@ const jsonLd = {
       hasOfferCatalog: {
         "@type": "OfferCatalog",
         name: "Farine di Grani Antichi",
-        itemListElement: [
-          {
-            "@type": "Offer",
-            itemOffered: {
-              "@type": "Product",
-              name: "Farina Cinquanta Grani Integrale"
-            }
-          },
-          {
-            "@type": "Offer",
-            itemOffered: {
-              "@type": "Product",
-              name: "Farina Cinquanta Grani Semintegrale"
-            }
-          },
-          {
-            "@type": "Offer",
-            itemOffered: {
-              "@type": "Product",
-              name: "Farina Cinquanta Grani Fiore"
-            }
+        itemListElement: flourVariantsSchema.map((variant) => ({
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Product",
+            name: variant.name
           }
-        ]
+        }))
       }
     },
     {
       "@type": "FAQPage",
-      mainEntity: [
-        {
-          "@type": "Question",
-          name: "Cos'è la farina Antichi Cinquanta Grani?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "È una farina artigianale di qualità superiore ottenuta dalla macinazione a pietra di un miscuglio di 50 varietà di antichi frumenti, coltivati nell'Appennino Reggiano vicino Castelnovo ne' Monti, senza l'uso di prodotti chimici. È disponibile in tre varianti: integrale, semintegrale e fiore."
-          }
-        },
-        {
-          "@type": "Question",
-          name: "Dove posso comprare farina di qualità a Reggio Emilia?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "La farina Cinquanta Grani è disponibile direttamente presso la nostra azienda a Marola di Carpineti (a pochi minuti da Castelnovo ne' Monti), al mercato di Piazza Fontanesi a Reggio Emilia, in vari supermercati della provincia di Reggio Emilia, oppure con spedizione in tutta Italia."
-          }
-        },
-        {
-          "@type": "Question",
-          name: "Quali sono le caratteristiche tecniche della farina?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "La farina ha una forza medio-alta (W 280-330) e un rapporto P/L di 0,5-0,7. È classificata come Panificabile Superiore, ideale per pane, pizza, pasta fresca e dolci."
-          }
-        },
-        {
-          "@type": "Question",
-          name: "Perché la macinatura a pietra è importante?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "La macinatura a pietra è un metodo antico che lavora il grano lentamente senza surriscaldarlo, producendo una farina a granulometria irregolare che conserva integralmente il germe di grano. Il risultato è una farina più nutriente, più saporita e molto più digeribile."
-          }
-        },
-        {
-          "@type": "Question",
-          name: "Cosa posso preparare con la farina Cinquanta Grani?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "La farina è versatile e adatta a tutte le preparazioni: pane a lievitazione naturale, pizza, focacce, pasta fresca, biscotti, torte e dolci in generale."
-          }
-        },
-        {
-          "@type": "Question",
-          name: "Qual è la differenza tra integrale, semintegrale e fiore?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "L'integrale contiene tutto il chicco con crusca e germe. La semintegrale è parzialmente setacciata per un equilibrio tra nutrienti e lavorabilità. Il fiore è la parte più interna, morbida e pregiata del grano, ideale per preparazioni delicate."
-          }
+      mainEntity: faqItems.map((item) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: item.answer
         }
-      ]
+      }))
     },
+    recipeSchema,
     {
       "@type": "BreadcrumbList",
       itemListElement: [
@@ -377,6 +351,54 @@ const jsonLd = {
   ]
 }
 
+const techSpecs = [
+  { label: "Forza (W)", value: "280-330", note: "Per lunghe lievitazioni e pizza napoletana" },
+  { label: "P/L (elasticità)", value: "0,5-0,7", note: "Equilibrio tra tenacità ed estensibilità" },
+  { label: "Proteine", value: "13-14%", note: "Glutine nativo, non addizionato" },
+  { label: "Classificazione", value: "Panificabile Superiore", note: "Ideale per pane, pizza, grandi lievitati" }
+]
+
+const comparisonPoints = [
+  {
+    industrial: "Picco glicemico e farine super raffinate che danno energia veloce ma breve.",
+    ours: "Miscela completa di crusca e germe per un rilascio più graduale: indice glicemico più bilanciato."
+  },
+  {
+    industrial: "Glutine tenace e additivi che possono appesantire e creare gonfiore.",
+    ours: "Glutine nativo dei grani antichi, P/L 0,5-0,7: struttura elastica ma più digeribile."
+  },
+  {
+    industrial: "Sapore neutro e piatti che sanno di poco.",
+    ours: "Profilo aromatico di montagna: note di nocciola e cereale tostato, più gusto e profumo."
+  },
+  {
+    industrial: "Filiera lontana e grano di provenienza incerta.",
+    ours: "Coltivata e macinata a Marola di Carpineti: filiera corta, controllo totale."
+  }
+]
+
+const packagingShots = [
+  {
+    title: "Sacco 1 kg",
+    description: "Per chi panifica a casa e vuole provare le tre varianti.",
+    image: "/images/farine/farina_cinquanta_semiint.webp"
+  },
+  {
+    title: "Formati famiglia",
+    description: "Lotti freschi per chi impasta ogni settimana.",
+    image: "/images/farine/farina_cinquanta_int.webp"
+  },
+  {
+    title: "Sacco professionale 25 kg",
+    description: "Pensato per pizzerie e forni artigianali: costanza e resa.",
+    image: "/images/farine/farina_cinquanta_fiore.webp"
+  }
+]
+
+const b2bMessage = encodeURIComponent(
+  "Ciao, ho una pizzeria/forno e voglio provare la Farina Cinquanta Grani in sacco da 25 kg. Potete inviarmi listino e resa sugli impasti?"
+)
+
 export default function FarinaCinquantaGraniPage() {
   return (
     <>
@@ -389,11 +411,67 @@ export default function FarinaCinquantaGraniPage() {
         {/* Hero Section */}
         <HeroFarina />
 
+        {/* Tabella tecnica reologica */}
+        <section className="py-14 lg:py-20 bg-white" id="specifiche">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mb-10">
+              <div className="inline-flex items-center gap-2 bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-[0.2em]">
+                <Sparkles className="w-3.5 h-3.5" />
+                Tabella Tecnica W / P&frasl;L
+              </div>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-stone-900 mt-3 mb-3">
+                Dati reologici per lunghe lievitazioni
+              </h2>
+              <p className="text-stone-600 max-w-2xl">
+                Comunica a Google e ai tuoi clienti perché questa farina è adatta a pizza napoletana, pane e grandi lievitati:
+                numeri chiari su forza, elasticità e assorbimento.
+              </p>
+            </div>
+
+            <div className="grid lg:grid-cols-3 gap-6 lg:gap-8 items-start">
+              <div className="lg:col-span-2 bg-[#FDFBF7] border border-amber-100 rounded-2xl p-6 shadow-sm">
+                <div className="grid sm:grid-cols-2 gap-4">
+                  {techSpecs.map((item) => (
+                    <div key={item.label} className="bg-white rounded-xl border border-amber-100 p-4 shadow-sm">
+                      <p className="text-xs font-bold uppercase tracking-[0.2em] text-amber-700 mb-1">{item.label}</p>
+                      <p className="text-2xl font-serif font-bold text-stone-900">{item.value}</p>
+                      <p className="text-sm text-stone-600 mt-1 leading-relaxed">{item.note}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="bg-stone-900 text-white rounded-2xl p-6 lg:p-8 shadow-lg">
+                <p className="text-sm uppercase tracking-[0.2em] text-white/60 mb-3">Perché conta</p>
+                <h3 className="text-2xl font-serif font-bold mb-3">
+                  Forza stabile, glutine nativo, impasti versatili.
+                </h3>
+                <p className="text-white/80 text-sm leading-relaxed mb-4">
+                  W 280-330 e P/L 0,5-0,7 garantiscono elasticità e estensibilità bilanciate. Proteine 13-14% senza booster
+                  industriali: più digeribilità e meno gonfiore.
+                </p>
+                <ul className="space-y-2 text-sm">
+                  <li className="flex items-start gap-2">
+                    <ShieldCheck className="w-4 h-4 text-emerald-300 mt-0.5" />
+                    <span>Perfetta per maturazioni 24-48h</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Activity className="w-4 h-4 text-emerald-300 mt-0.5" />
+                    <span>Maglia glutinica elastica, non gommoso</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Processo di Macinazione */}
         <ProcessoMacinazione />
 
         {/* Tre Varianti */}
         <VariantiFarina />
+
+
 
         {/* Usi Consigliati */}
         <section className="py-16 lg:py-24 bg-amber-50">
@@ -456,98 +534,113 @@ export default function FarinaCinquantaGraniPage() {
           </div>
         </section>
 
+        {/* Salute e digeribilità */}
+        <section className="py-16 lg:py-24 bg-[#F7F5F0]">
+          <div className="container mx-auto px-4">
+            <div className="text-center max-w-3xl mx-auto mb-10">
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-amber-100 text-amber-700 rounded-full text-sm font-semibold mb-4">
+                <ShieldCheck className="w-4 h-4" />
+                Alta digeribilità
+              </span>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-stone-900 mb-3">
+                Farina 00 industriale vs Cinquanta Grani
+              </h2>
+              <p className="text-stone-600">
+                Spiega perché chi è sensibile al glutine (non celiaco) o soffre di gonfiore sceglie i grani antichi.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+              <div className="bg-white border border-stone-200 rounded-2xl p-6 shadow-sm">
+                <p className="text-xs uppercase tracking-[0.2em] text-stone-500 mb-2">Farina 00 industriale</p>
+                <div className="space-y-4">
+                  {comparisonPoints.map((point, index) => (
+                    <div key={index} className="flex items-start gap-3">
+                      <Activity className="w-4 h-4 text-rose-500 mt-1" />
+                      <p className="text-stone-700 text-sm">{point.industrial}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="bg-white border border-amber-200 rounded-2xl p-6 shadow-sm">
+                <p className="text-xs uppercase tracking-[0.2em] text-amber-700 mb-2">Farina Cinquanta Grani</p>
+                <div className="space-y-4">
+                  {comparisonPoints.map((point, index) => (
+                    <div key={index} className="flex items-start gap-3">
+                      <ShieldCheck className="w-4 h-4 text-emerald-600 mt-1" />
+                      <p className="text-stone-800 text-sm">{point.ours}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="py-16 lg:py-24 bg-white" id="faq">
+          <div className="container mx-auto px-4">
+            <div className="text-center max-w-3xl mx-auto mb-10">
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-stone-100 text-stone-700 rounded-full text-sm font-semibold mb-4">
+                Dubbi frequenti
+              </span>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-stone-900 mb-3">
+                Prima di ordinare, ecco cosa sapere
+              </h2>
+              <p className="text-stone-600">
+                Tempi di lievitazione, varianti disponibili e dove acquistare: risposte rapide alle domande che riceviamo più spesso.
+              </p>
+            </div>
+            <FaqAccordion items={faqItems} />
+          </div>
+        </section>
+
         {/* SEO Section - Logistica e Fiducia (unificata) */}
         <WhyChooseUs />
 
-        {/* Testimonianze - Social Proof per SEO nazionale */}
-        <section className="py-16 lg:py-24 bg-gradient-to-b from-stone-50 to-white">
+        {/* CTA B2B */}
+        <section className="py-16 lg:py-20 bg-stone-900 text-white">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-amber-100 text-amber-700 rounded-full text-sm font-medium mb-4">
-                <Star className="w-4 h-4 fill-amber-500" />
-                Recensioni verificate
-              </span>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-gray-900 mb-4">
-                Cosa dicono i nostri <span className="text-amber-600">clienti</span>
-              </h2>
-              <p className="text-lg text-muted-foreground font-light max-w-2xl mx-auto">
-                Da Reggio Emilia a Modena e in tutta Italia: ecco perché chi prova la Cinquanta Grani non torna indietro
-              </p>
-              {/* Rating summary */}
-              <div className="flex items-center justify-center gap-2 mt-6">
-                <div className="flex">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <Star key={star} className="w-5 h-5 fill-amber-400 text-amber-400" />
-                  ))}
+            <div className="max-w-5xl mx-auto grid lg:grid-cols-2 gap-10 items-center">
+              <div>
+                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white/80 text-xs font-bold uppercase tracking-[0.2em]">
+                  <Truck className="w-4 h-4" />
+                  Per pizzerie e forni
+                </span>
+                <h2 className="text-3xl md:text-4xl font-serif font-bold mt-4 mb-3">
+                  Sacco da 25 kg: resa costante, filiera tracciata.
+                </h2>
+                <p className="text-white/80 mb-5">
+                  Stessa macinazione artigianale, lotti omogenei e assistenza diretta dall'Appennino. Ideale per pizza napoletana e pane a lunga maturazione.
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  <span className="inline-flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-full text-sm">
+                    <ShieldCheck className="w-4 h-4 text-emerald-300" /> Prove impasto su richiesta
+                  </span>
+                  <span className="inline-flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-full text-sm">
+                    <Wheat className="w-4 h-4 text-emerald-300" /> Lotti 100% Appennino Reggiano
+                  </span>
                 </div>
-                <span className="text-lg font-bold text-gray-900">4.9/5</span>
-                <span className="text-gray-500">basato su 47 recensioni</span>
               </div>
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-              {[
-                {
-                  name: "Elisa M.",
-                  location: "Reggio Emilia",
-                  rating: 5,
-                  text: "Il pane con la farina 50 grani è buonissimo e molto profumato! Ho provato anche legumi e cereali, veramente ottimi. Vi consiglio di visitare l'azienda!",
-                  use: "Pane e altro"
-                },
-                {
-                  name: "Giovanni B.",
-                  location: "Modena",
-                  rating: 5,
-                  text: "Farine naturali di ottima qualità. Si sente subito la differenza con quelle industriali. Consigliato!",
-                  use: "Qualità"
-                },
-                {
-                  name: "Laura C.",
-                  location: "Scandiano",
-                  rating: 5,
-                  text: "Da quando uso la Cinquanta Grani per la pizza del sabato sera, mio marito dice che è meglio della pizzeria. Il profumo mentre lievita è incredibile.",
-                  use: "Pizza"
-                },
-                {
-                  name: "Massimo R.",
-                  location: "Modena",
-                  rating: 5,
-                  text: "Gestisco un piccolo forno e cercavo farine di qualità vera. Questa è diventata la mia base per il pane a lievitazione naturale. I clienti tornano apposta.",
-                  use: "Uso professionale"
-                }
-              ].map((review, index) => (
-                <div
-                  key={index}
-                  className="bg-white rounded-2xl p-6 shadow-sm border border-stone-100 hover:shadow-lg transition-all duration-300 flex flex-col"
-                >
-                  {/* Quote icon */}
-                  <Quote className="w-8 h-8 text-amber-200 mb-3" />
-
-                  {/* Review text */}
-                  <p className="text-gray-700 text-sm leading-relaxed flex-grow mb-4">
-                    "{review.text}"
-                  </p>
-
-                  {/* Rating stars */}
-                  <div className="flex gap-0.5 mb-3">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <Star
-                        key={star}
-                        className={`w-4 h-4 ${star <= review.rating ? 'fill-amber-400 text-amber-400' : 'text-gray-200'}`}
-                      />
-                    ))}
-                  </div>
-
-                  {/* Author info */}
-                  <div className="border-t border-stone-100 pt-4">
-                    <p className="font-semibold text-gray-900">{review.name}</p>
-                    <p className="text-sm text-gray-500">{review.location}</p>
-                    <span className="inline-block mt-2 text-xs font-medium text-amber-600 bg-amber-50 px-2 py-1 rounded">
-                      {review.use}
-                    </span>
-                  </div>
+              <div className="bg-white text-stone-900 rounded-2xl p-6 shadow-xl border border-stone-200">
+                <h3 className="text-xl font-semibold mb-3">Richiedi listino professionale</h3>
+                <p className="text-stone-600 mb-5">
+                  Ti inviamo resa in forno, tempi di maturazione e disponibilità dei sacchi da 25 kg. Risposta entro 24h.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Link href={`/contatti?prodotto=Farina%20Antichi%20Cinquanta%20Grani&messaggio=${b2bMessage}`} className="w-full sm:w-auto">
+                    <Button className="w-full bg-amber-600 hover:bg-amber-500 text-white font-bold">
+                      Richiedi listino B2B
+                    </Button>
+                  </Link>
+                  <a href="tel:3408200080" className="w-full sm:w-auto">
+                    <Button variant="outline" className="w-full">
+                      Chiama ora
+                    </Button>
+                  </a>
                 </div>
-              ))}
+              </div>
             </div>
           </div>
         </section>

@@ -7,102 +7,14 @@ import { Clock, Flame, ArrowRight, ScanEye } from "lucide-react"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { pastaProducts, type PastaProduct } from "@/data/pastaProducts"
 
-// --- DATI ---
-// Ho aggiunto lo 'slug' per collegare eventualmente alle pagine prodotto singole
-const pastaCollections = [
-  {
-    id: "spaghetti",
-    slug: "spaghetti",
-    name: "Spaghetti",
-    tagline: "Il Grande Classico",
-    description: "Il formato più amato, nella sua versione autentica. Superficie ruvida che trattiene l'olio e il pomodoro. Perfetti per aglio e olio, alle vongole o con un semplice pomodoro fresco.",
-    cookingTime: "9-11 min",
-    intensity: "Media",
-    images: [
-      "/images/pasta/spaghetti_appennino_reggiano_3.webp",
-      "/images/pasta/spaghetti_appennino_reggiano.webp",
-      "/images/pasta/spaghetti_appennino_reggiano_2.webp",
-      "/images/pasta/spaghetti_appennino_reggiano_4.webp",
-    ]
-  },
-  {
-    id: "mezzi-paccheri",
-    slug: "mezzi-paccheri",
-    name: "Mezzi Paccheri",
-    tagline: "Il Re della Tavola",
-    description: "Superficie incredibilmente ruvida e struttura spessa. Nati per abbracciare ragù di carne e sughi corposi. Si riempiono di condimento ad ogni forchettata.",
-    cookingTime: "13-15 min",
-    intensity: "Alta",
-    images: [
-      "/images/pasta/mezzi_paccheri_appennino_reggiano_6.webp",
-      "/images/pasta/mezzi_paccheri_appennino_reggiano.webp",
-      "/images/pasta/mezzi_paccheri_appennino_reggiano_3.webp",
-      "/images/pasta/mezzi_paccheri_appennino_reggiano_4.webp",
-    ]
-  },
-  {
-    id: "fusilli",
-    slug: "fusilli",
-    name: "Fusilli",
-    tagline: "Spirale Perfetta",
-    description: "La spirale cattura il condimento in ogni piega. Ottimi con pesto, sughi vegetali o semplicemente burro e salvia. L'essiccazione lenta mantiene la forma intatta.",
-    cookingTime: "11-13 min",
-    intensity: "Media",
-    images: [
-      "/images/pasta/fusilli_appennino_reggiano_4.webp",
-      "/images/pasta/fusilli_appennino_reggiano_3.webp",
-      "/images/pasta/fusilli_appennino_reggiano.webp",
-    ]
-  },
-  {
-    id: "penne",
-    slug: "penne-rigate",
-    name: "Penne Rigate",
-    tagline: "Il Classico Versatile",
-    description: "Rigatura profonda e taglio netto. Il sugo entra dentro e si aggrappa fuori. Perfette per l'arrabbiata, la vodka o un ragù bianco.",
-    cookingTime: "11-13 min",
-    intensity: "Media-Alta",
-    images: [
-      "/images/pasta/penne_appennino_reggiano_5.webp",
-      "/images/pasta/penne_appennino_reggiano_3.webp",
-      "/images/pasta/penne_appennino_reggiano.webp",
-      "/images/pasta/penne_appennino_reggiano_4.webp",
-    ]
-  },
-  {
-    id: "maccheroni",
-    slug: "maccheroni",
-    name: "Maccheroni",
-    tagline: "Semplicità Rurale",
-    description: "Il formato della domenica. Corti, robusti e versatili. Perfetti saltati in padella con ragù, salsiccia o verdure di stagione.",
-    cookingTime: "11-13 min",
-    intensity: "Media",
-    images: [
-      "/images/pasta/maccheroni_appennino_reggiano_2.webp",
-      "/images/pasta/maccheroni_appennino_reggiano.webp",
-      "/images/pasta/maccheroni_appennino_reggiano_4.webp",
-    ]
-  },
-  {
-    id: "tubetti",
-    slug: "tubetti",
-    name: "Tubetti",
-    tagline: "Per Minestre e Zuppe",
-    description: "Piccoli ma tenaci. Ideali per minestre di legumi, pasta e fagioli o pasta e ceci. Tengono la cottura anche nel brodo caldo.",
-    cookingTime: "9-11 min",
-    intensity: "Delicata",
-    images: [
-      "/images/pasta/tubetti_appennino_reggiano_3.webp",
-      "/images/pasta/tubetti_appennino_reggiano_2.webp",
-      "/images/pasta/tubetti_appennino_reggiano.webp",
-    ]
-  }
-]
-
-function BigProductCard({ product, index }: { product: typeof pastaCollections[0], index: number }) {
+function BigProductCard({ product, index }: { product: PastaProduct, index: number }) {
   const [activeImage, setActiveImage] = useState(product.images[0])
   const isReversed = index % 2 !== 0
+  const prefilledMessage = encodeURIComponent(
+    `Ciao, vorrei ordinare ${product.name} trafilati al bronzo. Mi inviate disponibilità e prezzi?`
+  )
 
   return (
     <div className="bg-white rounded-2xl overflow-hidden shadow-lg border border-stone-200 hover:shadow-xl transition-all duration-300">
@@ -157,9 +69,28 @@ function BigProductCard({ product, index }: { product: typeof pastaCollections[0
                 </span>
               </div>
 
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-xs font-bold uppercase tracking-[0.2em] text-amber-700 bg-amber-100/60 px-2 py-1 rounded">
+                  Bronzo + essiccazione lenta
+                </span>
+              </div>
+
               <p className="text-stone-600 text-base leading-relaxed font-light mb-4 line-clamp-3 lg:line-clamp-none">
                 {product.description}
               </p>
+
+              <div className="bg-stone-50 border border-stone-100 rounded-lg p-3 mb-4 text-sm text-stone-700 flex items-start gap-2">
+                <span className="text-amber-600 font-semibold">Ideale con:</span>
+                <div className="space-y-1">
+                  <p className="leading-snug">{product.pairing}</p>
+                  {product.pairingLink && (
+                    <Link href={product.pairingLink} className="text-amber-700 font-semibold hover:underline inline-flex items-center gap-1 text-xs">
+                      {product.pairingLabel ?? "Scopri l'abbinamento"}
+                      <ArrowRight className="w-3 h-3" />
+                    </Link>
+                  )}
+                </div>
+              </div>
 
               {/* Specs Grid Compact */}
               <div className="flex gap-6 py-3 border-t border-stone-100">
@@ -178,6 +109,10 @@ function BigProductCard({ product, index }: { product: typeof pastaCollections[0
                   </div>
                 </div>
               </div>
+
+              <p className="text-sm text-stone-600">
+                Prezzo indicativo: {product.priceRange.low.toFixed(2)}€ - {product.priceRange.high.toFixed(2)}€ a seconda del formato.
+              </p>
             </div>
 
             {/* Bottom Area: Thumbnails + Dual CTA */}
@@ -196,7 +131,7 @@ function BigProductCard({ product, index }: { product: typeof pastaCollections[0
                         : "border-stone-100 opacity-60 hover:opacity-100 hover:border-stone-300"
                     )}
                   >
-                    <Image src={img} alt="" fill className="object-cover" />
+                    <Image src={img} alt="" fill className="object-cover" sizes="56px" />
                   </button>
                 ))}
               </div>
@@ -211,7 +146,10 @@ function BigProductCard({ product, index }: { product: typeof pastaCollections[0
                 </Link>
 
                 {/* CTA Principale (Form Precompilato) */}
-                <Link href={`/contatti?prodotto=${encodeURIComponent(product.name)}`} className="w-full lg:w-auto">
+                <Link
+                  href={`/contatti?prodotto=${encodeURIComponent(product.name)}&messaggio=${prefilledMessage}`}
+                  className="w-full lg:w-auto"
+                >
                   <Button className="w-full lg:w-auto rounded-full bg-stone-900 text-white hover:bg-amber-700 px-6 py-5 text-sm font-bold shadow-lg shadow-stone-900/10 hover:shadow-xl transition-all group">
                     Ordina Ora <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </Button>
@@ -250,7 +188,7 @@ export default function PastaShowcaseRefined() {
 
       {/* Product List - Max Width contenuta per visuale card multiple */}
       <div className="container mx-auto px-4 max-w-6xl flex flex-col gap-8 lg:gap-10">
-        {pastaCollections.map((product, index) => (
+        {pastaProducts.map((product, index) => (
           <BigProductCard key={product.id} product={product} index={index} />
         ))}
       </div>

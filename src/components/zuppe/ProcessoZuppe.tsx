@@ -5,7 +5,7 @@ const steps = [
     icon: Leaf,
     number: "01",
     title: "Selezione",
-    description: "Solo legumi secchi premium e i nostri cereali macinati a pietra. Niente importazioni anonime.",
+    description: "Solo legumi secchi premium e i nostri cereali. ",
   },
   {
     icon: Wheat,

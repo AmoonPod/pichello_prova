@@ -50,6 +50,8 @@ export default function DifferenceSection() {
                                 alt="Dettaglio rugosità pasta trafilata al bronzo"
                                 fill
                                 className="object-cover hover:scale-105 transition-transform duration-700"
+                                sizes="(max-width: 1024px) 100vw, 50vw"
+                                loading="lazy"
                             />
                             <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-md shadow-sm">
                                 <span className="text-xs font-bold uppercase tracking-wider text-amber-700">Superficie Ruvida</span>
@@ -93,6 +95,8 @@ export default function DifferenceSection() {
                                 alt="Pasta artigianale essiccata lentamente"
                                 fill
                                 className="object-cover hover:scale-105 transition-transform duration-700"
+                                sizes="(max-width: 1024px) 100vw, 50vw"
+                                loading="lazy"
                             />
                             <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-md shadow-sm">
                                 <span className="text-xs font-bold uppercase tracking-wider text-stone-700">Struttura Tenace</span>

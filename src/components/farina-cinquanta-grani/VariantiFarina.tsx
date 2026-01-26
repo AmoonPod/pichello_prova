@@ -86,8 +86,6 @@ function FarinaCard({ product, index }: { product: typeof farineVarianti[0], ind
             </motion.div>
           </AnimatePresence>
 
-          {/* Gradient overlay with color */}
-          <div className={cn("absolute inset-0 bg-gradient-to-t opacity-40", product.color)} />
 
           {/* Badge */}
           <div className="absolute top-4 left-4">

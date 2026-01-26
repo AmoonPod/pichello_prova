@@ -4,6 +4,10 @@ import { ArrowRight, MapPin, Wheat, Sun, ChefHat, Leaf } from "lucide-react"; //
 import { Button } from "@/components/ui/button"; // O il tuo path corretto
 
 export default function HeroPasta() {
+    const encodedMessage = encodeURIComponent(
+        "Ciao, vorrei il listino della pasta artigianale Il Pichello e sapere disponibilità dei formati."
+    )
+
     return (
         <section className="relative w-full overflow-hidden bg-background text-foreground">
             {/* BACKGROUND TEXTURE - Opzionale: aggiunge un leggero noise per togliere l'effetto "piatto" */}
@@ -40,7 +44,7 @@ export default function HeroPasta() {
 
                         {/* CTA AREA - High Visibility */}
                         <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mt-2">
-                            <Link href="/contatti?prodotto=Pasta%20Artigianale">
+                            <Link href={`/contatti?prodotto=Pasta%20Artigianale&messaggio=${encodedMessage}`}>
                                 <Button
                                     size="lg"
                                     className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg px-8 py-6 rounded-xl shadow-lg shadow-primary/10 hover:shadow-primary/20 transition-all transform hover:-translate-y-0.5"

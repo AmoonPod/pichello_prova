@@ -40,12 +40,17 @@ const ContactsPage = () => {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const productParam = urlParams.get("prodotto");
+    const messageParam = urlParams.get("messaggio");
     if (productParam) {
       setPrefilledProduct(productParam);
       setSelectedSubject("ordine");
       setMessageContent(
-        `Sono interessato al prodotto "${productParam}". Vorrei sapere disponibilità, quantità minime e prezzo. Grazie.`
+        messageParam ||
+          `Sono interessato al prodotto "${productParam}". Vorrei sapere disponibilità, quantità minime e prezzo. Grazie.`
       );
+    } else if (messageParam) {
+      setSelectedSubject("ordine");
+      setMessageContent(messageParam);
     }
   }, []);
 

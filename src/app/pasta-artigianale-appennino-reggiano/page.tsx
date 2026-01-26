@@ -1,27 +1,17 @@
 import { Metadata } from "next"
 import Link from "next/link"
-import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import FooterV2 from "@/components/new/Footer"
 import PastaGallery from "@/components/pasta-artigianale/PastaGallery"
-import {
-  ArrowRight,
-  Wheat,
-  Mountain,
-  Wind,
-  Phone,
-  Mail,
-  MapPin,
-  Timer,
-  Sparkles,
-  CircleDot,
-  Check
-} from "lucide-react"
+import { ArrowRight, Phone, Mail } from "lucide-react"
 import "../globals.css"
 import HeroPasta from "@/components/pasta-artigianale/HeroPasta"
 import ProcessJourney from "@/components/pasta-artigianale/ProcessJourney"
 import DifferenceSection from "@/components/pasta-artigianale/LaDifferenza"
 import TerritorySection from "@/components/pasta-artigianale/TerritorySection"
+import MobileStickyCTA from "@/components/pasta-artigianale/MobileStickyCTA"
+import { pastaProducts } from "@/data/pastaProducts"
+import FaqAccordion from "@/components/pasta-artigianale/FaqAccordion"
 
 // Force static generation
 export const dynamic = "force-static"
@@ -32,6 +22,7 @@ const baseUrl = process.env.VERCEL_URL
   : process.env.NODE_ENV === "production"
     ? "https://www.agricolailpichello.it"
     : "http://localhost:3000"
+const pageUrl = `${baseUrl}/pasta-artigianale-appennino-reggiano`
 
 export const metadata: Metadata = {
   title: "Pasta Artigianale Trafilata al Bronzo | Appennino Reggiano",
@@ -52,7 +43,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "it_IT",
-    url: `${baseUrl}/pasta-artigianale-appennino-reggiano`,
+    url: pageUrl,
     siteName: "Azienda Agricola Il Pichello",
     title: "Pasta Artigianale Trafilata al Bronzo | Appennino Reggiano",
     description:
@@ -74,142 +65,145 @@ export const metadata: Metadata = {
     images: ["/images/pasta/mezzi_paccheri_appennino_reggiano.webp"]
   },
   alternates: {
-    canonical: `${baseUrl}/pasta-artigianale-appennino-reggiano`
+    canonical: pageUrl
+  }
+}
+
+const faqItems = [
+  {
+    question: "Qual è il tempo di cottura ideale?",
+    answer:
+      "Ogni formato ha il suo tempo: 9-11 minuti per spaghetti e tubetti, fino a 13-15 minuti per i mezzi paccheri. Assaggia sempre un minuto prima del tempo indicato per servirla al dente."
+  },
+  {
+    question: "Perché la pasta artigianale costa di più?",
+    answer:
+      "Utilizziamo solo grano duro coltivato da noi, macinato a pietra e lavorato con trafile in bronzo. L'essiccazione naturale dura più di 24 ore e limita la produzione giornaliera, ma garantisce sapore e digeribilità."
+  },
+  {
+    question: "Spedite in tutta Italia?",
+    answer:
+      "Sì. Prepariamo le confezioni in giornata e spediamo con corriere espresso. Per ristoranti e gastronomie possiamo organizzare consegne cadenzate dall'Appennino Reggiano."
+  },
+  {
+    question: "Contiene glifosato o additivi?",
+    answer:
+      "No. Coltiviamo il grano in montagna senza glifosato e impastiamo solo con semola di nostra produzione e acqua. Nessun miglioratore, colorante o conservante."
+  },
+  {
+    question: "Che differenza c'è rispetto alla pasta industriale?",
+    answer:
+      "La trafila in bronzo rende la superficie ruvida, l'essiccazione lenta preserva il glutine e il sapore del grano. Risultato: tiene la cottura, trattiene il sugo e rimane digeribile."
+  }
+]
+
+const productSchemas = pastaProducts.map((product) => ({
+  "@type": "Product",
+  "@id": `${pageUrl}#${product.slug}`,
+  name: `${product.name} - Pasta artigianale trafilata al bronzo`,
+  description: product.description,
+  image: product.images.map((img) => `${baseUrl}${img}`),
+  brand: {
+    "@type": "Brand",
+    name: "Azienda Agricola Il Pichello"
+  },
+  manufacturer: {
+    "@type": "Organization",
+    "@id": `${baseUrl}/#organization`
+  },
+  category: "Pasta Secca",
+  material: "Semola di grano duro",
+  sku: product.id,
+  offers: {
+    "@type": "AggregateOffer",
+    priceCurrency: "EUR",
+    lowPrice: product.priceRange.low.toFixed(2),
+    highPrice: product.priceRange.high.toFixed(2),
+    offerCount: 1,
+    availability: "https://schema.org/InStock",
+    url: `${pageUrl}?formato=${encodeURIComponent(product.name)}`
+  }
+}))
+
+const faqSchema = {
+  "@type": "FAQPage",
+  "@id": `${pageUrl}#faq`,
+  mainEntity: faqItems.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.answer
+    }
+  }))
+}
+
+const breadcrumbList = {
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: baseUrl
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Prodotti",
+      item: `${baseUrl}/prodotti`
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: "Pasta Artigianale",
+      item: pageUrl
+    }
+  ]
+}
+
+const localBusiness = {
+  "@type": "LocalBusiness",
+  "@id": `${baseUrl}/#organization`,
+  name: "Azienda Agricola Il Pichello",
+  url: baseUrl,
+  telephone: ["+393408200080", "+393397981644"],
+  email: "info@agricolailpichello.it",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Via Dante Alighieri 141",
+    addressLocality: "Marola, Carpineti",
+    addressRegion: "Emilia-Romagna",
+    postalCode: "42033",
+    addressCountry: "IT"
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 44.4949,
+    longitude: 10.5058
+  },
+  areaServed: {
+    "@type": "GeoCircle",
+    geoMidpoint: {
+      "@type": "GeoCoordinates",
+      latitude: 44.4949,
+      longitude: 10.5058
+    },
+    geoRadius: "50000"
   }
 }
 
 // JSON-LD Schema
 const jsonLd = {
   "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Product",
-      "@id": `${baseUrl}/pasta-artigianale-appennino-reggiano#product`,
-      name: "Pasta Artigianale di Semola di Grano Duro",
-      description:
-        "Pasta artigianale prodotta con semola di grano duro coltivato nell'Appennino Reggiano, macinato a pietra nel nostro mulino, trafilata al bronzo ed essiccata naturalmente a temperatura ambiente. Formati disponibili: mezzi paccheri, penne, fusilli, maccheroni, tubetti.",
-      image: `${baseUrl}/images/pasta/mezzi_paccheri_appennino_reggiano.webp`,
-      brand: {
-        "@type": "Brand",
-        name: "Azienda Agricola Il Pichello"
-      },
-      manufacturer: {
-        "@type": "Organization",
-        "@id": `${baseUrl}/#organization`
-      },
-      category: "Pasta Secca",
-      material: "Semola di grano duro",
-      countryOfOrigin: {
-        "@type": "Country",
-        name: "Italia"
-      },
-      areaServed: {
-        "@type": "Place",
-        name: "Appennino Reggiano, Reggio Emilia, Emilia-Romagna"
-      },
-      additionalProperty: [
-        {
-          "@type": "PropertyValue",
-          name: "Trafilatura",
-          value: "Bronzo"
-        },
-        {
-          "@type": "PropertyValue",
-          name: "Essiccazione",
-          value: "Naturale a temperatura ambiente"
-        },
-        {
-          "@type": "PropertyValue",
-          name: "Macinazione",
-          value: "A pietra"
-        }
-      ]
-    },
-    {
-      "@type": "LocalBusiness",
-      "@id": `${baseUrl}/#organization`,
-      name: "Azienda Agricola Il Pichello",
-      url: baseUrl,
-      telephone: ["+393408200080", "+393397981644"],
-      email: "info@agricolailpichello.it",
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: "Via Dante Alighieri 141",
-        addressLocality: "Marola, Carpineti",
-        addressRegion: "Emilia-Romagna",
-        postalCode: "42033",
-        addressCountry: "IT"
-      },
-      geo: {
-        "@type": "GeoCoordinates",
-        latitude: 44.4949,
-        longitude: 10.5058
-      },
-      areaServed: {
-        "@type": "GeoCircle",
-        geoMidpoint: {
-          "@type": "GeoCoordinates",
-          latitude: 44.4949,
-          longitude: 10.5058
-        },
-        geoRadius: "50000"
-      }
-    },
-    {
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "Home",
-          item: baseUrl
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "Pasta Artigianale",
-          item: `${baseUrl}/pasta-artigianale-appennino-reggiano`
-        }
-      ]
-    }
-  ]
+  "@graph": [localBusiness, breadcrumbList, faqSchema, ...productSchemas]
 }
 
-// Process steps data
-const processSteps = [
-  {
-    icon: Mountain,
-    title: "Coltivazione",
-    description: "Grano duro coltivato nei nostri campi dell'Appennino Reggiano, a Marola e Carpineti.",
-    detail: "Terreni di montagna, aria pulita"
-  },
-  {
-    icon: CircleDot,
-    title: "Macinatura a pietra",
-    description: "Il grano viene macinato nel nostro mulino a pietra, preservando nutrienti e sapore.",
-    detail: "Nel nostro mulino aziendale"
-  },
-  {
-    icon: Sparkles,
-    title: "Semolatura",
-    description: "Setacciatura accurata per ottenere semola pura, scartando i residui di crusca.",
-    detail: "Semola di qualità superiore"
-  },
-  {
-    icon: Wheat,
-    title: "Trafilatura al bronzo",
-    description: "La trafila in bronzo dona ruvidità alla pasta: trattiene i sughi, esalta i sapori.",
-    detail: "Superficie ruvida e porosa"
-  },
-  {
-    icon: Wind,
-    title: "Essiccazione naturale",
-    description: "Niente forni industriali. Solo tempo e aria, a temperatura ambiente.",
-    detail: "Come una volta, senza fretta"
-  }
-]
-
 export default function PastaArtigianalePage() {
+  const contactPrefilledMessage = encodeURIComponent(
+    "Ciao, vorrei il listino della pasta artigianale Il Pichello e sapere disponibilità dei formati."
+  )
+
   return (
     <>
       <script
@@ -235,6 +229,25 @@ export default function PastaArtigianalePage() {
 
         {/* Territory Section - Local SEO */}
         <TerritorySection />
+
+        {/* FAQ Section */}
+        <section className="py-16 lg:py-24 bg-[#F9F9F7]" id="faq">
+          <div className="container mx-auto px-4">
+            <div className="text-center max-w-3xl mx-auto mb-12">
+              <span className="text-amber-600 font-bold uppercase tracking-widest text-xs mb-3 block">
+                Domande frequenti
+              </span>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-stone-900 mb-4">
+                Tutto quello che vuoi sapere prima di ordinare
+              </h2>
+              <p className="text-stone-600 text-lg">
+                Tempi di cottura, spedizioni e differenze rispetto alla pasta industriale.
+              </p>
+            </div>
+
+            <FaqAccordion items={faqItems} />
+          </div>
+        </section>
 
         {/* Final CTA Section */}
         <section className="py-16 lg:py-24 bg-primary">
@@ -277,7 +290,7 @@ export default function PastaArtigianalePage() {
               </div>
 
               {/* CTA Button */}
-              <Link href="/contatti?prodotto=Pasta%20artigianale%20di%20semola%20di%20grano%20duro">
+              <Link href={`/contatti?prodotto=Pasta%20artigianale%20di%20semola%20di%20grano%20duro&messaggio=${contactPrefilledMessage}`}>
                 <Button
                   size="lg"
                   className="bg-white hover:bg-white/90 text-primary font-bold px-10 py-4 text-lg rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 group"
@@ -289,6 +302,8 @@ export default function PastaArtigianalePage() {
             </div>
           </div>
         </section>
+
+        <MobileStickyCTA />
       </main>
 
       <FooterV2 />

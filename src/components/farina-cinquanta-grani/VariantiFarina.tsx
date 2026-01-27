@@ -8,8 +8,24 @@ import { Wheat, Leaf, Sparkles, ArrowRight, ScanEye, Scale, Cookie } from "lucid
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 
-// --- DATI VARIANTI FARINA ---
-const farineVarianti = [
+// Interfaccia per i prodotti da Sanity
+interface SanityProdotto {
+  _id: string
+  nome: string
+  descrizione?: string
+  ingredienti?: string
+  slug: { current: string } | string
+  immagini?: { image: string; alt?: string }[]
+}
+
+// Funzione per ottenere lo slug come stringa
+function getSlug(slug: { current: string } | string | undefined): string {
+  if (!slug) return ""
+  return typeof slug === 'string' ? slug : slug.current
+}
+
+// --- DATI STATICI VARIANTI FARINA (usati come fallback/integrazioni) ---
+const farineVariantiStatic = [
   {
     id: "integrale",
     slug: "farina-antichi-cinquanta-grani-integrale",
@@ -54,9 +70,69 @@ const farineVarianti = [
   }
 ]
 
-function FarinaCard({ product, index }: { product: typeof farineVarianti[0], index: number }) {
+// Tipo ibrido che combina dati Sanity e statici
+interface HybridFarina {
+  id: string
+  slug: string
+  name: string
+  tagline: string
+  description: string
+  icon: typeof Leaf | typeof Wheat | typeof Sparkles
+  fiber: string
+  bestFor: string
+  color: string
+  images: string[]
+}
+
+// Funzione per trovare i dati statici in base allo slug
+function getStaticData(sanitySlug: string) {
+  return farineVariantiStatic.find(f => 
+    f.slug === sanitySlug || 
+    sanitySlug.includes(f.id) ||
+    f.slug.includes(sanitySlug)
+  )
+}
+
+// Funzione helper per troncare la descrizione al terzo punto
+function clipDescription(text: string | undefined): string {
+  if (!text) return ""
+  // Divide il testo per i punti
+  const sentences = text.split('.')
+  // Se ci sono meno di 3 punti (quindi split restituisce <= 4 elementi considerando la parte dopo l'ultimo punto), ritorna tutto
+  if (sentences.length <= 4) return text
+  // Altrimenti prendi le prime 3 frasi, riuniscile e aggiungi il punto finale
+  return sentences.slice(0, 3).join('.') + '.'
+}
+
+// Funzione per creare prodotto ibrido (Sanity + dati statici)
+function createHybridFarina(sanityProduct: SanityProdotto): HybridFarina {
+  const slug = getSlug(sanityProduct.slug)
+  const staticData = getStaticData(slug)
+  const images = sanityProduct.immagini?.map(img => img.image) || staticData?.images || []
+  
+  // Ottieni la descrizione (da Sanity o statica)
+  const rawDescription = sanityProduct.descrizione || staticData?.description || ""
+  // Applica il troncamento
+  const description = clipDescription(rawDescription)
+  
+  return {
+    id: sanityProduct._id,
+    slug: slug,
+    name: sanityProduct.nome?.replace("Farina Antichi Cinquanta Grani ", "").replace("Farina Cinquanta Grani ", "") || staticData?.name || "Farina",
+    tagline: staticData?.tagline || "Macinata a Pietra",
+    description: description,
+    icon: staticData?.icon || Wheat,
+    fiber: staticData?.fiber || "Media",
+    bestFor: staticData?.bestFor || "Pane, pizza, pasta",
+    color: staticData?.color || "from-amber-600 to-amber-700",
+    images: images
+  }
+}
+
+function FarinaCard({ product, index }: { product: HybridFarina, index: number }) {
   const [activeImage, setActiveImage] = useState(product.images[0])
   const isReversed = index % 2 !== 0
+  const IconComponent = product.icon
 
   return (
     <div className="bg-white rounded-2xl overflow-hidden shadow-lg border border-stone-200 hover:shadow-xl transition-all duration-300">
@@ -64,7 +140,7 @@ function FarinaCard({ product, index }: { product: typeof farineVarianti[0], ind
 
         {/* LATO IMMAGINE */}
         <div className={cn(
-          "relative bg-stone-100 h-[300px] lg:h-[450px] overflow-hidden lg:col-span-3",
+          "relative bg-stone-100 h-[300px] lg:h-auto lg:min-h-full overflow-hidden lg:col-span-3",
           isReversed ? "lg:order-last" : ""
         )}>
           <AnimatePresence mode="wait">
@@ -90,7 +166,7 @@ function FarinaCard({ product, index }: { product: typeof farineVarianti[0], ind
           {/* Badge */}
           <div className="absolute top-4 left-4">
             <span className="bg-white/90 backdrop-blur text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-sm text-stone-800 shadow-sm flex items-center gap-1">
-              <product.icon className="w-3 h-3" />
+              <IconComponent className="w-3 h-3" />
               {product.tagline}
             </span>
           </div>
@@ -183,7 +259,20 @@ function FarinaCard({ product, index }: { product: typeof farineVarianti[0], ind
   )
 }
 
-export default function VariantiFarina() {
+interface VariantiFarinaProps {
+  prodotti?: SanityProdotto[]
+}
+
+export default function VariantiFarina({ prodotti }: VariantiFarinaProps) {
+  // Se ci sono prodotti da Sanity, li converte in formato ibrido
+  // Altrimenti usa i dati statici come fallback
+  const products: HybridFarina[] = prodotti && prodotti.length > 0
+    ? prodotti.map(p => createHybridFarina(p))
+    : farineVariantiStatic.map(f => ({
+        ...f,
+        id: f.id
+      }))
+
   return (
     <section className="bg-[#F9F9F7] py-16 lg:py-24" id="varianti">
       {/* Intro */}
@@ -205,7 +294,7 @@ export default function VariantiFarina() {
 
       {/* Product List */}
       <div className="container mx-auto px-4 max-w-6xl flex flex-col gap-8 lg:gap-10">
-        {farineVarianti.map((product, index) => (
+        {products.map((product, index) => (
           <FarinaCard key={product.id} product={product} index={index} />
         ))}
       </div>

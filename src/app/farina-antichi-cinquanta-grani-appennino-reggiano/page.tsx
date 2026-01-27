@@ -24,9 +24,18 @@ import ProcessoMacinazione from "@/components/farina-cinquanta-grani/ProcessoMac
 import VariantiFarina from "@/components/farina-cinquanta-grani/VariantiFarina"
 import WhyChooseUs from "@/components/farina-cinquanta-grani/WhyChooseUs"
 import FaqAccordion from "@/components/pasta-artigianale/FaqAccordion"
+import { getProdottiBySlugs } from "sanity/sanity.query"
+
 // Force static generation
 export const dynamic = "force-static"
-export const revalidate = 86400 // 24 hours
+export const revalidate = 3600 // 1 hour
+
+// Slugs delle farine da fetchare da Sanity
+const FARINE_SLUGS = [
+  "farina-antichi-cinquanta-grani-integrale",
+  "farina-antichi-cinquanta-grani-semintegrale",
+  "farina-antichi-cinquanta-grani-fiore"
+]
 
 const baseUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -399,7 +408,10 @@ const b2bMessage = encodeURIComponent(
   "Ciao, ho una pizzeria/forno e voglio provare la Farina Cinquanta Grani in sacco da 25 kg. Potete inviarmi listino e resa sugli impasti?"
 )
 
-export default function FarinaCinquantaGraniPage() {
+export default async function FarinaCinquantaGraniPage() {
+  // Fetch farine da Sanity
+  const prodotti = await getProdottiBySlugs(FARINE_SLUGS)
+  
   return (
     <>
       <script
@@ -469,7 +481,7 @@ export default function FarinaCinquantaGraniPage() {
         <ProcessoMacinazione />
 
         {/* Tre Varianti */}
-        <VariantiFarina />
+        <VariantiFarina prodotti={prodotti} />
 
 
 

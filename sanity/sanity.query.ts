@@ -132,3 +132,30 @@ export async function getCategorie() {
     tags: [CACHE_TAG_CATEGORIES],
   })();
 }
+
+// Fetch multiple products by their slugs
+async function fetchProdottiBySlugs(slugs: string[]) {
+  return readClient.fetch(
+    groq`*[_type == "prodotto" && slug.current in $slugs] | order(ordine asc){
+      _id,
+      nome,
+      descrizione,
+      ingredienti,
+      immagini[] {
+        "image": asset->url + "?auto=format&fit=max&w=1400&q=75",
+        alt
+      },
+      slug,
+      ordine
+    }`,
+    { slugs }
+  );
+}
+
+export async function getProdottiBySlugs(slugs: string[]) {
+  const cacheKey = `products-by-slugs-${slugs.sort().join('-')}`;
+  return unstable_cache(async () => fetchProdottiBySlugs(slugs), [cacheKey], {
+    revalidate: CACHE_REVALIDATE,
+    tags: [CACHE_TAG_PRODUCTS, cacheKey],
+  })();
+}

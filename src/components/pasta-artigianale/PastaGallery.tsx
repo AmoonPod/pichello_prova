@@ -9,7 +9,71 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { pastaProducts, type PastaProduct } from "@/data/pastaProducts"
 
-function BigProductCard({ product, index }: { product: PastaProduct, index: number }) {
+// Interfaccia per i prodotti da Sanity
+interface SanityProdotto {
+  _id: string
+  nome: string
+  descrizione?: string
+  ingredienti?: string
+  slug: { current: string } | string
+  immagini?: { image: string; alt?: string }[]
+}
+
+// Funzione per ottenere lo slug come stringa
+function getSlug(slug: { current: string } | string | undefined): string {
+  if (!slug) return ""
+  return typeof slug === 'string' ? slug : slug.current
+}
+
+// Funzione per trovare i dati statici in base allo slug del prodotto Sanity
+function getStaticData(sanitySlug: string): PastaProduct | undefined {
+  // Cerca una corrispondenza esatta o parziale
+  return pastaProducts.find(p => 
+    p.slug === sanitySlug || 
+    sanitySlug.includes(p.slug) ||
+    p.slug.includes(sanitySlug)
+  )
+}
+
+// Tipo ibrido che combina dati Sanity e statici
+interface HybridProduct {
+  id: string
+  slug: string
+  name: string
+  tagline: string
+  description: string
+  cookingTime: string
+  intensity: string
+  images: string[]
+  pairing: string
+  pairingLink?: string
+  pairingLabel?: string
+  priceRange: { low: number; high: number }
+}
+
+// Funzione per creare prodotto ibrido (Sanity + dati statici)
+function createHybridProduct(sanityProduct: SanityProdotto): HybridProduct {
+  const slug = getSlug(sanityProduct.slug)
+  const staticData = getStaticData(slug)
+  const images = sanityProduct.immagini?.map(img => img.image) || staticData?.images || []
+  
+  return {
+    id: sanityProduct._id,
+    slug: slug,
+    name: sanityProduct.nome || staticData?.name || "Pasta",
+    tagline: staticData?.tagline || "Trafilata al Bronzo",
+    description: sanityProduct.descrizione || staticData?.description || "",
+    cookingTime: staticData?.cookingTime || "10-12 min",
+    intensity: staticData?.intensity || "Media",
+    images: images,
+    pairing: staticData?.pairing || "Ideale con sughi corposi.",
+    pairingLink: staticData?.pairingLink,
+    pairingLabel: staticData?.pairingLabel,
+    priceRange: staticData?.priceRange || { low: 3, high: 5 }
+  }
+}
+
+function BigProductCard({ product, index }: { product: HybridProduct, index: number }) {
   const [activeImage, setActiveImage] = useState(product.images[0])
   const isReversed = index % 2 !== 0
   const prefilledMessage = encodeURIComponent(
@@ -23,7 +87,7 @@ function BigProductCard({ product, index }: { product: PastaProduct, index: numb
         {/* LATO IMMAGINE (5 Colonne - Più stretto per dare spazio al testo, ma alto abbastanza) */}
         {/* Altezza ridotta a h-[400px] su desktop per farne stare 1.5 in visuale */}
         <div className={cn(
-          "relative bg-stone-100 h-[300px] lg:h-[450px] overflow-hidden lg:col-span-3",
+          "relative bg-stone-100 h-[300px] lg:h-auto lg:min-h-full overflow-hidden lg:col-span-3",
           isReversed ? "lg:order-last" : ""
         )}>
           <AnimatePresence mode="wait">
@@ -166,7 +230,20 @@ function BigProductCard({ product, index }: { product: PastaProduct, index: numb
   )
 }
 
-export default function PastaShowcaseRefined() {
+interface PastaGalleryProps {
+  prodotti?: SanityProdotto[]
+}
+
+export default function PastaShowcaseRefined({ prodotti }: PastaGalleryProps) {
+  // Se ci sono prodotti da Sanity, li converte in formato ibrido
+  // Altrimenti usa i dati statici come fallback
+  const products: HybridProduct[] = prodotti && prodotti.length > 0
+    ? prodotti.map(p => createHybridProduct(p))
+    : pastaProducts.map(p => ({
+        ...p,
+        id: p.id
+      }))
+
   return (
     <section className="bg-[#F9F9F7] py-16 lg:py-24" id="la-nostra-pasta">
       {/* Intro Copywriting Aggressivo */}
@@ -188,7 +265,7 @@ export default function PastaShowcaseRefined() {
 
       {/* Product List - Max Width contenuta per visuale card multiple */}
       <div className="container mx-auto px-4 max-w-6xl flex flex-col gap-8 lg:gap-10">
-        {pastaProducts.map((product, index) => (
+        {products.map((product, index) => (
           <BigProductCard key={product.id} product={product} index={index} />
         ))}
       </div>

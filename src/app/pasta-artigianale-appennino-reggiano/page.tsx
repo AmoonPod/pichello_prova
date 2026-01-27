@@ -12,10 +12,11 @@ import TerritorySection from "@/components/pasta-artigianale/TerritorySection"
 import MobileStickyCTA from "@/components/pasta-artigianale/MobileStickyCTA"
 import { pastaProducts } from "@/data/pastaProducts"
 import FaqAccordion from "@/components/pasta-artigianale/FaqAccordion"
+import { getProdottiByCategoria } from "sanity/sanity.query"
 
 // Force static generation
 export const dynamic = "force-static"
-export const revalidate = 86400 // 24 hours
+export const revalidate = 3600 // 1 hour
 
 const baseUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -199,7 +200,10 @@ const jsonLd = {
   "@graph": [localBusiness, breadcrumbList, faqSchema, ...productSchemas]
 }
 
-export default function PastaArtigianalePage() {
+export default async function PastaArtigianalePage() {
+  // Fetch pasta da Sanity
+  const prodotti = await getProdottiByCategoria("pasta-di-semola-di-grano-duro")
+  
   const contactPrefilledMessage = encodeURIComponent(
     "Ciao, vorrei il listino della pasta artigianale Il Pichello e sapere disponibilità dei formati."
   )
@@ -219,7 +223,7 @@ export default function PastaArtigianalePage() {
         <ProcessJourney />
 
         {/* Gallery Section */}
-        <PastaGallery />
+        <PastaGallery prodotti={prodotti} />
 
 
 

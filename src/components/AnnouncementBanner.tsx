@@ -13,7 +13,7 @@ const BANNER_DISMISSED_KEY = 'pichello-pasta-banner-dismissed'
 // ============================================
 // POPUP MODAL COMPONENT (Prima visita)
 // ============================================
-function PastaPopup({ onClose }) {
+function PastaPopup({ onClose }: { onClose: () => void }) {
   const [isClosing, setIsClosing] = useState(false)
 
   const handleClose = () => {
@@ -195,7 +195,7 @@ function PastaPopup({ onClose }) {
 // ============================================
 // TOP BANNER COMPONENT
 // ============================================
-function TopBanner({ canBeDismissed, onDismiss }) {
+function TopBanner({ canBeDismissed, onDismiss }: { canBeDismissed: boolean; onDismiss: () => void }) {
   return (
     <div className="relative overflow-hidden">
       <Link

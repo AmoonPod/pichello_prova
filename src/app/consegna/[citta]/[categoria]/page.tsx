@@ -13,6 +13,8 @@ import "@/app/globals.css";
 import PastaGallery from "@/components/pasta-artigianale/PastaGallery";
 import VariantiFarina from "@/components/farina-cinquanta-grani/VariantiFarina";
 import GalleriaZuppe from "@/components/zuppe/GalleriaZuppe";
+import GalleriaRisotti from "@/components/zuppe/GalleriaRisotti";
+import { Phone, Mail } from "lucide-react";
 
 // Force static generation
 export const dynamic = "force-static";
@@ -79,7 +81,14 @@ export default async function LocalSeoPage(props: { params: Promise<{ citta: str
         return <VariantiFarina prodotti={prodotti} hideIntro={true} />;
       case "zuppe-e-legumi":
         const zuppeOnly = prodotti.filter((p: any) => !p.nome?.toLowerCase().includes("risotto"));
-        return <GalleriaZuppe zuppe={zuppeOnly} hideIntro={true} />;
+        const risottiOnly = prodotti.filter((p: any) => p.nome?.toLowerCase().includes("risotto"));
+        return (
+          <>
+            <GalleriaZuppe zuppe={zuppeOnly} hideIntro={true} />
+            <div className="py-12"></div>
+            <GalleriaRisotti risotti={risottiOnly} />
+          </>
+        );
       default:
         // Generic Grid for other categories (Miele, etc.)
         return (
@@ -111,6 +120,10 @@ export default async function LocalSeoPage(props: { params: Promise<{ citta: str
         );
     }
   };
+
+  const contactPrefilledMessage = encodeURIComponent(
+    `Ciao, sono di ${city.name}. Vorrei ordinare ${category.name.toLowerCase()} con consegna a domicilio.`
+  );
 
   return (
     <div className="min-h-screen bg-stone-50 font-sans">
@@ -149,11 +162,11 @@ export default async function LocalSeoPage(props: { params: Promise<{ citta: str
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Button size="lg" className="rounded-full px-8 py-6 text-lg shadow-lg hover:shadow-xl transition-all" asChild>
-                  <Link href="#catalogo">
-                    Visualizza Prodotti
-                  </Link>
-                </Button>
+                <Link href={`/contatti?messaggio=${contactPrefilledMessage}`}>
+                  <Button size="lg" className="rounded-full px-8 py-6 text-lg shadow-lg hover:shadow-xl transition-all">
+                    Ordina Ora
+                  </Button>
+                </Link>
                 <div className="flex items-center justify-center gap-2 text-stone-500 text-sm px-4 py-2 bg-stone-100 rounded-full">
                   <Truck className="w-4 h-4" />
                   <span>Consegna rapida a {city.name}</span>
@@ -165,7 +178,7 @@ export default async function LocalSeoPage(props: { params: Promise<{ citta: str
             <div className="relative hidden lg:block">
               <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-700">
                 {/* Fallback image or category specific image could go here */}
-                <div className="absolute inset-0 bg-stone-200 animate-pulse" />
+                <div className="absolute inset-0 bg-stone-200" />
                 {/* Ideally we would show a featured product image here. 
                      For now we use a gradient placeholder or the first product image if available */}
                 {prodotti[0]?.immagini?.[0]?.image ? (
@@ -182,7 +195,7 @@ export default async function LocalSeoPage(props: { params: Promise<{ citta: str
               </div>
 
               {/* Floating badges */}
-              <div className="absolute -top-6 -left-6 bg-white p-4 rounded-2xl shadow-xl flex items-center gap-3 animate-bounce-slow">
+              <div className="absolute -top-6 -left-6 bg-white p-4 rounded-2xl shadow-xl flex items-center gap-3">
                 <div className="bg-green-100 p-2 rounded-full text-green-700">
                   <Leaf className="w-6 h-6" />
                 </div>
@@ -192,7 +205,7 @@ export default async function LocalSeoPage(props: { params: Promise<{ citta: str
                 </div>
               </div>
 
-              <div className="absolute -bottom-6 -right-6 bg-white p-4 rounded-2xl shadow-xl flex items-center gap-3 animate-bounce-slow delay-700">
+              <div className="absolute -bottom-6 -right-6 bg-white p-4 rounded-2xl shadow-xl flex items-center gap-3">
                 <div className="bg-amber-100 p-2 rounded-full text-amber-700">
                   <Star className="w-6 h-6" />
                 </div>
@@ -246,24 +259,46 @@ export default async function LocalSeoPage(props: { params: Promise<{ citta: str
         {renderProductGallery()}
       </main>
 
-      {/* Local SEO Text Block */}
-      <section className="bg-white py-20 border-t border-stone-100">
+      {/* Local SEO Text Block & CTA */}
+      <section className="bg-stone-100 py-20">
         <div className="container mx-auto px-4 max-w-4xl text-center">
           <h2 className="text-3xl font-serif font-bold text-stone-900 mb-6">
-            Perché scegliere Il Pichello a {city.name}?
+            Ordina {category.name.toLowerCase()} a {city.name}
           </h2>
           <div className="prose prose-stone mx-auto text-lg text-stone-600 leading-relaxed">
             <p>
-              Molti clienti di <strong>{city.name}</strong> hanno già scelto la qualità de Il Pichello.
-              Siamo un'azienda agricola a ciclo chiuso: questo significa che seguiamo ogni fase,
-              dalla semina al raccolto, fino alla trasformazione nel nostro laboratorio.
+              Non siamo un supermercato, ma una vera azienda agricola. Coltiviamo in Appennino e portiamo i nostri prodotti a <strong>{city.name}</strong>.
+              Scegliere noi significa sostenere l'agricoltura locale e mangiare cibo vero, sano e tracciato.
             </p>
-            <p>
-              Ordinare {category.name.toLowerCase()} da noi non è come acquistare al supermercato.
-              Significa portare sulla tua tavola a {city.name} un prodotto vivo, ricco di nutrienti
-              e dal sapore autentico, sostenendo al contempo una piccola realtà agricola che custodisce
-              il territorio dell'Appennino Reggiano.
-            </p>
+          </div>
+          
+          <div className="mt-10 p-8 bg-white rounded-3xl shadow-sm inline-block w-full max-w-2xl">
+            <h3 className="text-xl font-bold text-stone-900 mb-4">Come ricevere a casa?</h3>
+            <div className="grid sm:grid-cols-2 gap-6 text-left">
+              <div className="flex items-start gap-3">
+                <div className="bg-green-100 p-2 rounded-full text-green-700 mt-1">
+                  <Phone className="w-4 h-4" />
+                </div>
+                <div>
+                  <p className="font-bold text-stone-900">Telefono / WhatsApp</p>
+                  <p className="text-stone-600 text-sm">Chiama o scrivi a Mirco al 340 8200080 per un ordine rapido.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="bg-green-100 p-2 rounded-full text-green-700 mt-1">
+                  <Mail className="w-4 h-4" />
+                </div>
+                <div>
+                  <p className="font-bold text-stone-900">Modulo Online</p>
+                  <p className="text-stone-600 text-sm">Clicca qui sotto e compila la richiesta. Ti ricontattiamo noi.</p>
+                </div>
+              </div>
+            </div>
+            <div className="mt-8 pt-6 border-t border-stone-100 text-center">
+               <Link href={`/contatti?messaggio=${contactPrefilledMessage}`}>
+                <Button className="rounded-full px-10 py-6 text-lg">Richiedi {category.name} Ora</Button>
+               </Link>
+            </div>
           </div>
 
           <div className="mt-12">

@@ -208,7 +208,7 @@ const PrintCatalogPage = async () => {
                     }
 
                     .logo-container {
-                        margin-bottom: 2rem;
+                        margin-bottom: 1rem;
                         display: flex;
                         justify-content: center;
                         align-items: center;
@@ -223,22 +223,25 @@ const PrintCatalogPage = async () => {
                     .cover-title {
                         font-size: 48px;
                         font-weight: 700;
-                        margin-bottom: 16px;
+                        margin-bottom: 8px;
                         color: #8C1C06;
-                        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+                        /* text-shadow removed for better printing */
+                        line-height: 1.1;
                     }
                     
                     .cover-subtitle {
-                       font-size: 24px;
-                       color: #4B5563;
-                       margin-bottom: 2rem;
+                       font-size: 32px;
+                       font-weight: 600;
+                       color: #8C1C06;
+                       margin-bottom: 8px;
                     }
 
                     .cover-info {
                         background: rgba(255,255,255,0.9);
                         padding: 2rem;
                         border-radius: 12px;
-                        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+                        /* box-shadow removed for better printing */
+                        border: 1px solid #e5e7eb; /* Added light border as replacement for shadow */
                         max-width: 500px;
                         margin: 0 auto;
                     }
@@ -289,7 +292,8 @@ const PrintCatalogPage = async () => {
                         background: white;
                         padding: 1.5rem;
                         border-radius: 12px;
-                        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+                        /* box-shadow removed for better printing */
+                        border: 1px solid #e5e7eb; /* Added light border as replacement */
                         border-left: 4px solid #8C1C06;
                     }
 
@@ -409,6 +413,11 @@ const PrintCatalogPage = async () => {
 
                     /* CSS specifici per generazione PDF con Puppeteer */
                     @media print {
+                        * {
+                            box-shadow: none !important;
+                            text-shadow: none !important;
+                        }
+
                         img {
                             -webkit-print-color-adjust: exact !important;
                             color-adjust: exact !important;
@@ -481,7 +490,8 @@ const PrintCatalogPage = async () => {
                         <img src="/images/logo.png" alt="Azienda Agricola Il Pichello" width={350} height={350} loading="eager" />
                     </div>
                     <h1 className="cover-title">Catalogo Prodotti</h1>
-                    <p className="cover-subtitle">Azienda Agricola Il Pichello</p>
+                    <p className="cover-subtitle">dell’Appennino Reggiano</p>
+                    <h1 className="cover-title">2026</h1>
 
                     <div className="cover-info">
                         <h3>Tradizione e Qualità dall'Appennino Reggiano</h3>

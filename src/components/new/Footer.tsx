@@ -21,6 +21,8 @@ import {
 import { ProdottoType, CategoriaType } from "../../../types";
 import { useCatalogPDF } from "@/hooks/useCatalogPDF";
 
+import { cities } from "@/data/localSeoConfig";
+
 interface FooterV2Props {
   prodotti?: ProdottoType[];
   categorie?: CategoriaType[];
@@ -326,34 +328,24 @@ const FooterV2: React.FC<FooterV2Props> = ({
               </div>
             </div>
 
-            {/* Zone Servite SEO Links */}
+            {/* Zone Servite SEO Links - DYNAMIC & OPTIMIZED */}
             <div className="mt-8 pt-6 border-t border-gray-100">
               <h5 className="font-bold text-gray-900 mb-3 text-sm flex items-center gap-2">
                 <div className="w-1.5 h-1.5 bg-green-500 rounded-full" />
                 Consegna a Domicilio
               </h5>
-              <ul className="text-sm space-y-2 text-gray-600">
-                <li>
-                  <Link href="/consegna/reggio-emilia/pasta-artigianale" className="hover:text-primary transition-colors">
-                    Pasta fresca a Reggio Emilia
+              <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+                {cities.map((city) => (
+                  <Link 
+                    key={city.slug}
+                    href={`/consegna/${city.slug}`} 
+                    className="text-xs text-gray-600 hover:text-primary transition-colors flex items-center gap-1.5"
+                  >
+                    <span className="w-1 h-1 bg-gray-300 rounded-full" />
+                    {city.name}
                   </Link>
-                </li>
-                <li>
-                  <Link href="/consegna/modena/farine-macinate-a-pietra" className="hover:text-primary transition-colors">
-                    Farine a Modena
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/consegna/parma/zuppe-e-legumi" className="hover:text-primary transition-colors">
-                    Zuppe a Parma
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/consegna/bologna/miele-e-conserve" className="hover:text-primary transition-colors">
-                    Miele a Bologna
-                  </Link>
-                </li>
-              </ul>
+                ))}
+              </div>
             </div>
           </div>
 

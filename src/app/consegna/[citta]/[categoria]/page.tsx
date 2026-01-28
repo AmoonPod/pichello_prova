@@ -178,20 +178,14 @@ export default async function LocalSeoPage(props: { params: Promise<{ citta: str
             <div className="relative hidden lg:block">
               <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-700">
                 {/* Fallback image or category specific image could go here */}
-                <div className="absolute inset-0 bg-stone-200" />
                 {/* Ideally we would show a featured product image here. 
                      For now we use a gradient placeholder or the first product image if available */}
-                {prodotti[0]?.immagini?.[0]?.image ? (
-                  <img
-                    src={prodotti[0].immagini[0].image}
-                    alt={category.name}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-stone-200 flex items-center justify-center">
-                    <span className="text-stone-400 font-serif text-2xl">Il Pichello</span>
-                  </div>
-                )}
+                <img
+                  src="/images/pasta/mezzi_paccheri_appennino_reggiano_5.webp"
+                  alt={category.name}
+                  className="w-full h-full object-cover"
+                />
+
               </div>
 
               {/* Floating badges */}
@@ -271,7 +265,7 @@ export default async function LocalSeoPage(props: { params: Promise<{ citta: str
               Scegliere noi significa sostenere l'agricoltura locale e mangiare cibo vero, sano e tracciato.
             </p>
           </div>
-          
+
           <div className="mt-10 p-8 bg-white rounded-3xl shadow-sm inline-block w-full max-w-2xl">
             <h3 className="text-xl font-bold text-stone-900 mb-4">Come ricevere a casa?</h3>
             <div className="grid sm:grid-cols-2 gap-6 text-left">
@@ -295,9 +289,9 @@ export default async function LocalSeoPage(props: { params: Promise<{ citta: str
               </div>
             </div>
             <div className="mt-8 pt-6 border-t border-stone-100 text-center">
-               <Link href={`/contatti?messaggio=${contactPrefilledMessage}`}>
+              <Link href={`/contatti?messaggio=${contactPrefilledMessage}`}>
                 <Button className="rounded-full px-10 py-6 text-lg">Richiedi {category.name} Ora</Button>
-               </Link>
+              </Link>
             </div>
           </div>
 

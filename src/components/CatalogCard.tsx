@@ -180,7 +180,7 @@ const CatalogCard = memo(function CatalogCard({
     );
 
     const CardContent = (
-        <div className={`items-stretch bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden break-inside-avoid flex flex-col md:flex-row flex-1
+        <div className={`items-stretch bg-white rounded-lg ${isPrint ? '' : 'shadow-sm'} border border-gray-200 overflow-hidden break-inside-avoid flex flex-col md:flex-row flex-1
             ${isPrint ? "print:rounded-none print:shadow-none print:border print:border-gray-300" : "min-h-[180px] hover:shadow-lg hover:border-orange-200 hover:ring-1 hover:ring-orange-100 transition-all duration-300"}
             ${forceEagerLoad ? 'p-1 gap-1 h-full' : isPrint ? 'p-1 gap-2 h-full' : 'p-2 gap-2'}`}>
 
@@ -224,12 +224,14 @@ const CatalogCard = memo(function CatalogCard({
             {/* Product Info */}
             <div className={`flex-1 min-w-0 flex flex-col ${forceEagerLoad ? (isCompactLayout ? 'w-[60%]' : 'md:w-[35%]') : 'md:w-1/3'}`}>
                 <div className={forceEagerLoad ? 'mb-0.5' : 'mb-2'}>
-                    <h3 className={`font-bold text-gray-900 ${forceEagerLoad ? 'text-[11px] leading-tight' : 'text-base'} ${!isPrint && "group-hover:text-primary transition-colors"}`}>
+                    <h3 className={`font-bold text-gray-900 ${forceEagerLoad ? 'text-[13px] leading-tight' : 'text-lg'} ${!isPrint && "group-hover:text-primary transition-colors"}`}>
                         {product.nome}
                     </h3>
-                    <div className={forceEagerLoad ? 'scale-90 origin-left' : ''}>
-                        <CategoryTag category={product.categoria} />
-                    </div>
+                    {product.categoria_slug?.current === 'pasta-di-semola-di-grano-duro' && (
+                        <div className={forceEagerLoad ? 'scale-90 origin-left' : ''}>
+                            <CategoryTag category={product.categoria} />
+                        </div>
+                    )}
                 </div>
 
                 {hasSpecifications && (

@@ -48,8 +48,8 @@ const getOptimizedImageUrl = (url: string, forPrint: boolean): string => {
 
             // Override (non append) per evitare duplicati tipo ?w=2000&w=300
             // e per rendere davvero più leggero il PDF.
-            const printWidth = 560;
-            const printQuality = 55;
+            const printWidth = 800;
+            const printQuality = 80;
 
             // Importante: NON facciamo crop lato CDN (es. entropy) perché può “spostare”
             // il soggetto. Il crop lo gestiamo in pagina con object-fit/object-position.

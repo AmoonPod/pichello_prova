@@ -244,7 +244,7 @@ const FooterV2: React.FC<FooterV2Props> = ({
               </li>
               <li>
                 <Link
-                  href="/pasta-artigianale-appennino-reggiano"
+                  href="/pasta-artigianale-trafilata-bronzo"
                   className="text-gray-600 hover:text-primary transition-colors duration-300 flex items-center gap-2 group text-sm lg:text-base py-1"
                 >
                   <span className="w-1 h-1 bg-gray-400 rounded-full group-hover:bg-primary transition-colors" />
@@ -253,7 +253,7 @@ const FooterV2: React.FC<FooterV2Props> = ({
               </li>
               <li>
                 <Link
-                  href="/farina-antichi-cinquanta-grani-appennino-reggiano"
+                  href="/farina-grani-antichi-macinata-pietra"
                   className="text-gray-600 hover:text-primary transition-colors duration-300 flex items-center gap-2 group text-sm lg:text-base py-1"
                 >
                   <span className="w-1 h-1 bg-gray-400 rounded-full group-hover:bg-primary transition-colors" />
@@ -262,7 +262,7 @@ const FooterV2: React.FC<FooterV2Props> = ({
               </li>
               <li>
                 <Link
-                  href="/zuppe-appennino-reggiano"
+                  href="/zuppe-legumi-cereali-artigianali"
                   className="text-gray-600 hover:text-primary transition-colors duration-300 flex items-center gap-2 group text-sm lg:text-base py-1"
                 >
                   <span className="w-1 h-1 bg-gray-400 rounded-full group-hover:bg-primary transition-colors" />
@@ -324,6 +324,36 @@ const FooterV2: React.FC<FooterV2Props> = ({
                   </p>
                 </div>
               </div>
+            </div>
+
+            {/* Zone Servite SEO Links */}
+            <div className="mt-8 pt-6 border-t border-gray-100">
+              <h5 className="font-bold text-gray-900 mb-3 text-sm flex items-center gap-2">
+                <div className="w-1.5 h-1.5 bg-green-500 rounded-full" />
+                Consegna a Domicilio
+              </h5>
+              <ul className="text-sm space-y-2 text-gray-600">
+                <li>
+                  <Link href="/consegna/reggio-emilia/pasta-artigianale" className="hover:text-primary transition-colors">
+                    Pasta fresca a Reggio Emilia
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/consegna/modena/farine-macinate-a-pietra" className="hover:text-primary transition-colors">
+                    Farine a Modena
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/consegna/parma/zuppe-e-legumi" className="hover:text-primary transition-colors">
+                    Zuppe a Parma
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/consegna/bologna/miele-e-conserve" className="hover:text-primary transition-colors">
+                    Miele a Bologna
+                  </Link>
+                </li>
+              </ul>
             </div>
           </div>
 

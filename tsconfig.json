@@ -22,6 +22,7 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
+      "~/*": ["./*"],
       "next-sanity/studio": ["./node_modules/next-sanity/dist/studio"]
     }
   },

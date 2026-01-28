@@ -50,21 +50,21 @@ const NavbarV2 = () => {
             Prodotti
           </Link>
           <Link
-            href="/pasta-artigianale-appennino-reggiano"
+            href="/pasta-artigianale-trafilata-bronzo"
             className="text-foreground hover:text-primary transition-all duration-200 text-sm font-medium hover:-translate-y-0.5 transform flex items-center gap-1"
           >
             <Wheat className="h-4 w-4" />
             Pasta
           </Link>
           <Link
-            href="/farina-antichi-cinquanta-grani-appennino-reggiano"
+            href="/farina-grani-antichi-macinata-pietra"
             className="text-foreground hover:text-primary transition-all duration-200 text-sm font-medium hover:-translate-y-0.5 transform flex items-center gap-1"
           >
             <CircleDot className="h-4 w-4" />
             Farina
           </Link>
           <Link
-            href="/zuppe-appennino-reggiano"
+            href="/zuppe-legumi-cereali-artigianali"
             className="text-foreground hover:text-primary transition-all duration-200 text-sm font-medium hover:-translate-y-0.5 transform flex items-center gap-1"
           >
             <Soup className="h-4 w-4" />
@@ -143,7 +143,7 @@ const NavbarV2 = () => {
                 </SheetClose>
                 <SheetClose asChild>
                   <Link
-                    href="/pasta-artigianale-appennino-reggiano"
+                    href="/pasta-artigianale-trafilata-bronzo"
                     className="font-medium text-lg hover:text-primary transition-colors flex items-center gap-2"
                     prefetch={false}
                   >
@@ -153,7 +153,7 @@ const NavbarV2 = () => {
                 </SheetClose>
                 <SheetClose asChild>
                   <Link
-                    href="/farina-antichi-cinquanta-grani-appennino-reggiano"
+                    href="/farina-grani-antichi-macinata-pietra"
                     className="font-medium text-lg hover:text-primary transition-colors flex items-center gap-2"
                     prefetch={false}
                   >
@@ -163,7 +163,7 @@ const NavbarV2 = () => {
                 </SheetClose>
                 <SheetClose asChild>
                   <Link
-                    href="/zuppe-appennino-reggiano"
+                    href="/zuppe-legumi-cereali-artigianali"
                     className="font-medium text-lg hover:text-primary transition-colors flex items-center gap-2"
                     prefetch={false}
                   >

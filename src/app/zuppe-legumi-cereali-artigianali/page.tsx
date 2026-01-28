@@ -25,58 +25,55 @@ import WhyChooseZuppe from "@/components/zuppe/WhyChooseZuppe"
 export const dynamic = "force-static"
 export const revalidate = 3600 // 1 hour
 
-const baseUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : process.env.NODE_ENV === "production"
-    ? "https://www.agricolailpichello.it"
-    : "http://localhost:3000"
+// PRODUCTION DOMAIN - sempre usare il dominio canonico per SEO
+const baseUrl = "https://www.agricolailpichello.it"
 
-const pageUrl = `${baseUrl}/zuppe-appennino-reggiano`
+const pageUrl = `${baseUrl}/zuppe-legumi-cereali-artigianali`
 
 export const metadata: Metadata = {
-  title: "Zuppe Artigianali e Risotti | Appennino Reggiano | Il Pichello",
+  title: "Zuppe di Legumi e Cereali Artigianali | Pronte in 30 Minuti | Il Pichello",
   description:
-    "Zuppe di legumi e cereali dell'Appennino Reggiano, preparate a mano a Marola di Carpineti. Ingredienti naturali, senza conservanti, pronte da cuocere in 30-40 minuti. Risotti gourmet con riso Carnaroli. Spedizione in tutta Italia.",
+    "Zuppe contadine e Risotti gourmet senza conservanti. Solo legumi italiani e cereali antichi. 100% vegane, ricche di proteine vegetali. Il pasto sano e veloce, pronto in 30 minuti. Acquista online dal produttore.",
   keywords: [
-    "zuppe artigianali",
-    "zuppe di legumi",
-    "zuppe Appennino Reggiano",
-    "risotti pronti",
-    "zuppe farro orzo",
-    "zuppe lenticchie",
-    "zuppe senza conservanti",
+    "zuppe legumi online",
+    "zuppe vegane proteiche",
+    "zuppe pronte senza conservanti",
+    "zuppe artigianali italiane",
+    "risotti pronti gourmet",
+    "kit risotto funghi porcini",
+    "zuppe farro lenticchie",
+    "minestre cereali antichi",
+    "zuppe vegetariane proteine",
     "comfort food italiano",
-    "zuppe Reggio Emilia",
-    "Il Pichello zuppe",
-    "zuppe cereali antichi",
-    "minestre montagna",
-    "risotto funghi porcini",
-    "risotto tartufo",
-    "zuppe vegetariane",
-    "proteine vegetali"
+    "zuppe plant based",
+    "pasto veloce sano",
+    "zuppe secche vendita online",
+    "risotto tartufo artigianale",
+    "cesti regalo alimentari",
+    "proteine vegetali legumi"
   ],
   openGraph: {
     type: "website",
     locale: "it_IT",
     url: pageUrl,
     siteName: "Azienda Agricola Il Pichello",
-    title: "Zuppe Artigianali e Risotti | Appennino Reggiano",
+    title: "Zuppe di Legumi e Cereali Artigianali | Pronte in 30 Minuti",
     description:
-      "Zuppe di legumi e cereali preparate a mano nell'Appennino Reggiano. Ingredienti naturali, pronte da cuocere. Il vero comfort food italiano.",
+      "Zuppe contadine e Risotti gourmet senza conservanti. 100% vegane, ricche di proteine vegetali. Pronte in 30 minuti. Spedizione in tutta Italia.",
     images: [
       {
         url: "/images/zuppe_background.jpg",
         width: 1200,
         height: 630,
-        alt: "Zuppe artigianali dell'Appennino Reggiano - Azienda Agricola Il Pichello"
+        alt: "Zuppe artigianali di legumi e cereali - 100% vegane - Il Pichello"
       }
     ]
   },
   twitter: {
     card: "summary_large_image",
-    title: "Zuppe Artigianali e Risotti | Appennino Reggiano",
+    title: "Zuppe di Legumi e Cereali Artigianali | Pronte in 30 Minuti",
     description:
-      "Zuppe di legumi e cereali dell'Appennino. Ingredienti naturali, senza conservanti.",
+      "Zuppe vegane e Risotti gourmet senza conservanti. Pronte in 30 minuti. Spedizione in Italia.",
     images: ["/images/zuppe_background.jpg"]
   },
   alternates: {
@@ -84,48 +81,201 @@ export const metadata: Metadata = {
   }
 }
 
+// Recipe schemas per le zuppe principali (SEO avanzato)
+const recipeSchemas = [
+  {
+    "@type": "Recipe",
+    "@id": `${pageUrl}#zuppa-contadina`,
+    name: "Zuppa Contadina dell'Appennino",
+    description: "Mix pronto di farro, orzo e lenticchie per una zuppa rustica e nutriente. Ideale per dieta vegana e vegetariana, ricca di proteine vegetali.",
+    image: [`${baseUrl}/images/zuppe/zuppa_contadina.webp`],
+    recipeCuisine: "Italiana",
+    recipeCategory: "Zuppa",
+    totalTime: "PT40M",
+    prepTime: "PT5M",
+    cookTime: "PT35M",
+    recipeYield: "4 porzioni",
+    keywords: "zuppa vegana, zuppa proteine vegetali, zuppa farro lenticchie, comfort food",
+    suitableForDiet: ["https://schema.org/VeganDiet", "https://schema.org/VegetarianDiet"],
+    author: {
+      "@type": "Organization",
+      name: "Azienda Agricola Il Pichello"
+    },
+    recipeIngredient: [
+      "1 confezione Zuppa Contadina Il Pichello (300g)",
+      "1 litro di acqua fredda o brodo vegetale",
+      "Olio extravergine di oliva a piacere",
+      "Sale e pepe q.b."
+    ],
+    recipeInstructions: [
+      {
+        "@type": "HowToStep",
+        text: "Versa il contenuto della busta in una pentola con 1 litro di acqua fredda o brodo vegetale."
+      },
+      {
+        "@type": "HowToStep",
+        text: "Porta a bollore, poi abbassa la fiamma e lascia cuocere lentamente per 30-35 minuti."
+      },
+      {
+        "@type": "HowToStep",
+        text: "A cottura ultimata, condisci con un filo d'olio extravergine e servi calda."
+      }
+    ],
+    nutrition: {
+      "@type": "NutritionInformation",
+      proteinContent: "12g per porzione",
+      fiberContent: "8g per porzione",
+      calories: "180 kcal per porzione"
+    }
+  },
+  {
+    "@type": "Recipe",
+    "@id": `${pageUrl}#zuppa-montanaro`,
+    name: "Zuppa del Montanaro",
+    description: "Ricetta tradizionale dell'Appennino con cereali e legumi di montagna. 100% vegetale, senza conservanti. Pronta in 40 minuti.",
+    image: [`${baseUrl}/images/zuppe/zuppa_montanaro.webp`],
+    recipeCuisine: "Italiana",
+    recipeCategory: "Zuppa",
+    totalTime: "PT45M",
+    prepTime: "PT5M",
+    cookTime: "PT40M",
+    recipeYield: "4 porzioni",
+    keywords: "zuppa montagna, ricetta tradizionale, zuppe italiane, plant based",
+    suitableForDiet: ["https://schema.org/VeganDiet", "https://schema.org/VegetarianDiet"],
+    author: {
+      "@type": "Organization",
+      name: "Azienda Agricola Il Pichello"
+    },
+    recipeIngredient: [
+      "1 confezione Zuppa del Montanaro Il Pichello (300g)",
+      "1,2 litri di acqua o brodo",
+      "Olio extravergine di oliva",
+      "Parmigiano Reggiano grattugiato (opzionale)"
+    ],
+    recipeInstructions: [
+      {
+        "@type": "HowToStep",
+        text: "Metti il contenuto in pentola con acqua fredda. Non serve ammollo."
+      },
+      {
+        "@type": "HowToStep",
+        text: "Cuoci a fuoco lento per 35-40 minuti mescolando occasionalmente."
+      },
+      {
+        "@type": "HowToStep",
+        text: "Servi con olio a crudo e, se gradito, una spolverata di Parmigiano."
+      }
+    ],
+    nutrition: {
+      "@type": "NutritionInformation",
+      proteinContent: "14g per porzione",
+      fiberContent: "10g per porzione",
+      calories: "200 kcal per porzione"
+    }
+  },
+  {
+    "@type": "Recipe",
+    "@id": `${pageUrl}#risotto-funghi-porcini`,
+    name: "Kit Risotto ai Funghi Porcini Artigianale",
+    description: "Risotto gourmet con Riso Carnaroli e funghi porcini secchi dell'Appennino. Pronto in 20 minuti, cremoso e profumato.",
+    image: [`${baseUrl}/images/zuppe/risotto_porcini.webp`],
+    recipeCuisine: "Italiana",
+    recipeCategory: "Risotto",
+    totalTime: "PT25M",
+    prepTime: "PT5M",
+    cookTime: "PT20M",
+    recipeYield: "3-4 porzioni",
+    keywords: "kit risotto funghi porcini, risotto pronto gourmet, regalo gastronomico",
+    author: {
+      "@type": "Organization",
+      name: "Azienda Agricola Il Pichello"
+    },
+    recipeIngredient: [
+      "1 Kit Risotto Funghi Porcini Il Pichello",
+      "1 litro di brodo vegetale caldo",
+      "50g di burro",
+      "Parmigiano Reggiano grattugiato",
+      "1 bicchiere di vino bianco secco"
+    ],
+    recipeInstructions: [
+      {
+        "@type": "HowToStep",
+        text: "Tosta il riso in padella con metà del burro per 2 minuti."
+      },
+      {
+        "@type": "HowToStep",
+        text: "Sfuma con vino bianco, poi aggiungi i funghi e il brodo caldo poco alla volta."
+      },
+      {
+        "@type": "HowToStep",
+        text: "Cuoci per 16-18 minuti. Manteca con burro e Parmigiano."
+      }
+    ]
+  }
+]
+
 // JSON-LD Schema per SEO
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "Product",
-      "@id": `${pageUrl}#product`,
-      name: "Zuppe Artigianali dell'Appennino Reggiano",
-      description:
-        "Zuppe e minestre di legumi e cereali antichi, preparate a mano nell'Appennino Reggiano. Mix di farro, orzo, lenticchie e grani antichi. Senza conservanti, pronte da cuocere in 30-40 minuti. 100% vegetali, ricche di proteine.",
-      image: [`${baseUrl}/images/zuppe_background.jpg`],
-      brand: {
-        "@type": "Brand",
-        name: "Azienda Agricola Il Pichello"
-      },
-      manufacturer: {
-        "@type": "Organization",
-        "@id": `${baseUrl}/#organization`
-      },
-      category: "Zuppe e Minestre",
-      countryOfOrigin: {
-        "@type": "Country",
-        name: "Italia"
-      },
-      additionalProperty: [
+      "@type": "ItemList",
+      "@id": `${pageUrl}#productlist`,
+      name: "Zuppe e Risotti Artigianali - Il Pichello",
+      description: "Collezione di zuppe di legumi e cereali 100% vegane e risotti gourmet. Senza conservanti, pronte in 30 minuti.",
+      numberOfItems: 8,
+      itemListElement: [
         {
-          "@type": "PropertyValue",
-          name: "Tempo di Cottura",
-          value: "30-40 minuti"
+          "@type": "ListItem",
+          position: 1,
+          item: {
+            "@type": "Product",
+            name: "Zuppa Contadina",
+            description: "Mix di farro, orzo e lenticchie. 100% vegana, ricca di proteine vegetali.",
+            offers: {
+              "@type": "AggregateOffer",
+              priceCurrency: "EUR",
+              lowPrice: "4.50",
+              highPrice: "6.00",
+              availability: "https://schema.org/InStock"
+            }
+          }
         },
         {
-          "@type": "PropertyValue",
-          name: "Conservazione",
-          value: "Oltre 12 mesi"
+          "@type": "ListItem",
+          position: 2,
+          item: {
+            "@type": "Product",
+            name: "Zuppa del Montanaro",
+            description: "Ricetta tradizionale dell'Appennino con cereali e legumi di montagna.",
+            offers: {
+              "@type": "AggregateOffer",
+              priceCurrency: "EUR",
+              lowPrice: "4.50",
+              highPrice: "6.00",
+              availability: "https://schema.org/InStock"
+            }
+          }
         },
         {
-          "@type": "PropertyValue",
-          name: "Tipo",
-          value: "100% Vegetale"
+          "@type": "ListItem",
+          position: 3,
+          item: {
+            "@type": "Product",
+            name: "Kit Risotto ai Funghi Porcini",
+            description: "Risotto gourmet con Riso Carnaroli e funghi porcini secchi dell'Appennino.",
+            offers: {
+              "@type": "AggregateOffer",
+              priceCurrency: "EUR",
+              lowPrice: "6.00",
+              highPrice: "8.00",
+              availability: "https://schema.org/InStock"
+            }
+          }
         }
       ]
     },
+    ...recipeSchemas,
     {
       "@type": "LocalBusiness",
       "@id": `${baseUrl}/#organization`,

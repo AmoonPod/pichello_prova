@@ -37,13 +37,10 @@ const FARINE_SLUGS = [
   "farina-antichi-cinquanta-grani-fiore"
 ]
 
-const baseUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : process.env.NODE_ENV === "production"
-    ? "https://www.agricolailpichello.it"
-    : "http://localhost:3000"
+// PRODUCTION DOMAIN - sempre usare il dominio canonico per SEO
+const baseUrl = "https://www.agricolailpichello.it"
 
-const pageUrl = `${baseUrl}/farina-antichi-cinquanta-grani-appennino-reggiano`
+const pageUrl = `${baseUrl}/farina-grani-antichi-macinata-pietra`
 const flourVariantsSchema = [
   {
     id: "integrale",
@@ -220,60 +217,48 @@ const faqItems = [
 ]
 
 export const metadata: Metadata = {
-  title: "Farina di Grani Antichi Macinata a Pietra | Appennino Reggiano | Il Pichello",
+  title: "Farina di Grani Antichi Macinata a Pietra | W280 Forte per Pizza e Pane | Il Pichello",
   description:
-    "Cerchi una farina artigianale di qualità superiore? La Farina Antichi Cinquanta Grani è una miscela unica di 50 varietà di grani antichi, macinata a pietra nel nostro mulino a Marola di Carpineti, vicino Castelnovo ne' Monti. Integrale, semintegrale e fiore. Spedizione in tutta Italia.",
+    "Miscela unica di 50 Grani Antichi macinati a pietra. Forza W280 ideale per pizza, pane e grandi lievitati. Sapore autentico, basso indice glicemico. Ordina dal produttore, consegna in 24/48h.",
   keywords: [
-    "farina cinquanta grani",
-    "farina grani antichi",
-    "farina macinata a pietra",
-    "farina artigianale",
-    "farina di qualità",
-    "migliore farina per pane",
-    "farina professionale",
-    "farina Appennino Reggiano",
-    "farina Marola Carpineti",
-    "farina Castelnovo ne Monti",
-    "farina Reggio Emilia",
+    "farina grani antichi online",
+    "farina macinata a pietra vendita",
+    "farina W280 pizza",
+    "farina forte per pane",
+    "farina artigianale italiana",
+    "farina per pizza napoletana",
+    "farina lunghe lievitazioni",
     "farina integrale grani antichi",
     "farina semintegrale",
     "farina fiore di grano",
     "farina panificabile superiore",
-    "farina W 280",
-    "farina senza chimica",
-    "farina naturale Emilia Romagna",
-    "grani antichi Emilia Romagna",
-    "mulino a pietra Appennino",
-    "prodotto di montagna farina",
-    "Azienda Agricola Il Pichello",
-    "farina km0 Reggio Emilia",
-    "farina artigianale Italia",
-    "comprare farina buona online",
-    "farina per pizza professionale",
-    "farina per pane fatto in casa"
+    "farina senza additivi",
+    "acquisto farina online Italia",
+    "migliore farina per pizza",
+    "farina professionale panificazione"
   ],
   openGraph: {
     type: "website",
     locale: "it_IT",
     url: pageUrl,
     siteName: "Azienda Agricola Il Pichello",
-    title: "Farina di Grani Antichi Macinata a Pietra | Appennino Reggiano",
+    title: "Farina di Grani Antichi Macinata a Pietra | W280 per Pizza e Pane",
     description:
-      "La migliore farina artigianale dell'Appennino Reggiano. 50 varietà di grani antichi, macinati a pietra nel nostro mulino a Marola, vicino Castelnovo ne' Monti. Ideale per pane, pizza e pasta fresca. Spedizione in tutta Italia.",
+      "Miscela unica di 50 Grani Antichi macinati a pietra. Forza W280 ideale per pizza, pane e grandi lievitati. Spedizione in tutta Italia.",
     images: [
       {
         url: "/images/cereali.jpg",
         width: 1200,
         height: 630,
-        alt: "Farina di Grani Antichi Macinata a Pietra - Azienda Agricola Il Pichello, Appennino Reggiano"
+        alt: "Farina di Grani Antichi Macinata a Pietra W280 - Il Pichello"
       }
     ]
   },
   twitter: {
     card: "summary_large_image",
-    title: "Farina di Grani Antichi Macinata a Pietra | Appennino Reggiano",
+    title: "Farina di Grani Antichi Macinata a Pietra | W280 per Pizza e Pane",
     description:
-      "La migliore farina artigianale: 50 grani antichi macinati a pietra. Ideale per pane, pizza e pasta. Spedizione in tutta Italia.",
+      "Miscela di 50 Grani Antichi, forza W280 per lunghe lievitazioni. Spedizione in tutta Italia.",
     images: ["/images/cereali.jpg"]
   },
   alternates: {

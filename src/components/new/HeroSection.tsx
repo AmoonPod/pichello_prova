@@ -15,7 +15,9 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import Cereali from "../../../public/images/cereali.jpg";
+import PastaImg from "../../../public/images/pasta/mezzi_paccheri_appennino_reggiano_5.webp";
+import FarinaImg from "../../../public/images/farine/farina_cinquanta_fiore.webp";
+import ZuppeImg from "../../../public/images/zuppe/zuppe.webp";
 
 // Counter animation component
 const AnimatedCounter = ({
@@ -71,13 +73,13 @@ const productCategories = [
     name: "Farina 50 Grani",
     icon: <Wheat className="w-5 h-5 text-primary-foreground" />,
     description: "Macinata a pietra nel nostro mulino",
-    href: "/farina-antichi-cinquanta-grani-appennino-reggiano",
+    href: "/farina-grani-antichi-macinata-pietra",
   },
   {
     name: "Pasta Artigianale",
     icon: <Wheat className="w-5 h-5 text-primary-foreground" />,
     description: "Trafilata al bronzo",
-    href: "/pasta-artigianale-appennino-reggiano",
+    href: "/pasta-artigianale-trafilata-bronzo",
   },
   {
     name: "Legumi e farine",
@@ -95,7 +97,7 @@ const productCategories = [
     name: "Zuppe e risotti",
     icon: <Droplets className="w-5 h-5 text-primary-foreground" />,
     description: "Ricette della tradizione",
-    href: "/zuppe-appennino-reggiano",
+    href: "/zuppe-legumi-cereali-artigianali",
   },
   {
     name: "Grano saraceno e castagne",
@@ -155,42 +157,61 @@ const HeroSection = () => {
             className="space-y-6 lg:space-y-8"
           >
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-2 text-sm text-primary">
-              <MapPin className="w-4 h-4" />
-              <span className="font-medium">Appennino Reggiano</span>
-            </div>
 
-            {/* Main Heading */}
+
+            {/* Main Heading - SEO Optimized */}
             <div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 text-foreground">
-                Azienda Agricola
-                <span className="block text-primary mt-2">Il Pichello</span>
+              <p className="text-lg md:text-xl font-semibold text-primary mb-2">
+                Azienda Agricola Il Pichello
+              </p>
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4 text-foreground">
+                Farine di Grani Antichi, Pasta Artigianale e Miele
+                <span className="block text-primary mt-2">dall'Appennino Reggiano</span>
               </h1>
               <div className="w-20 lg:w-24 h-1 bg-primary rounded-full" />
             </div>
 
-            {/* Tagline */}
-            <p className="text-lg md:text-xl lg:text-2xl text-secondary font-medium">
-              Seminiamo Tradizione, Raccogliamo Autenticità
+            {/* Tagline - Ottimizzata SEO */}
+            <p className="text-lg md:text-xl lg:text-2xl text-secondary font-medium leading-tight">
+              Vendita diretta dal produttore: Farine macinate a pietra, Pasta trafilata al bronzo e Miele artigianale. Spedizioni in tutta Italia.
             </p>
 
-            {/* Description - Testo ottimizzato per includere più categorie e keywords SEO */}
+            {/* Description - Testo ottimizzato con biorazionale affiancato a termini cercati */}
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-              Nel cuore dell'Appennino Reggiano coltiviamo con passione una
-              ricca varietà di prodotti della terra: dal miele biologico alla{" "}
-              <Link href="/farina-antichi-cinquanta-grani-appennino-reggiano" className="text-primary hover:underline font-medium">
-                farina di grani antichi macinata a pietra
+              Il nostro <strong>metodo biorazionale</strong>, un'agricoltura naturale e sostenibile senza pesticidi, ci permette di coltivare prodotti genuini e sani. Scopri le nostre{" "}
+              <Link
+                href="/farina-grani-antichi-macinata-pietra"
+                className="text-primary hover:underline font-bold"
+              >
+                farine integrali e semi-integrali
               </Link>
-              , dalla{" "}
-              <Link href="/pasta-artigianale-appennino-reggiano" className="text-primary hover:underline font-medium">
-                pasta artigianale trafilata al bronzo
-              </Link>{" "}
-              ai legumi tradizionali e alle erbe per tisane. Ogni prodotto nasce dal terreno Reggiano e arriva
-              sulle tavole con la sincerità di chi rispetta la natura.
+              , i legumi, le zuppe e i prodotti tipici dell'Appennino Reggiano.
             </p>
 
-            {/* Features - Griglia rotante con tutte le 7 categorie */}
-            <div className="h-24 md:h-28 mb-4">
+            {/* CTA Buttons - Spostati in alto per visibilità immediata */}
+            <div className="flex flex-col sm:flex-row gap-4 pt-4 pb-2">
+              <Link href="/prodotti">
+                <Button
+                  size="lg"
+                  className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-8 py-3 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group"
+                >
+                  Scopri i Nostri Prodotti
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
+              <Link href="/contatti">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="w-full sm:w-auto border-2 border-primary text-primary hover:bg-primary/5 font-semibold px-8 py-3 text-lg rounded-full transition-all duration-300"
+                >
+                  Contattaci
+                </Button>
+              </Link>
+            </div>
+
+            {/* Features - Griglia rotante spostata sotto le CTA */}
+            <div className="h-24 md:h-28 mb-4 opacity-90 scale-95 origin-left">
               <div className="grid grid-cols-3 gap-2 md:gap-3 h-full">
                 {visibleCategories.map((category, index) => (
                   <Link
@@ -231,85 +252,93 @@ const HeroSection = () => {
                 ))}
               </div>
             </div>
-
-            {/* CTA Buttons - Corretto il link "Contattaci" */}
-            <div className="flex flex-col sm:flex-row gap-4 pt-8 mt-4">
-              <Link href="/prodotti">
-                <Button
-                  size="lg"
-                  className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-8 py-3 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group"
-                >
-                  Scopri i Nostri Prodotti
-                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </Link>
-              <Link href="/contatti">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="w-full sm:w-auto border-2 border-primary text-primary hover:bg-primary/5 font-semibold px-8 py-3 text-lg rounded-full transition-all duration-300"
-                >
-                  Contattaci
-                </Button>
-              </Link>
-            </div>
           </motion.div>
 
-          {/* Right Content - Image */}
+          {/* Right Content - Bento Grid */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: isVisible ? 1 : 0, x: isVisible ? 0 : 50 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="relative order-last"
+            className="relative order-last w-full h-auto md:h-[600px]"
           >
-            {/* Main Product Image */}
-            <div className="relative max-w-lg mx-auto lg:max-w-none mt-8 lg:mt-0">
-              <div className="relative w-full h-80 sm:h-96 lg:h-[500px] rounded-3xl overflow-hidden shadow-2xl">
+            <div className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 gap-4 w-full h-full">
+              {/* Farine Card - Main Vertical (Best Seller) */}
+              <Link
+                href="/farina-grani-antichi-macinata-pietra"
+                className="relative w-full h-64 md:h-auto md:col-span-1 md:row-span-2 rounded-3xl overflow-hidden group cursor-pointer shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors z-10" />
                 <Image
-                  src={Cereali}
-                  alt="Cesto di prodotti biorazionali dell'Azienda Agricola Il Pichello: miele, farine macinate a pietra, cereali e legumi dell'Appennino Reggiano"
-                  className="w-full h-full object-cover"
+                  src={FarinaImg}
+                  alt="Farina tipo 1 e integrale di 50 grani antichi macinata a pietra per pizza, pane e dolci"
+                  className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                  priority
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
-                <div className="absolute bottom-6 left-6 text-white">
-                  <h3 className="text-xl lg:text-2xl font-bold">
-                    I Nostri Prodotti
+                <div className="absolute bottom-0 left-0 p-6 z-20 w-full bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="bg-primary/90 text-primary-foreground text-[10px] uppercase tracking-wider font-bold px-2 py-1 rounded-full animate-pulse">
+                      Best Seller
+                    </span>
+                  </div>
+                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-1">
+                    Farine Antiche
                   </h3>
-                  <p className="text-sm text-white/90">
-                    Genuini e autentici dell'Appennino
+                  <p className="text-white/90 text-sm font-medium flex items-center gap-2">
+                    Macinate a pietra <ArrowRight className="w-4 h-4" />
                   </p>
                 </div>
-              </div>
+              </Link>
 
-              {/* Floating Cards */}
-              <div className="absolute -top-4 -left-2 lg:-top-8 lg:-left-8 bg-card border border-border rounded-xl lg:rounded-2xl p-2 lg:p-4 shadow-xl transform -rotate-3 hover:rotate-0 transition-transform duration-300">
-                <div className="flex items-center gap-1 lg:gap-3">
-                  <div className="w-8 h-8 lg:w-12 lg:h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                    <Wheat className="w-4 h-4 lg:w-6 lg:h-6 text-primary" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-foreground text-xs lg:text-base">
-                      100%
-                    </h4>
-                    <p className="text-xs text-muted-foreground">
-                      Biorazionale
-                    </p>
-                  </div>
+              {/* Pasta Card - Top Right */}
+              <Link
+                href="/pasta-artigianale-trafilata-bronzo"
+                className="relative w-full h-48 md:h-auto md:col-span-1 md:row-span-1 rounded-3xl overflow-hidden group cursor-pointer shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors z-10" />
+                <Image
+                  src={PastaImg}
+                  alt="Spaghetti e pasta artigianale di grani antichi trafilata al bronzo essiccata a temperatura ambiente"
+                  className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                  sizes="(max-width: 768px) 100vw, 25vw"
+                />
+                <div className="absolute bottom-0 left-0 p-5 z-20 w-full bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+                  <h3 className="text-xl font-bold text-white mb-1">
+                    Pasta Artigianale
+                  </h3>
+                  <p className="text-white/90 text-sm font-medium flex items-center gap-1">
+                    Trafilata al bronzo <ArrowRight className="w-3 h-3" />
+                  </p>
                 </div>
-              </div>
+              </Link>
 
-              <div className="absolute -bottom-4 -right-2 lg:-bottom-8 lg:-right-8 bg-card border border-border rounded-xl lg:rounded-2xl p-2 lg:p-4 shadow-xl transform rotate-3 hover:rotate-0 transition-transform duration-300">
-                <div className="flex items-center gap-1 lg:gap-3">
-                  <div className="w-8 h-8 lg:w-12 lg:h-12 bg-secondary/10 rounded-full flex items-center justify-center">
-                    <Truck className="w-4 h-4 lg:w-6 lg:h-6 text-secondary" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-foreground text-xs lg:text-base">
-                      Km 0
-                    </h4>
-                    <p className="text-xs text-muted-foreground">Locale</p>
-                  </div>
+              {/* Zuppe Card - Bottom Right */}
+              <Link
+                href="/zuppe-legumi-cereali-artigianali"
+                className="relative w-full h-48 md:h-auto md:col-span-1 md:row-span-1 rounded-3xl overflow-hidden group cursor-pointer shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors z-10" />
+                <Image
+                  src={ZuppeImg}
+                  alt="Zuppe di legumi e cereali pronti da cuocere - mix tradizionali dell'Appennino senza conservanti"
+                  className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                  sizes="(max-width: 768px) 100vw, 25vw"
+                />
+                <div className="absolute bottom-0 left-0 p-5 z-20 w-full bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+                  <h3 className="text-xl font-bold text-white mb-1">
+                    Zuppe e Legumi
+                  </h3>
+                  <p className="text-white/90 text-sm font-medium flex items-center gap-1">
+                    Sapori contadini <ArrowRight className="w-3 h-3" />
+                  </p>
                 </div>
+              </Link>
+            </div>
+
+            {/* Floating Element - Km0 Seal */}
+            <div className="absolute -bottom-6 -right-6 md:-bottom-8 md:-right-8 bg-white p-3 md:p-4 rounded-full shadow-xl z-30 hidden lg:block animate-bounce" style={{ animationDuration: '3s' }}>
+              <div className="bg-primary/10 p-2 md:p-3 rounded-full">
+                <Truck className="w-6 h-6 md:w-8 md:h-8 text-primary" />
               </div>
             </div>
           </motion.div>

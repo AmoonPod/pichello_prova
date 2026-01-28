@@ -51,7 +51,7 @@ export default function WhyChooseUs() {
                         </div>
 
                         {/* Cross-link alla Pasta */}
-                        <Link href="/pasta-artigianale-appennino-reggiano" className="group block mt-6">
+                        <Link href="/pasta-artigianale-trafilata-bronzo" className="group block mt-6">
                             <div className="bg-amber-50/50 border border-amber-200 rounded-xl p-4 hover:bg-amber-50 hover:border-amber-300 transition-all duration-300">
                                 <div className="flex items-center gap-4">
                                     <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center group-hover:bg-amber-200 transition-colors flex-shrink-0">

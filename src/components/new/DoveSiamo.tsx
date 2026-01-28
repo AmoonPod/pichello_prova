@@ -125,7 +125,7 @@ const LocationSection = () => {
 
               {/* Cross-link alle produzioni artigianali */}
               <div className="grid sm:grid-cols-2 gap-3 pt-2">
-                <Link href="/farina-antichi-cinquanta-grani-appennino-reggiano" className="group">
+                <Link href="/farina-grani-antichi-macinata-pietra" className="group">
                   <div className="flex items-center gap-3 p-3 bg-amber-50/50 border border-amber-200/50 rounded-xl hover:bg-amber-50 hover:border-amber-300 transition-all">
                     <div className="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center group-hover:bg-amber-200 transition-colors">
                       <CircleDot className="w-4 h-4 text-amber-700" />
@@ -136,7 +136,7 @@ const LocationSection = () => {
                     </div>
                   </div>
                 </Link>
-                <Link href="/pasta-artigianale-appennino-reggiano" className="group">
+                <Link href="/pasta-artigianale-trafilata-bronzo" className="group">
                   <div className="flex items-center gap-3 p-3 bg-amber-50/50 border border-amber-200/50 rounded-xl hover:bg-amber-50 hover:border-amber-300 transition-all">
                     <div className="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center group-hover:bg-amber-200 transition-colors">
                       <Wheat className="w-4 h-4 text-amber-700" />

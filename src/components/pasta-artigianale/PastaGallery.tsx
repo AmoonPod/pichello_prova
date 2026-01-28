@@ -232,9 +232,10 @@ function BigProductCard({ product, index }: { product: HybridProduct, index: num
 
 interface PastaGalleryProps {
   prodotti?: SanityProdotto[]
+  hideIntro?: boolean
 }
 
-export default function PastaShowcaseRefined({ prodotti }: PastaGalleryProps) {
+export default function PastaShowcaseRefined({ prodotti, hideIntro = false }: PastaGalleryProps) {
   // Se ci sono prodotti da Sanity, li converte in formato ibrido
   // Altrimenti usa i dati statici come fallback
   const products: HybridProduct[] = prodotti && prodotti.length > 0
@@ -246,22 +247,24 @@ export default function PastaShowcaseRefined({ prodotti }: PastaGalleryProps) {
 
   return (
     <section className="bg-[#F9F9F7] py-16 lg:py-24" id="la-nostra-pasta">
-      {/* Intro Copywriting Aggressivo */}
-      <div className="container mx-auto px-4 mb-12 lg:mb-16 text-center max-w-4xl">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100/50 text-amber-800 text-xs font-bold uppercase tracking-widest mb-4 border border-amber-200/50">
-          Solo grano dell'Appennino Reggiano
+      {/* Intro Copywriting Aggressivo - Shown only if hideIntro is false */}
+      {!hideIntro && (
+        <div className="container mx-auto px-4 mb-12 lg:mb-16 text-center max-w-4xl">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100/50 text-amber-800 text-xs font-bold uppercase tracking-widest mb-4 border border-amber-200/50">
+            Solo grano dell'Appennino Reggiano
+          </div>
+
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-stone-900 mb-6 leading-[1.1]">
+            Ruvida. Tenace. <span className="text-amber-700 italic">Di Montagna.</span>
+          </h2>
+
+          <p className="text-lg text-stone-600 font-light max-w-2xl mx-auto leading-relaxed">
+            Dimentica la pasta industriale liscia e sbiadita. Qui c'è solo grano del nostro Appennino,
+            acqua pura e <strong className="text-stone-800 font-medium">tutto il tempo che serve</strong>.
+            Scegli il formato che ti farà venire l'acquolina in bocca.
+          </p>
         </div>
-
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-stone-900 mb-6 leading-[1.1]">
-          Ruvida. Tenace. <span className="text-amber-700 italic">Di Montagna.</span>
-        </h2>
-
-        <p className="text-lg text-stone-600 font-light max-w-2xl mx-auto leading-relaxed">
-          Dimentica la pasta industriale liscia e sbiadita. Qui c'è solo grano del nostro Appennino,
-          acqua pura e <strong className="text-stone-800 font-medium">tutto il tempo che serve</strong>.
-          Scegli il formato che ti farà venire l'acquolina in bocca.
-        </p>
-      </div>
+      )}
 
       {/* Product List - Max Width contenuta per visuale card multiple */}
       <div className="container mx-auto px-4 max-w-6xl flex flex-col gap-8 lg:gap-10">

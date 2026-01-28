@@ -4,6 +4,7 @@ import ProductsSection from "@/components/new/Prodotti";
 import LocationSection from "@/components/new/DoveSiamo";
 import ContactSection from "@/components/new/Contatti";
 import FooterV2 from "@/components/new/Footer";
+import SeoTextSection from "@/components/new/SeoTextSection";
 import { getProdotti, getCategorie } from "../../sanity/sanity.query";
 import "../app/globals.css";
 import { Metadata } from "next";
@@ -14,9 +15,9 @@ export const revalidate = 1800; // Revalidate every 30 minutes (homepage changes
 
 export const metadata: Metadata = {
   title:
-    "Azienda Agricola Il Pichello | Prodotti Biorazionali Appennino Reggiano",
+    "Vendita Farine Grani Antichi, Legumi, Miele e Pasta Artigianale | Azienda Agricola Il Pichello",
   description:
-    "Scopri l'Azienda Agricola Il Pichello a Marola (RE), cuore dell'Appennino Reggiano. Coltiviamo con passione prodotti biorazionali: miele, cereali, legumi e trasformati. Tradizione e sostenibilità a km0.",
+    "Acquista direttamente dal produttore: Farine macinate a pietra, Pasta trafilata al bronzo e Miele italiano dell'Appennino Reggiano. Spedizioni in tutta Italia. Scopri il catalogo.",
 
   openGraph: {
     type: "website",
@@ -24,24 +25,24 @@ export const metadata: Metadata = {
     url: "https://www.agricolailpichello.it/",
     siteName: "Azienda Agricola Il Pichello",
     title:
-      "Azienda Agricola Il Pichello | Prodotti Biorazionali Appennino Reggiano",
+      "Vendita Farine Grani Antichi, Legumi, Miele e Pasta Artigianale | Il Pichello",
     description:
-      "Scopri l'Azienda Agricola Il Pichello a Marola (RE), cuore dell'Appennino Reggiano. Coltiviamo con passione prodotti biorazionali: miele, cereali, legumi e trasformati. Tradizione e sostenibilità a km0.",
+      "Acquista direttamente dal produttore: Farine di Grani Antichi macinate a pietra, Pasta trafilata al bronzo e Miele artigianale. Spedizioni in tutta Italia.",
     images: [
       {
         url: "/images/og-image.png", // Fixed extension from .jpg to .png
         width: 1200,
         height: 630,
-        alt: "Azienda Agricola Il Pichello - Prodotti Biorazionali Appennino Reggiano",
+        alt: "Azienda Agricola Il Pichello - Farine di Grani Antichi, Pasta e Miele dell'Appennino Reggiano",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
     title:
-      "Azienda Agricola Il Pichello | Prodotti Biorazionali Appennino Reggiano",
+      "Vendita Farine Grani Antichi, Legumi, Miele e Pasta Artigianale | Il Pichello",
     description:
-      "Scopri l'Azienda Agricola Il Pichello a Marola (RE), cuore dell'Appennino Reggiano. Coltiviamo con passione prodotti biorazionali: miele, cereali, legumi e trasformati. Tradizione e sostenibilità a km0.",
+      "Acquista direttamente dal produttore: Farine macinate a pietra, Pasta trafilata al bronzo e Miele italiano. Spedizioni in tutta Italia.",
     images: ["/images/og-image.png"],
   },
   alternates: {
@@ -59,7 +60,7 @@ const jsonLd = {
       url: "https://www.agricolailpichello.it/",
       name: "Azienda Agricola Il Pichello",
       description:
-        "Azienda agricola specializzata in prodotti biorazionali nell'Appennino Reggiano",
+        "Azienda agricola specializzata in prodotti naturali e sostenibili coltivati con metodo biorazionale nell'Appennino Reggiano",
       publisher: {
         "@id": "https://www.agricolailpichello.it/#organization",
       },
@@ -90,7 +91,7 @@ const jsonLd = {
       },
       image: ["https://www.agricolailpichello.it/images/og-image.png"],
       description:
-        "Azienda agricola specializzata nella produzione di miele, cereali, legumi e trasformati con metodi biorazionali nell'Appennino Reggiano. Vendita diretta ai mercati e su appuntamento in azienda.",
+        "Azienda agricola specializzata nella produzione di miele, farine di grani antichi, legumi e pasta artigianale con metodo biorazionale (agricoltura naturale e sostenibile senza pesticidi) nell'Appennino Reggiano. Vendita diretta e spedizioni in tutta Italia.",
       address: {
         "@type": "PostalAddress",
         streetAddress: "Via Dante Alighieri 141",
@@ -121,30 +122,38 @@ const jsonLd = {
       },
       hasOfferCatalog: {
         "@type": "OfferCatalog",
-        name: "Prodotti Biorazionali",
+        name: "Prodotti Naturali e Artigianali",
         itemListElement: [
           {
             "@type": "Offer",
             itemOffered: {
               "@type": "Product",
-              name: "Miele",
-              description: "Miele prodotto con metodi biorazionali",
+              name: "Miele Artigianale",
+              description: "Miele italiano dell'Appennino Reggiano prodotto con metodo biorazionale naturale",
             },
           },
           {
             "@type": "Offer",
             itemOffered: {
               "@type": "Product",
-              name: "Cereali",
-              description: "Cereali coltivati con tecniche sostenibili",
+              name: "Farine di Grani Antichi",
+              description: "Farine macinate a pietra da 50 varietà di grani antichi coltivati senza pesticidi",
             },
           },
           {
             "@type": "Offer",
             itemOffered: {
               "@type": "Product",
-              name: "Legumi",
-              description: "Legumi di alta qualità dell'Appennino Reggiano",
+              name: "Legumi e Zuppe",
+              description: "Legumi naturali e zuppe pronte da cuocere dell'Appennino Reggiano",
+            },
+          },
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Product",
+              name: "Pasta Artigianale",
+              description: "Pasta trafilata al bronzo ed essiccata a temperatura ambiente con semola di grani antichi",
             },
           },
         ],
@@ -187,6 +196,7 @@ export default async function Index() {
           <LocationSection />
         </div>
         <ContactSection />
+        <SeoTextSection />
       </main>
       <FooterV2 prodotti={prodotti} categorie={categorie} />
     </div>

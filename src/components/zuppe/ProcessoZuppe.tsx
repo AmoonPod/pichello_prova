@@ -1,4 +1,4 @@
-import { Wheat, Leaf, Flame, Timer, Package, Heart, ArrowRight } from "lucide-react"
+import { Wheat, Leaf, Timer, Package, Heart, ArrowRight } from "lucide-react"
 
 const steps = [
   {
@@ -14,26 +14,20 @@ const steps = [
     description: "Ogni ricetta è un'equazione perfetta tra gusto e nutrizione. Proporzioni studiate per l'armonia.",
   },
   {
-    icon: Flame, // Cambiato icona per renderla più chiara
-    number: "03",
-    title: "Tostatura",
-    description: "Tostiamo leggermente alcuni ingredienti. È il trucco per sprigionare profumi intensi.",
-  },
-  {
     icon: Timer,
-    number: "04",
+    number: "03",
     title: "Aria e Tempo",
     description: "Niente liofilizzazione chimica. Solo disidratazione naturale per preservare il sapore vero.",
   },
   {
     icon: Package,
-    number: "05",
+    number: "04",
     title: "Il Sacco",
     description: "Confezioniamo a mano in atmosfera protettiva. Freschezza sigillata fino a casa tua.",
   },
   {
     icon: Heart,
-    number: "06",
+    number: "05",
     title: "Tocca a Te",
     description: "Apri, versa in acqua fredda e cuoci lento. Tu metti solo il fuoco e l'olio buono.",
   }

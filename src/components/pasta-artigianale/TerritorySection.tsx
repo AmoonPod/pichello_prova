@@ -49,7 +49,7 @@ export default function TerritorySection() {
                         </div>
 
                         {/* Cross-link alla Farina */}
-                        <Link href="/farina-antichi-cinquanta-grani-appennino-reggiano" className="group block">
+                        <Link href="/farina-grani-antichi-macinata-pietra" className="group block">
                             <div className="bg-stone-100/50 border border-stone-200 rounded-xl p-5 hover:bg-stone-100 hover:border-amber-300 transition-all duration-300">
                                 <div className="flex items-center gap-4">
                                     <div className="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center group-hover:bg-amber-200 transition-colors flex-shrink-0">

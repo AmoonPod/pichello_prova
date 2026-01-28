@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useInView, Variants } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ChevronRight, Image as ImageIcon, Package, Leaf, Wheat, CircleDot, ArrowRight } from "lucide-react";
+import { ChevronRight, Image as ImageIcon, Package, Leaf, Wheat, CircleDot, ArrowRight, Soup, ShieldCheck, Truck, PackageCheck } from "lucide-react";
 import { CategoriaType } from "../../../types";
 import Link from "next/link";
 
@@ -90,14 +90,14 @@ export default function ProductsSectionClient({
           </div>
 
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3">
-            I Nostri <span className="text-secondary">Prodotti</span>
+            Catalogo Prodotti: <span className="text-secondary">Farine, Pasta, Legumi e Miele</span>
           </h2>
 
           <div className="w-20 h-1 bg-secondary rounded-full mx-auto mb-4" />
 
           <p className="text-base md:text-lg text-muted-foreground font-medium max-w-2xl mx-auto">
             Scopri la nostra vasta gamma di prodotti genuini, coltivati e
-            lavorati con cura per portare sulla tua tavola il vero sapore della
+            lavorati con cura nell'Appennino Reggiano per portare sulla tua tavola il vero sapore della
             natura
           </p>
         </motion.div>
@@ -225,17 +225,15 @@ export default function ProductsSectionClient({
                   >
                     {/* Decorative Background */}
                     <div
-                      className={`absolute inset-2 bg-gradient-to-br ${
-                        index % 2 === 0
-                          ? "from-primary/3 via-primary/5 to-primary/8"
-                          : "from-secondary/3 via-secondary/5 to-secondary/8"
-                      } rounded-2xl transform ${
-                        index % 3 === 0
+                      className={`absolute inset-2 bg-gradient-to-br ${index % 2 === 0
+                        ? "from-primary/3 via-primary/5 to-primary/8"
+                        : "from-secondary/3 via-secondary/5 to-secondary/8"
+                        } rounded-2xl transform ${index % 3 === 0
                           ? "rotate-1"
                           : index % 3 === 1
                             ? "-rotate-1"
                             : "rotate-0.5"
-                      } group-hover:rotate-0 transition-transform duration-500`}
+                        } group-hover:rotate-0 transition-transform duration-500`}
                     />
 
                     {/* Card Content */}
@@ -308,31 +306,33 @@ export default function ProductsSectionClient({
         >
           <div className="text-center mb-8">
             <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
-              I Nostri <span className="text-primary">Fiori all'Occhiello</span>
+              Le Nostre Specialità: <span className="text-primary">Farina 50 Grani, Pasta Artigianale e Zuppe</span>
             </h3>
             <p className="text-muted-foreground">
               Produzioni artigianali dal nostro mulino a pietra
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {/* Pasta Card */}
-            <Link href="/pasta-artigianale-appennino-reggiano" className="group">
-              <div className="relative bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-6 hover:shadow-xl transition-all duration-300 overflow-hidden">
+            <Link href="/pasta-artigianale-trafilata-bronzo" className="group">
+              <div className="relative bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-6 hover:shadow-xl transition-all duration-300 overflow-hidden h-full">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-amber-200/30 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
-                <div className="relative">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center group-hover:bg-amber-200 transition-colors">
-                      <Wheat className="w-6 h-6 text-amber-700" />
+                <div className="relative h-full flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center group-hover:bg-amber-200 transition-colors">
+                        <Wheat className="w-6 h-6 text-amber-700" />
+                      </div>
+                      <div>
+                        <h4 className="text-xl font-bold text-gray-900">Pasta Artigianale</h4>
+                        <p className="text-sm text-amber-700 font-medium">Trafilata al bronzo</p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="text-xl font-bold text-gray-900">Pasta Artigianale</h4>
-                      <p className="text-sm text-amber-700 font-medium">Trafilata al bronzo</p>
-                    </div>
+                    <p className="text-gray-600 text-sm mb-4">
+                      Semola di grano duro macinata a pietra, trafilata al bronzo ed essiccata naturalmente a temperatura ambiente.
+                    </p>
                   </div>
-                  <p className="text-gray-600 text-sm mb-4">
-                    Semola di grano duro macinata a pietra, trafilata al bronzo ed essiccata naturalmente a temperatura ambiente.
-                  </p>
                   <div className="flex items-center text-amber-700 font-semibold text-sm group-hover:text-amber-800">
                     Scopri i formati
                     <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -342,24 +342,53 @@ export default function ProductsSectionClient({
             </Link>
 
             {/* Farina Card */}
-            <Link href="/farina-antichi-cinquanta-grani-appennino-reggiano" className="group">
-              <div className="relative bg-gradient-to-br from-stone-50 to-amber-50 border border-stone-200 rounded-2xl p-6 hover:shadow-xl transition-all duration-300 overflow-hidden">
+            <Link href="/farina-grani-antichi-macinata-pietra" className="group">
+              <div className="relative bg-gradient-to-br from-stone-50 to-amber-50 border border-stone-200 rounded-2xl p-6 hover:shadow-xl transition-all duration-300 overflow-hidden h-full">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-stone-200/30 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
-                <div className="relative">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-12 h-12 bg-stone-100 rounded-xl flex items-center justify-center group-hover:bg-stone-200 transition-colors">
-                      <CircleDot className="w-6 h-6 text-stone-700" />
+                <div className="relative h-full flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-12 h-12 bg-stone-100 rounded-xl flex items-center justify-center group-hover:bg-stone-200 transition-colors">
+                        <CircleDot className="w-6 h-6 text-stone-700" />
+                      </div>
+                      <div>
+                        <h4 className="text-xl font-bold text-gray-900">Farina 50 Grani</h4>
+                        <p className="text-sm text-stone-700 font-medium">Macinata a pietra</p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="text-xl font-bold text-gray-900">Farina 50 Grani</h4>
-                      <p className="text-sm text-stone-700 font-medium">Macinata a pietra</p>
-                    </div>
+                    <p className="text-gray-600 text-sm mb-4">
+                      50 varietà di grani antichi coltivati senza chimica, macinati a pietra. Integrale, semintegrale e fiore.
+                    </p>
                   </div>
-                  <p className="text-gray-600 text-sm mb-4">
-                    50 varietà di grani antichi coltivati senza chimica, macinati a pietra. Integrale, semintegrale e fiore.
-                  </p>
                   <div className="flex items-center text-stone-700 font-semibold text-sm group-hover:text-stone-800">
                     Scopri le varianti
+                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </div>
+            </Link>
+
+            {/* Zuppe Card */}
+            <Link href="/zuppe-legumi-cereali-artigianali" className="group md:col-span-2 lg:col-span-1">
+              <div className="relative bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 rounded-2xl p-6 hover:shadow-xl transition-all duration-300 overflow-hidden h-full">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-green-200/30 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
+                <div className="relative h-full flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center group-hover:bg-green-200 transition-colors">
+                        <Soup className="w-6 h-6 text-green-700" />
+                      </div>
+                      <div>
+                        <h4 className="text-xl font-bold text-gray-900">Zuppe e Risotti</h4>
+                        <p className="text-sm text-green-700 font-medium">Pronti da cuocere</p>
+                      </div>
+                    </div>
+                    <p className="text-gray-600 text-sm mb-4">
+                      Mix di legumi e cereali bilanciati o risotti gourmet. Sani, veloci e senza conservanti.
+                    </p>
+                  </div>
+                  <div className="flex items-center text-green-700 font-semibold text-sm group-hover:text-green-800">
+                    Scopri le ricette
                     <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
@@ -405,6 +434,31 @@ export default function ProductsSectionClient({
                   Contattaci Ora
                 </Button>
               </Link>
+            </div>
+
+            {/* Trust Badges - Social Proof Logistica */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 pt-8 border-t border-border/50">
+              <div className="flex flex-col items-center gap-2">
+                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-1">
+                  <PackageCheck className="w-6 h-6 text-primary" />
+                </div>
+                <h4 className="font-bold text-foreground">Spedizioni Sicure</h4>
+                <p className="text-sm text-muted-foreground">Imballaggi accurati e su misura</p>
+              </div>
+              <div className="flex flex-col items-center gap-2">
+                <div className="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center mb-1">
+                  <Truck className="w-6 h-6 text-secondary" />
+                </div>
+                <h4 className="font-bold text-foreground">Consegna Rapida</h4>
+                <p className="text-sm text-muted-foreground">In tutta Italia in 24/48h</p>
+              </div>
+              <div className="flex flex-col items-center gap-2">
+                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-1">
+                  <ShieldCheck className="w-6 h-6 text-primary" />
+                </div>
+                <h4 className="font-bold text-foreground">Garanzia Freschezza</h4>
+                <p className="text-sm text-muted-foreground">Direttamente dal produttore</p>
+              </div>
             </div>
           </div>
         </motion.div>

@@ -261,9 +261,10 @@ function FarinaCard({ product, index }: { product: HybridFarina, index: number }
 
 interface VariantiFarinaProps {
   prodotti?: SanityProdotto[]
+  hideIntro?: boolean
 }
 
-export default function VariantiFarina({ prodotti }: VariantiFarinaProps) {
+export default function VariantiFarina({ prodotti, hideIntro = false }: VariantiFarinaProps) {
   // Se ci sono prodotti da Sanity, li converte in formato ibrido
   // Altrimenti usa i dati statici come fallback
   const products: HybridFarina[] = prodotti && prodotti.length > 0
@@ -275,22 +276,24 @@ export default function VariantiFarina({ prodotti }: VariantiFarinaProps) {
 
   return (
     <section className="bg-[#F9F9F7] py-16 lg:py-24" id="varianti">
-      {/* Intro */}
-      <div className="container mx-auto px-4 mb-12 lg:mb-16 text-center max-w-4xl">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100/50 text-amber-800 text-xs font-bold uppercase tracking-widest mb-4 border border-amber-200/50">
-          <Wheat className="w-3.5 h-3.5" />
-          Tre anime, un'unica eccellenza
+      {/* Intro - Condizionale */}
+      {!hideIntro && (
+        <div className="container mx-auto px-4 mb-12 lg:mb-16 text-center max-w-4xl">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100/50 text-amber-800 text-xs font-bold uppercase tracking-widest mb-4 border border-amber-200/50">
+            <Wheat className="w-3.5 h-3.5" />
+            Tre anime, un'unica eccellenza
+          </div>
+
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-stone-900 mb-6 leading-[1.1]">
+            Scegli la tua <span className="text-amber-700 italic">variante.</span>
+          </h2>
+
+          <p className="text-lg text-muted-foreground font-light max-w-2xl mx-auto leading-relaxed">
+            La stessa miscela preziosa di 50 grani antichi, tre diversi gradi di setacciatura.
+            Dalla più rustica alla più raffinata: <strong className="text-foreground font-medium">ognuna perfetta per le sue preparazioni</strong>.
+          </p>
         </div>
-
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-stone-900 mb-6 leading-[1.1]">
-          Scegli la tua <span className="text-amber-700 italic">variante.</span>
-        </h2>
-
-        <p className="text-lg text-muted-foreground font-light max-w-2xl mx-auto leading-relaxed">
-          La stessa miscela preziosa di 50 grani antichi, tre diversi gradi di setacciatura.
-          Dalla più rustica alla più raffinata: <strong className="text-foreground font-medium">ognuna perfetta per le sue preparazioni</strong>.
-        </p>
-      </div>
+      )}
 
       {/* Product List */}
       <div className="container mx-auto px-4 max-w-6xl flex flex-col gap-8 lg:gap-10">

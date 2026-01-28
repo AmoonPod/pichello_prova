@@ -40,14 +40,13 @@ const AboutSection = () => {
           </div>
 
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3">
-            La Nostra <span className="text-primary">Azienda</span>
+            Coltivazione <span className="text-primary">Naturale e Biorazionale</span> di Grani Antichi
           </h2>
 
           <div className="w-20 h-1 bg-primary rounded-full mx-auto mb-4" />
 
           <p className="text-base md:text-lg text-secondary font-medium max-w-2xl mx-auto">
-            Dal cuore dell'Appennino Reggiano, una storia di passione e
-            autenticità
+            Agricoltura naturale e sostenibile nel cuore dell'Appennino Reggiano, senza pesticidi né additivi chimici
           </p>
         </motion.div>
 
@@ -102,20 +101,22 @@ const AboutSection = () => {
                 </p>
 
                 <h4 className="text-xl font-semibold text-primary mt-8 mb-4">
-                  Il Nostro Impegno: Metodo Biorazionale nell'Appennino Reggiano
+                  Il Nostro Impegno: Agricoltura Naturale e Sostenibile
                 </h4>
                 <p>
                   Il nostro{" "}
                   <span className="font-bold text-primary text-lg">
                     metodo biorazionale
-                  </span>{" "}
-                  rappresenta la nostra filosofia di vita: un'agricoltura
+                  </span>
+                  , un'evoluzione consapevole dell'
+                  <strong className="text-secondary">agricoltura biologica e naturale</strong>
+                  , rappresenta la nostra filosofia di vita. Un'agricoltura
                   sostenibile di montagna, praticata con orgoglio sui nostri
                   terreni nell'{" "}
                   <span className="font-semibold text-secondary">
                     Appennino Reggiano
                   </span>
-                  , che rifiuta pesticidi e stratagemmi moderni. Attraverso la
+                  , che rifiuta <strong>pesticidi e residui chimici</strong>. Attraverso la
                   rotazione delle colture, l'uso di concimi naturali
                   dell'Appennino e la tutela della biodiversità locale,
                   rispettiamo profondamente la natura e la sapienza contadina
@@ -157,12 +158,12 @@ const AboutSection = () => {
                 <div className="mt-8 pt-6 border-t border-border">
                   <p className="text-sm text-muted-foreground mb-4 font-medium">Alcune delle nostre produzioni artigianali:</p>
                   <div className="flex flex-wrap gap-3">
-                    <Link href="/farina-antichi-cinquanta-grani-appennino-reggiano" className="group inline-flex items-center gap-2 px-4 py-2 bg-amber-50 border border-amber-200 rounded-full hover:bg-amber-100 hover:border-amber-300 transition-all">
+                    <Link href="/farina-grani-antichi-macinata-pietra" className="group inline-flex items-center gap-2 px-4 py-2 bg-amber-50 border border-amber-200 rounded-full hover:bg-amber-100 hover:border-amber-300 transition-all">
                       <CircleDot className="w-4 h-4 text-amber-700" />
                       <span className="text-sm font-medium text-amber-900">Farina 50 Grani</span>
                       <ArrowRight className="w-3 h-3 text-amber-600 group-hover:translate-x-0.5 transition-transform" />
                     </Link>
-                    <Link href="/pasta-artigianale-appennino-reggiano" className="group inline-flex items-center gap-2 px-4 py-2 bg-amber-50 border border-amber-200 rounded-full hover:bg-amber-100 hover:border-amber-300 transition-all">
+                    <Link href="/pasta-artigianale-trafilata-bronzo" className="group inline-flex items-center gap-2 px-4 py-2 bg-amber-50 border border-amber-200 rounded-full hover:bg-amber-100 hover:border-amber-300 transition-all">
                       <Wheat className="w-4 h-4 text-amber-700" />
                       <span className="text-sm font-medium text-amber-900">Pasta Artigianale</span>
                       <ArrowRight className="w-3 h-3 text-amber-600 group-hover:translate-x-0.5 transition-transform" />

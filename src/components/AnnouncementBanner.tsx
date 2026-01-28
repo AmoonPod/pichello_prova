@@ -178,7 +178,7 @@ function PastaPopup({ onClose }: { onClose: () => void }) {
 
             {/* CTA Button */}
             <Link
-              href="/pasta-artigianale-appennino-reggiano"
+              href="/pasta-artigianale-trafilata-bronzo"
               onClick={handleNavigate}
               className="group inline-flex items-center justify-center gap-2 px-6 py-3 bg-amber-600 hover:bg-amber-700 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
             >
@@ -199,7 +199,7 @@ function TopBanner({ canBeDismissed, onDismiss }: { canBeDismissed: boolean; onD
   return (
     <div className="relative overflow-hidden">
       <Link
-        href="/pasta-artigianale-appennino-reggiano"
+        href="/pasta-artigianale-trafilata-bronzo"
         className="group block relative bg-gradient-to-r from-amber-700 via-amber-600 to-amber-700 text-white overflow-hidden"
       >
         {/* Animated shimmer effect */}

@@ -18,51 +18,48 @@ import { getProdottiByCategoria } from "sanity/sanity.query"
 export const dynamic = "force-static"
 export const revalidate = 3600 // 1 hour
 
-const baseUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : process.env.NODE_ENV === "production"
-    ? "https://www.agricolailpichello.it"
-    : "http://localhost:3000"
-const pageUrl = `${baseUrl}/pasta-artigianale-appennino-reggiano`
+// PRODUCTION DOMAIN - sempre usare il dominio canonico per SEO
+const baseUrl = "https://www.agricolailpichello.it"
+const pageUrl = `${baseUrl}/pasta-artigianale-trafilata-bronzo`
 
 export const metadata: Metadata = {
-  title: "Pasta Artigianale Trafilata al Bronzo | Appennino Reggiano",
+  title: "Vendita Pasta Artigianale Trafilata al Bronzo | 100% Grano Italiano | Il Pichello",
   description:
-    "Pasta di semola di grano duro coltivato nell'Appennino Reggiano, macinato a pietra e trafilato al bronzo. Essiccazione naturale a temperatura ambiente. Azienda Agricola Il Pichello, Marola (RE).",
+    "Acquista la vera Pasta Artigianale rugosa e tenace. Semola di grano duro 100% italiano, trafilatura al bronzo ed essiccazione lenta. Spedizioni in tutta Italia.",
   keywords: [
-    "pasta artigianale",
-    "trafilata al bronzo",
-    "Appennino Reggiano",
-    "semola grano duro",
-    "pasta essiccazione naturale",
-    "Marola",
-    "Carpineti",
-    "Reggio Emilia",
-    "pasta km0",
-    "Il Pichello"
+    "pasta artigianale online",
+    "vendita pasta trafilata al bronzo",
+    "pasta artigianale italiana",
+    "spaghetti trafilati al bronzo",
+    "pasta essiccazione lenta",
+    "pasta grano italiano",
+    "pasta senza glifosato",
+    "pasta di semola di grano duro",
+    "pasta rugosa artigianale",
+    "acquisto pasta online"
   ],
   openGraph: {
     type: "website",
     locale: "it_IT",
     url: pageUrl,
     siteName: "Azienda Agricola Il Pichello",
-    title: "Pasta Artigianale Trafilata al Bronzo | Appennino Reggiano",
+    title: "Vendita Pasta Artigianale Trafilata al Bronzo | 100% Grano Italiano",
     description:
-      "Pasta di semola di grano duro coltivato nell'Appennino Reggiano, macinato a pietra e trafilato al bronzo. Essiccazione naturale a temperatura ambiente.",
+      "Acquista la vera Pasta Artigianale rugosa e tenace. Semola di grano duro 100% italiano, trafilatura al bronzo ed essiccazione lenta. Spedizioni in tutta Italia.",
     images: [
       {
         url: "/images/pasta/mezzi_paccheri_appennino_reggiano.webp",
         width: 1200,
         height: 630,
-        alt: "Pasta artigianale trafilata al bronzo - Azienda Agricola Il Pichello, Appennino Reggiano"
+        alt: "Pasta artigianale trafilata al bronzo - 100% grano italiano - Il Pichello"
       }
     ]
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pasta Artigianale Trafilata al Bronzo | Appennino Reggiano",
+    title: "Vendita Pasta Artigianale Trafilata al Bronzo | 100% Grano Italiano",
     description:
-      "Pasta di semola di grano duro dell'Appennino Reggiano, trafilata al bronzo ed essiccata naturalmente.",
+      "Acquista la vera Pasta Artigianale rugosa e tenace. Semola di grano duro 100% italiano, trafilatura al bronzo. Spedizioni in Italia.",
     images: ["/images/pasta/mezzi_paccheri_appennino_reggiano.webp"]
   },
   alternates: {
@@ -98,33 +95,47 @@ const faqItems = [
   }
 ]
 
-const productSchemas = pastaProducts.map((product) => ({
-  "@type": "Product",
-  "@id": `${pageUrl}#${product.slug}`,
-  name: `${product.name} - Pasta artigianale trafilata al bronzo`,
-  description: product.description,
-  image: product.images.map((img) => `${baseUrl}${img}`),
-  brand: {
-    "@type": "Brand",
-    name: "Azienda Agricola Il Pichello"
-  },
-  manufacturer: {
-    "@type": "Organization",
-    "@id": `${baseUrl}/#organization`
-  },
-  category: "Pasta Secca",
-  material: "Semola di grano duro",
-  sku: product.id,
-  offers: {
-    "@type": "AggregateOffer",
-    priceCurrency: "EUR",
-    lowPrice: product.priceRange.low.toFixed(2),
-    highPrice: product.priceRange.high.toFixed(2),
-    offerCount: 1,
-    availability: "https://schema.org/InStock",
-    url: `${pageUrl}?formato=${encodeURIComponent(product.name)}`
+const productSchemas = pastaProducts.map((product, index) => ({
+  "@type": "ListItem",
+  position: index + 1,
+  item: {
+    "@type": "Product",
+    "@id": `${pageUrl}#${product.slug}`,
+    name: `${product.name} - Pasta artigianale trafilata al bronzo`,
+    description: product.description,
+    image: product.images.map((img) => `${baseUrl}${img}`),
+    brand: {
+      "@type": "Brand",
+      name: "Azienda Agricola Il Pichello"
+    },
+    manufacturer: {
+      "@type": "Organization",
+      "@id": `${baseUrl}/#organization`
+    },
+    category: "Pasta Secca",
+    material: "Semola di grano duro 100% italiano",
+    sku: product.id,
+    offers: {
+      "@type": "AggregateOffer",
+      priceCurrency: "EUR",
+      lowPrice: product.priceRange.low.toFixed(2),
+      highPrice: product.priceRange.high.toFixed(2),
+      offerCount: 1,
+      availability: "https://schema.org/InStock",
+      url: `${pageUrl}?formato=${encodeURIComponent(product.name)}`
+    }
   }
 }))
+
+// ItemList schema per la pagina categoria
+const itemListSchema = {
+  "@type": "ItemList",
+  "@id": `${pageUrl}#productlist`,
+  name: "Pasta Artigianale Trafilata al Bronzo - Il Pichello",
+  description: "Collezione completa di pasta artigianale trafilata al bronzo con essiccazione lenta. Semola di grano duro 100% italiano.",
+  numberOfItems: pastaProducts.length,
+  itemListElement: productSchemas
+}
 
 const faqSchema = {
   "@type": "FAQPage",
@@ -197,7 +208,7 @@ const localBusiness = {
 // JSON-LD Schema
 const jsonLd = {
   "@context": "https://schema.org",
-  "@graph": [localBusiness, breadcrumbList, faqSchema, ...productSchemas]
+  "@graph": [localBusiness, breadcrumbList, faqSchema, itemListSchema]
 }
 
 export default async function PastaArtigianalePage() {

@@ -115,7 +115,7 @@ export const pastaProducts: PastaProduct[] = [
     cookingTime: "9-11 min",
     intensity: "Delicata",
     pairing: "Ideale con minestre di legumi e zuppe di montagna.",
-    pairingLink: "/zuppe-appennino-reggiano",
+    pairingLink: "/zuppe-legumi-cereali-artigianali",
     pairingLabel: "Vedi le nostre zuppe",
     priceRange: { low: 3, high: 5 },
     images: [

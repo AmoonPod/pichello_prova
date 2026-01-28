@@ -63,11 +63,11 @@ const FinalCTASection = () => {
           {/* Description */}
           <p className="text-lg md:text-xl text-white/80 font-medium max-w-3xl mx-auto mb-10 lg:mb-12 leading-relaxed">
             Scopri i sapori genuini dell'Appennino Reggiano: dalla{" "}
-            <Link href="/farina-antichi-cinquanta-grani-appennino-reggiano" className="text-white underline underline-offset-2 hover:text-white/90">
+            <Link href="/farina-grani-antichi-macinata-pietra" className="text-white underline underline-offset-2 hover:text-white/90">
               farina di grani antichi
             </Link>{" "}
             alla{" "}
-            <Link href="/pasta-artigianale-appennino-reggiano" className="text-white underline underline-offset-2 hover:text-white/90">
+            <Link href="/pasta-artigianale-trafilata-bronzo" className="text-white underline underline-offset-2 hover:text-white/90">
               pasta trafilata al bronzo
             </Link>
             . Contattaci per ordinare o ricevere informazioni personalizzate.

@@ -53,19 +53,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/pasta-artigianale-appennino-reggiano`,
+      url: `${baseUrl}/pasta-artigianale-trafilata-bronzo`,
       lastModified: lastModified,
       changeFrequency: 'monthly',
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/farina-antichi-cinquanta-grani-appennino-reggiano`,
+      url: `${baseUrl}/farina-grani-antichi-macinata-pietra`,
       lastModified: lastModified,
       changeFrequency: 'monthly',
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/zuppe-appennino-reggiano`,
+      url: `${baseUrl}/zuppe-legumi-cereali-artigianali`,
       lastModified: lastModified,
       changeFrequency: 'monthly',
       priority: 0.9,

@@ -129,25 +129,27 @@ function ZuppaCard({ product, index }: { product: Prodotto; index: number }) {
   )
 }
 
-export default function GalleriaZuppe({ zuppe }: { zuppe: Prodotto[] }) {
+export default function GalleriaZuppe({ zuppe, hideIntro = false }: { zuppe: Prodotto[], hideIntro?: boolean }) {
   return (
     <section className="bg-[#F9F9F7] py-16 lg:py-24" id="le-zuppe">
       {/* Intro */}
-      <div className="container mx-auto px-4 mb-12 lg:mb-16 text-center max-w-4xl">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest mb-4 border border-primary/20">
-          <Soup className="w-3.5 h-3.5" />
-          Comfort Food dell'Appennino
+      {!hideIntro && (
+        <div className="container mx-auto px-4 mb-12 lg:mb-16 text-center max-w-4xl">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest mb-4 border border-primary/20">
+            <Soup className="w-3.5 h-3.5" />
+            Comfort Food dell'Appennino
+          </div>
+
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-foreground mb-6 leading-[1.1]">
+            Le nostre <span className="text-primary italic">Zuppe.</span>
+          </h2>
+
+          <p className="text-lg text-muted-foreground font-light max-w-2xl mx-auto leading-relaxed">
+            Dalla tradizione contadina alle varianti gourmet.
+            <strong className="text-foreground font-medium"> Ogni busta è una ricetta bilanciata</strong>, pronta da cuocere.
+          </p>
         </div>
-
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-foreground mb-6 leading-[1.1]">
-          Le nostre <span className="text-primary italic">Zuppe.</span>
-        </h2>
-
-        <p className="text-lg text-muted-foreground font-light max-w-2xl mx-auto leading-relaxed">
-          Dalla tradizione contadina alle varianti gourmet.
-          <strong className="text-foreground font-medium"> Ogni busta è una ricetta bilanciata</strong>, pronta da cuocere.
-        </p>
-      </div>
+      )}
 
       {/* Product List - Grid Layout */}
       <div className="container mx-auto px-4 max-w-7xl">

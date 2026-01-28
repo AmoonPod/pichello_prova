@@ -8,7 +8,7 @@ import "../../globals.css";
 import ProdottoGallery from "@/components/prodotto/prodotto_gallery";
 import ProductCard from "@/components/ProductCard";
 import CategoryTag from "@/components/category_tag";
-import { Image as ImageIcon } from "lucide-react";
+import { Image as ImageIcon, ArrowRight } from "lucide-react";
 import BarcodeDisplay from "@/components/BarcodeDisplay";
 import FooterV2 from "@/components/new/Footer";
 import Link from "next/link";
@@ -29,6 +29,8 @@ export async function generateStaticParams() {
     };
   });
 }
+
+import { notFound } from "next/navigation";
 
 // Generate dynamic metadata for each product
 export async function generateMetadata(props: {
@@ -121,7 +123,9 @@ export default async function Product(props: {
     getCategorie(),
   ]);
 
-  if (!prodotto) return null;
+  if (!prodotto) {
+    notFound();
+  }
 
   const hasImages = prodotto.immagini && prodotto.immagini.length > 0;
 
@@ -203,6 +207,35 @@ export default async function Product(props: {
       worstRating: "1",
     },
   };
+
+  // Determine category landing page logic
+  const getCategoryLink = (catName: string) => {
+    const lowerCat = catName?.toLowerCase() || "";
+    if (lowerCat.includes("pasta")) return { url: "/pasta-artigianale-trafilata-bronzo", label: "Scopri tutta la Pasta Artigianale" };
+    if (lowerCat.includes("farina") || lowerCat.includes("cereali") || lowerCat.includes("grani")) return { url: "/farina-grani-antichi-macinata-pietra", label: "Scopri le Farine Macinate a Pietra" };
+    if (lowerCat.includes("zupp") || lowerCat.includes("risott") || lowerCat.includes("legum")) return { url: "/zuppe-legumi-cereali-artigianali", label: "Scopri Zuppe e Risotti" };
+    return { url: "/prodotti", label: "Vedi Tutti i Prodotti" };
+  };
+
+  const categoryLink = getCategoryLink(prodotto.categoria);
+
+  // Filter related products logic
+  // 1. Prioritize products in the same category
+  // 2. Exclude current product
+  // 3. Fill with other products if needed
+  const relatedProducts = prodotti
+    .filter((p: ProdottoType) => p._id !== prodotto._id && p.categoria === prodotto.categoria)
+    .slice(0, 3);
+
+  if (relatedProducts.length < 3) {
+    const remainingCount = 3 - relatedProducts.length;
+    const otherProducts = prodotti
+      .filter(
+        (p: ProdottoType) => p._id !== prodotto._id && p.categoria !== prodotto.categoria
+      )
+      .slice(0, remainingCount);
+    relatedProducts.push(...otherProducts);
+  }
 
   return (
     <>
@@ -539,93 +572,47 @@ export default async function Product(props: {
           </div>
         </div>
 
-        {/* Related Products - Redesigned */}
-        <section className="bg-[#FBECC9] py-16 lg:py-20 mt-16">
+        {/* Related Products - Minimal Redesign for Better Internal Linking */}
+        <section className="py-16 lg:py-24 border-t border-gray-100 bg-white">
           <div className="container mx-auto px-4">
-            {/* Header */}
-            <div className="text-center mb-12 lg:mb-16">
-              <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-2 text-sm text-primary mb-6">
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                  />
-                </svg>
-                <span className="font-medium">Prodotti Correlati</span>
+            <div className="flex flex-col md:flex-row justify-between items-end mb-10 gap-4">
+              <div className="max-w-2xl">
+                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3 tracking-tight">
+                  Potrebbero piacerti anche
+                </h2>
+                <p className="text-gray-500 text-lg">
+                  Prodotti simili dalla nostra selezione artigianale
+                </p>
               </div>
 
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 leading-tight">
-                Scopri Altri
-                <span className="block text-primary">
-                  Sapori dell'Appennino
-                </span>
-              </h2>
-
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                Altri prodotti della nostra selezione che potrebbero
-                interessarti, coltivati con la stessa passione e autenticità
-              </p>
+              {/* Smart Internal Linking CTA */}
+              {categoryLink.url !== "/prodotti" && (
+                <Link
+                  href={categoryLink.url}
+                  className="group inline-flex items-center gap-2 text-primary font-semibold hover:text-primary/80 transition-colors pb-1 border-b-2 border-transparent hover:border-primary/20"
+                >
+                  {categoryLink.label}
+                  <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                </Link>
+              )}
             </div>
 
-            {/* Products Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
-              {prodotti
-                .slice(0, 3)
-                .map((product: ProdottoType, index: number) => (
-                  <div
-                    key={product._id}
-                    className="group"
-                    style={{
-                      animationDelay: `${index * 0.1}s`,
-                    }}
-                  >
-                    <div className="relative">
-                      {/* Decorative background */}
-                      <div
-                        className={`absolute inset-2 rounded-xl transform rotate-1 group-hover:rotate-0 transition-transform duration-500 ${index % 3 === 0
-                          ? "bg-gradient-to-br from-primary/10 via-primary/15 to-primary/20"
-                          : index % 3 === 1
-                            ? "bg-gradient-to-br from-secondary/10 via-secondary/15 to-secondary/20"
-                            : "bg-gradient-to-br from-primary/5 via-primary/10 to-primary/15"
-                          }`}
-                      />
-
-                      {/* Product Card */}
-                      <div className="relative">
-                        <ProductCard product={product} />
-                      </div>
-                    </div>
-                  </div>
-                ))}
+            {/* Clean Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-12">
+              {relatedProducts.map((product: ProdottoType) => (
+                <div key={product._id} className="group">
+                  <ProductCard product={product} />
+                </div>
+              ))}
             </div>
 
-            {/* Call to Action */}
-            <div className="text-center mt-12 lg:mt-16">
+            {/* Fallback CTA if no specific category link is present or just to offer more options */}
+            <div className="mt-16 text-center">
               <Link
                 href="/prodotti"
-                className="inline-flex items-center gap-3 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 group"
+                className="inline-flex items-center justify-center gap-2 px-8 py-3 bg-gray-50 hover:bg-gray-100 text-gray-900 rounded-full font-medium transition-colors border border-gray-200"
               >
-                <span>Vedi Tutti i Prodotti</span>
-                <svg
-                  className="w-5 h-5 group-hover:translate-x-1 transition-transform"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 8l4 4m0 0l-4 4m4-4H3"
-                  />
-                </svg>
+                Vedi tutto il catalogo
               </Link>
             </div>
           </div>

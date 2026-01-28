@@ -53,7 +53,7 @@ export default function WhyChooseZuppe() {
             </div>
 
             {/* Cross-link alla Farina */}
-            <Link href="/farina-antichi-cinquanta-grani-appennino-reggiano" className="group block mt-6">
+            <Link href="/farina-grani-antichi-macinata-pietra" className="group block mt-6">
               <div className="bg-primary/5 border border-primary/20 rounded-xl p-4 hover:bg-primary/10 hover:border-primary/30 transition-all duration-300">
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors flex-shrink-0">

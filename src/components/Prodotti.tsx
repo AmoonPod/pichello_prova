@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import ProductCard from "@/components/ProductCard";
 import { Input } from "@/components/ui/input";
 import { CategoriaType, ProdottoType } from "../../types";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { Search, Filter, Grid, List, Leaf, ShoppingBag } from "lucide-react";
 import { motion, useInView, Variants } from "framer-motion";
@@ -29,6 +29,7 @@ const ProductsClient = ({
   });
   const [isVisible, setIsVisible] = useState(false);
   const clientSearchParams = useSearchParams();
+  const router = useRouter();
   const initialCategory =
     serverSearchParams?.categoria || clientSearchParams.get("categoria");
   const [searchTerm, setSearchTerm] = useState("");
@@ -149,9 +150,9 @@ const ProductsClient = ({
       href?: string;
       current?: boolean;
     }> = [
-      { label: "Home", href: "/" },
-      { label: "Prodotti", href: "/prodotti" },
-    ];
+        { label: "Home", href: "/" },
+        { label: "Prodotti", href: "/prodotti" },
+      ];
 
     if (selectedCategory) {
       const currentCategory = getCurrentCategory();
@@ -205,85 +206,27 @@ const ProductsClient = ({
       )}
 
       <div className="min-h-screen bg-backgroundvariant">
-        {/* Hero Section */}
-        <section className="relative py-20 lg:py-32 bg-primary overflow-hidden">
-          {/* Decorative Elements */}
-          <div className="absolute top-20 left-10 w-40 h-40 rounded-full bg-white/5 blur-3xl animate-pulse delay-300" />
-          <div className="absolute bottom-20 right-10 w-32 h-32 rounded-full bg-white/5 blur-2xl animate-pulse delay-700" />
-          <div
-            className="absolute top-1/2 left-1/4 w-24 h-24 rounded-full bg-white/3 blur-xl animate-bounce"
-            style={{ animationDuration: "7s" }}
-          />
-
-          {/* Pattern Overlay */}
-          <div className="absolute inset-0 opacity-10">
-            <div
-              className="absolute inset-0"
-              style={{
-                backgroundImage: `radial-gradient(circle at 25% 25%, white 2px, transparent 2px)`,
-                backgroundSize: "60px 60px",
-              }}
-            />
-          </div>
-
-          <div className="container mx-auto px-4 relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-center"
-            >
-              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 text-sm text-white mb-6">
-                <Leaf className="w-4 h-4" />
-                <span className="font-medium">Biorazionale dell'Appennino</span>
-              </div>
-
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-                Sapori Autentici
-                <br />
-                <span className="text-white/90">della Montagna</span>
-              </h1>
-
-              <p className="text-lg md:text-xl text-white/80 font-medium max-w-3xl mx-auto mb-8 leading-relaxed">
-                Esplora la nostra selezione di prodotti agricoli di alta
-                qualità, coltivati con passione e rispetto per la terra
-                dell'Appennino Reggiano
-              </p>
-
-              {/* Desktop Search Bar */}
-              <div className="hidden md:block">
-                <div className="max-w-md mx-auto">
-                  <div className="relative">
-                    <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                    <Input
-                      type="text"
-                      placeholder="Cerca il tuo prodotto preferito..."
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      className="pl-12 pr-4 py-3 bg-white/95 backdrop-blur-sm border-0 text-gray-900 placeholder:text-gray-500 rounded-full text-lg shadow-lg focus:shadow-xl transition-all duration-300"
-                    />
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
         {/* Main Content */}
-        <section className="py-12 lg:py-20 relative">
-          {/* Background decorative elements */}
-          <div className="absolute top-40 left-10 w-32 h-32 rounded-full bg-primary/5 blur-2xl animate-pulse delay-300" />
-          <div className="absolute bottom-40 right-10 w-28 h-28 rounded-full bg-secondary/5 blur-xl animate-pulse delay-700" />
-
+        <section className="py-2 relative">
           <div className="container mx-auto px-4">
-            {/* Breadcrumbs */}
+            {/* Header Area */}
             <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
+              transition={{ duration: 0.6 }}
               className="mb-8"
             >
               <Breadcrumbs items={getBreadcrumbs()} />
+              <div className="mt-4 max-w-4xl">
+                <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                  Sapori Autentici della Montagna
+                </h1>
+                <p className="text-lg text-gray-600 leading-relaxed">
+                  Esplora la nostra selezione di prodotti agricoli di alta
+                  qualità, coltivati con passione e rispetto per la terra
+                  dell'Appennino Reggiano.
+                </p>
+              </div>
             </motion.div>
 
             <div className="flex flex-col lg:flex-row gap-8">
@@ -313,11 +256,10 @@ const ProductsClient = ({
                       <div className="space-y-2">
                         <Link href="/prodotti" scroll={false}>
                           <div
-                            className={`cursor-pointer rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200 ${
-                              !selectedCategory
-                                ? "bg-primary text-white shadow-md"
-                                : "hover:bg-gray-50 text-gray-700 border border-gray-200 hover:border-primary/30"
-                            }`}
+                            className={`cursor-pointer rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200 ${!selectedCategory
+                              ? "bg-primary text-white shadow-md"
+                              : "hover:bg-gray-50 text-gray-700 border border-gray-200 hover:border-primary/30"
+                              }`}
                           >
                             <div className="flex items-center justify-between">
                               <span>Tutte le categorie</span>
@@ -345,20 +287,18 @@ const ProductsClient = ({
                               scroll={false}
                             >
                               <div
-                                className={`cursor-pointer rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200 ${
-                                  selectedCategory === slug
-                                    ? "bg-primary text-white shadow-md"
-                                    : "hover:bg-gray-50 text-gray-700 border border-gray-200 hover:border-primary/30"
-                                }`}
+                                className={`cursor-pointer rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200 ${selectedCategory === slug
+                                  ? "bg-primary text-white shadow-md"
+                                  : "hover:bg-gray-50 text-gray-700 border border-gray-200 hover:border-primary/30"
+                                  }`}
                               >
                                 <div className="flex items-center justify-between">
                                   <span>{category.nome}</span>
                                   <span
-                                    className={`text-xs px-2 py-1 rounded-full ${
-                                      selectedCategory === slug
-                                        ? "bg-white/20 opacity-75"
-                                        : "bg-gray-100 opacity-75"
-                                    }`}
+                                    className={`text-xs px-2 py-1 rounded-full ${selectedCategory === slug
+                                      ? "bg-white/20 opacity-75"
+                                      : "bg-gray-100 opacity-75"
+                                      }`}
                                   >
                                     {categoryCount}
                                   </span>
@@ -422,11 +362,10 @@ const ProductsClient = ({
                       <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
                         <Link href="/prodotti" scroll={false}>
                           <button
-                            className={`text-sm whitespace-nowrap px-4 py-2 rounded-full font-medium transition-all duration-200 ${
-                              !selectedCategory
-                                ? "bg-primary text-white shadow-md"
-                                : "border border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-primary/30"
-                            }`}
+                            className={`text-sm whitespace-nowrap px-4 py-2 rounded-full font-medium transition-all duration-200 ${!selectedCategory
+                              ? "bg-primary text-white shadow-md"
+                              : "border border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-primary/30"
+                              }`}
                           >
                             Tutte
                           </button>
@@ -442,11 +381,10 @@ const ProductsClient = ({
                               scroll={false}
                             >
                               <button
-                                className={`text-sm whitespace-nowrap px-4 py-2 rounded-full font-medium transition-all duration-200 ${
-                                  selectedCategory === slug
-                                    ? "bg-primary text-white shadow-md"
-                                    : "border border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-primary/30"
-                                }`}
+                                className={`text-sm whitespace-nowrap px-4 py-2 rounded-full font-medium transition-all duration-200 ${selectedCategory === slug
+                                  ? "bg-primary text-white shadow-md"
+                                  : "border border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-primary/30"
+                                  }`}
                               >
                                 {category.nome}
                               </button>
@@ -464,42 +402,57 @@ const ProductsClient = ({
                     variants={itemVariants}
                     initial="hidden"
                     animate={isVisible ? "visible" : "hidden"}
-                    className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8"
+                    className="flex flex-col gap-6 mb-8"
                   >
-                    <div>
-                      <h2 className="text-2xl lg:text-3xl font-bold text-foreground mb-1">
-                        {selectedCategory
-                          ? getCategoryTitle()
-                          : getCurrentCategoryName()}
-                      </h2>
-                      <p className="text-muted-foreground">
-                        {filteredProdotti.length}{" "}
-                        {filteredProdotti.length === 1
-                          ? "prodotto trovato"
-                          : "prodotti trovati"}
-                      </p>
+                    <div className="flex items-center justify-between gap-4">
+                      {/* Search Bar Desktop */}
+                      <div className="relative flex-1 max-w-md">
+                        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                        <Input
+                          type="text"
+                          placeholder="Cerca il tuo prodotto preferito..."
+                          value={searchTerm}
+                          onChange={(e) => setSearchTerm(e.target.value)}
+                          className="pl-12 pr-4 py-2 bg-white border border-gray-200 text-gray-900 placeholder:text-gray-500 rounded-full shadow-sm focus:shadow-md transition-all duration-300"
+                        />
+                      </div>
+
+                      <div className="flex items-center gap-2 bg-white rounded-xl p-1 shadow-sm border border-gray-200">
+                        <button
+                          onClick={() => setViewMode("grid")}
+                          className={`p-2 rounded-lg transition-all duration-200 ${viewMode === "grid"
+                            ? "bg-primary text-white shadow-sm"
+                            : "text-gray-600 hover:bg-gray-100"
+                            }`}
+                        >
+                          <Grid className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={() => setViewMode("list")}
+                          className={`p-2 rounded-lg transition-all duration-200 ${viewMode === "list"
+                            ? "bg-primary text-white shadow-sm"
+                            : "text-gray-600 hover:bg-gray-100"
+                            }`}
+                        >
+                          <List className="w-4 h-4" />
+                        </button>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2 bg-white rounded-xl p-1 shadow-sm border border-gray-200">
-                      <button
-                        onClick={() => setViewMode("grid")}
-                        className={`p-2 rounded-lg transition-all duration-200 ${
-                          viewMode === "grid"
-                            ? "bg-primary text-white shadow-sm"
-                            : "text-gray-600 hover:bg-gray-100"
-                        }`}
-                      >
-                        <Grid className="w-4 h-4" />
-                      </button>
-                      <button
-                        onClick={() => setViewMode("list")}
-                        className={`p-2 rounded-lg transition-all duration-200 ${
-                          viewMode === "list"
-                            ? "bg-primary text-white shadow-sm"
-                            : "text-gray-600 hover:bg-gray-100"
-                        }`}
-                      >
-                        <List className="w-4 h-4" />
-                      </button>
+
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h2 className="text-2xl font-bold text-foreground mb-1">
+                          {selectedCategory
+                            ? getCategoryTitle()
+                            : getCurrentCategoryName()}
+                        </h2>
+                        <p className="text-muted-foreground">
+                          {filteredProdotti.length}{" "}
+                          {filteredProdotti.length === 1
+                            ? "prodotto trovato"
+                            : "prodotti trovati"}
+                        </p>
+                      </div>
                     </div>
                   </motion.div>
                 )}
@@ -510,11 +463,10 @@ const ProductsClient = ({
                     variants={containerVariants}
                     initial="visible"
                     animate="visible"
-                    className={`${
-                      viewMode === "grid"
-                        ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
-                        : "space-y-3 sm:space-y-4"
-                    }`}
+                    className={`${viewMode === "grid"
+                      ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
+                      : "space-y-3 sm:space-y-4"
+                      }`}
                   >
                     {filteredProdotti.map((product, index) => (
                       <motion.div
@@ -554,6 +506,7 @@ const ProductsClient = ({
                         onClick={() => {
                           setSearchTerm("");
                           setSelectedCategory(null);
+                          router.push("/prodotti");
                         }}
                         className="px-6 py-3 bg-primary text-white rounded-full hover:bg-primary/90 transition-all duration-300 font-medium shadow-lg hover:shadow-xl"
                       >
